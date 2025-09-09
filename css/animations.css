@@ -1,0 +1,230 @@
+/* Pixel Art Animations for Gallisch Dorp Game */
+
+/* Chief Working Animation - Pixel Perfect */
+.chief-sprite.working {
+  animation: working 0.8s steps(4, end) infinite alternate;
+}
+
+@keyframes working {
+  0% { transform: translate(0px, 0px); }
+  25% { transform: translate(-1px, 0px); }
+  50% { transform: translate(0px, -1px); }
+  75% { transform: translate(1px, 0px); }
+  100% { transform: translate(0px, 1px); }
+}
+
+/* Floating Gold Animation - Pixel Perfect */
+.floating-gold {
+  position: absolute;
+  color: #ffd700;
+  pointer-events: none;
+  animation: floatUp 2s steps(8, end) forwards;
+  font-size: 12px;
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: 1px 1px 0 #000;
+  z-index: 1000;
+}
+
+@keyframes floatUp {
+  0% { 
+    opacity: 1; 
+    transform: translateY(0px); 
+  }
+  12.5% { transform: translateY(-6px); }
+  25% { transform: translateY(-12px); }
+  37.5% { transform: translateY(-18px); }
+  50% { transform: translateY(-24px); }
+  62.5% { transform: translateY(-30px); }
+  75% { transform: translateY(-36px); opacity: 0.7; }
+  87.5% { transform: translateY(-42px); opacity: 0.3; }
+  100% { 
+    opacity: 0; 
+    transform: translateY(-48px); 
+  }
+}
+
+/* Particle Effects - Pixel Perfect */
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #ffd700;
+  pointer-events: none;
+  animation: particle 1s steps(6, end) forwards;
+  z-index: 999;
+  box-shadow: 0 0 0 1px #000;
+}
+
+@keyframes particle {
+  0% { 
+    opacity: 1; 
+    transform: translateY(0px);
+  }
+  16.67% { transform: translateY(-4px); }
+  33.33% { transform: translateY(-8px); }
+  50% { transform: translateY(-12px); opacity: 0.8; }
+  66.67% { transform: translateY(-16px); opacity: 0.5; }
+  83.33% { transform: translateY(-20px); opacity: 0.2; }
+  100% { 
+    opacity: 0; 
+    transform: translateY(-24px);
+  }
+}
+
+/* Button Press Animation */
+button {
+  transition: all 0.1s ease;
+}
+
+button:hover {
+  animation: buttonHover 0.3s ease;
+}
+
+@keyframes buttonHover {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+  100% { transform: translateY(-2px); }
+}
+
+/* Panel Entrance Animation */
+.panel {
+  animation: panelSlideIn 0.5s ease-out;
+}
+
+@keyframes panelSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gold Display Pulse - Pixel Perfect */
+.gold-display {
+  animation: goldPulse 4s steps(8, end) infinite;
+}
+
+@keyframes goldPulse {
+  0%, 87.5%, 100% { 
+    box-shadow: 
+      0 0 0 1px #b8860b,
+      0 0 0 4px #000,
+      4px 4px 0 4px #8b6914;
+  }
+  12.5% { 
+    box-shadow: 
+      0 0 0 1px #b8860b,
+      0 0 0 4px #000,
+      4px 4px 0 4px #8b6914,
+      0 0 0 6px rgba(255, 215, 0, 0.5);
+  }
+  50% { 
+    box-shadow: 
+      0 0 0 1px #b8860b,
+      0 0 0 4px #000,
+      4px 4px 0 4px #8b6914,
+      0 0 0 8px rgba(255, 215, 0, 0.3);
+  }
+}
+
+/* Progress Bar Animation */
+.progress-bar {
+  transition: width 0.1s linear;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, .2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, .2) 50%,
+    rgba(255, 255, 255, .2) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 50px 50px;
+  animation: progressMove 2s linear infinite;
+}
+
+@keyframes progressMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+/* Generator Item Hover Effect */
+.generator-item {
+  transition: all 0.2s ease;
+}
+
+.generator-item:hover {
+  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Attack Result Animations */
+.attack-result.success {
+  animation: successFlash 0.5s ease;
+}
+
+.attack-result.failure {
+  animation: failureShake 0.5s ease;
+}
+
+@keyframes successFlash {
+  0%, 100% { background: rgba(0,0,0,0.5); }
+  50% { background: rgba(76, 175, 80, 0.3); }
+}
+
+@keyframes failureShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Chief Sprite Idle Animation */
+.chief-sprite:not(.working) {
+  animation: idle 4s ease-in-out infinite;
+}
+
+@keyframes idle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Loading States */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}

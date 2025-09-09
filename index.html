@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Didam Clicker - Idle Game</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>🏰 Didam clicker</h1>
+    
+    <div class="gold-display">
+      💰 Goudstukken: <span id="gold">0</span> 
+      <span style="color: #2e7d32;">(+<span id="gpsDisplay">0</span>/sec)</span>
+    </div>
+
+    <!-- Dorpshoofd -->
+    <div class="panel">
+      <div class="chief-section">
+        <h2>👑 Dorpshoofd</h2>
+        <div class="chief-sprite" id="chiefSprite">👑</div>
+        <button id="chiefBtn">Vraag raad aan Dorpshoofd</button>
+        <p>(+<span id="chiefGold">1</span> goudstukken per klik, wachttijd <span id="chiefCooldownText">5.0</span>s)</p>
+        <div class="progress-container">
+          <div class="progress-bar" id="chiefProgress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upgrades -->
+    <div class="panel">
+      <h2>⚒️ Upgrades Dorpshoofd</h2>
+      <div class="stats-row">
+        <span>Goud per klik: <span id="chiefGoldStat">1</span></span>
+        <button id="upgradeGoldBtn" class="upgrade-btn">
+          Upgrade (+1) - <span id="chiefGoldCost">25</span>💰
+        </button>
+      </div>
+      
+      <div class="stats-row">
+        <span>Wachttijd: <span id="chiefCooldownStat">5.0</span>s</span>
+        <button id="upgradeCooldownBtn" class="upgrade-btn">
+          Upgrade (-0.5s) - <span id="chiefCooldownCost">75</span>💰
+        </button>
+      </div>
+    </div>
+
+    <!-- Generators -->
+    <div class="panel">
+      <h2>🏭 Generators</h2>
+      
+      <div class="generator-item">
+        <div class="generator-sprite villager-sprite">👨‍🌾</div>
+        <div class="generator-info">
+          <div><strong>Dorpelingen</strong></div>
+          <div class="generator-count"><span id="villagerCount">0</span> (+1/sec elk)</div>
+        </div>
+        <button id="buyVillagerBtn" class="buy-btn">
+          Koop: <span id="villagerCost">5</span>💰
+        </button>
+      </div>
+      
+      <div class="generator-item">
+        <div class="generator-sprite warrior-sprite">🛡️</div>
+        <div class="generator-info">
+          <div><strong>Krijgers</strong></div>
+          <div class="generator-count"><span id="warriorCount">0</span> (+5/sec elk)</div>
+        </div>
+        <button id="buyWarriorBtn" class="buy-btn">
+          Koop: <span id="warriorCost">100</span>💰
+        </button>
+      </div>
+      
+      <div class="generator-item">
+        <div class="generator-sprite seer-sprite">🔮</div>
+        <div class="generator-info">
+          <div><strong>Zieners</strong></div>
+          <div class="generator-count"><span id="seerCount">0</span> (+20/sec elk)</div>
+        </div>
+        <button id="buySeerBtn" class="buy-btn">
+          Koop: <span id="seerCost">500</span>💰
+        </button>
+      </div>
+      
+      <div class="generator-item">
+        <div class="generator-sprite elite-sprite">⚔️</div>
+        <div class="generator-info">
+          <div><strong>Elite Krijgers</strong></div>
+          <div class="generator-count"><span id="eliteCount">0</span> (+100/sec elk)</div>
+        </div>
+        <button id="buyEliteBtn" class="buy-btn">
+          Koop: <span id="eliteCost">2000</span>💰
+        </button>
+      </div>
+    </div>
+
+    <!-- Centraal Gebouw -->
+    <div class="panel">
+      <h2>🏗️ Centraal Gebouw</h2>
+      
+      <div class="building-section">
+        <div class="building-display">
+          <div class="building-sprite" id="buildingSprite">🏚️</div>
+          <div class="building-info">
+            <h3 id="buildingName">Geen gebouw</h3>
+            <p id="buildingDescription">Het dorp heeft nog geen centraal gebouw</p>
+          </div>
+        </div>
+        
+        <div class="building-upgrade">
+          <button id="upgradeBuildingBtn" class="upgrade-btn">
+            Bouw: <span id="buildingUpgradeName">Houten schuur</span> - <span id="buildingCost">500</span>💰
+          </button>
+        </div>
+      </div>
+
+      <!-- Generator Upgrades -->
+      <div class="generator-upgrades" id="generatorUpgrades" style="display: none;">
+        <h3>🔧 Generator Upgrades</h3>
+        
+        <div class="upgrade-category">
+          <h4>👨‍🌾 Dorpelingen</h4>
+          <div class="upgrade-buttons">
+            <button id="villagerSpeedBtn" class="small-upgrade-btn">
+              Snelheid Lv.<span id="villagerSpeedLvl">0</span> - <span id="villagerSpeedCost">100</span>💰
+            </button>
+            <button id="villagerGoldBonusBtn" class="small-upgrade-btn">
+              Goud Lv.<span id="villagerGoldLvl">0</span> - <span id="villagerGoldCost">150</span>💰
+            </button>
+            <button id="villagerLuckBonusBtn" class="small-upgrade-btn">
+              Geluk Lv.<span id="villagerLuckLvl">0</span> - <span id="villagerLuckCost">200</span>💰
+            </button>
+          </div>
+        </div>
+
+        <div class="upgrade-category">
+          <h4>🛡️ Krijgers</h4>
+          <div class="upgrade-buttons">
+            <button id="warriorSpeedBtn" class="small-upgrade-btn">
+              Snelheid Lv.<span id="warriorSpeedLvl">0</span> - <span id="warriorSpeedCost">300</span>💰
+            </button>
+            <button id="warriorGoldBonusBtn" class="small-upgrade-btn">
+              Goud Lv.<span id="warriorGoldLvl">0</span> - <span id="warriorGoldCost">450</span>💰
+            </button>
+            <button id="warriorLuckBonusBtn" class="small-upgrade-btn">
+              Geluk Lv.<span id="warriorLuckLvl">0</span> - <span id="warriorLuckCost">600</span>💰
+            </button>
+          </div>
+        </div>
+
+        <div class="upgrade-category">
+          <h4>🔮 Zieners</h4>
+          <div class="upgrade-buttons">
+            <button id="seerSpeedBtn" class="small-upgrade-btn">
+              Snelheid Lv.<span id="seerSpeedLvl">0</span> - <span id="seerSpeedCost">800</span>💰
+            </button>
+            <button id="seerGoldBonusBtn" class="small-upgrade-btn">
+              Goud Lv.<span id="seerGoldLvl">0</span> - <span id="seerGoldCost">1200</span>💰
+            </button>
+            <button id="seerLuckBonusBtn" class="small-upgrade-btn">
+              Geluk Lv.<span id="seerLuckLvl">0</span> - <span id="seerLuckCost">1600</span>💰
+            </button>
+          </div>
+        </div>
+
+        <div class="upgrade-category">
+          <h4>⚔️ Elite Krijgers</h4>
+          <div class="upgrade-buttons">
+            <button id="eliteSpeedBtn" class="small-upgrade-btn">
+              Snelheid Lv.<span id="eliteSpeedLvl">0</span> - <span id="eliteSpeedCost">2000</span>💰
+            </button>
+            <button id="eliteGoldBonusBtn" class="small-upgrade-btn">
+              Goud Lv.<span id="eliteGoldLvl">0</span> - <span id="eliteGoldCost">3000</span>💰
+            </button>
+            <button id="eliteLuckBonusBtn" class="small-upgrade-btn">
+              Geluk Lv.<span id="eliteLuckLvl">0</span> - <span id="eliteLuckCost">4000</span>💰
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aanvallen -->
+    <div class="panel">
+      <h2>⚔️ Val Romeinse kampementen aan</h2>
+      <div class="stats-row">
+        <span>Beschikbare krijgers: <strong><span id="warriorCount2">0</span></strong></span>
+      </div>
+
+      <div class="camp-selection">
+        <label><strong>Kampement:</strong></label><br>
+        <select id="campSelect">
+          <option value="camp1">🏕️ Klein kamp (laag risico, beloning 100💰)</option>
+          <option value="camp2">🏰 Middelgroot kamp (middel risico, beloning 400💰)</option>
+          <option value="camp3">🏛️ Groot fort (hoog risico, beloning 1500💰)</option>
+        </select>
+        <br><br>
+        <label><strong>Aantal krijgers:</strong></label><br>
+        <input type="number" id="warriorsToSend" min="1" value="1" max="0">
+        <br><br>
+        <button id="attackBtn" class="attack-btn">🚀 Aanvallen!</button>
+        <div>Cooldown: <span id="campCooldown">0</span> sec</div>
+      </div>
+      
+      <div class="attack-result" id="attackResult">
+        Kies een kamp en val aan met je krijgers!
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules - Load in correct order -->
+  <script src="js/game-state.js"></script>
+  <script src="js/visual-effects.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/chief.js"></script>
+  <script src="js/generators.js"></script>
+  <script src="js/upgrades.js"></script>
+  <script src="js/building.js"></script>
+  <script src="js/combat.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
