@@ -13,9 +13,37 @@ body {
   margin: 0; 
   padding: 20px;
   background: 
-    radial-gradient(circle at 25% 25%, #98d982 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, #7bb661 0%, transparent 50%),
-    linear-gradient(135deg, #6ba644 0%, #8fbc70 50%, #5d8f47 100%);
+    /* Tree canopy layers with different greens */
+    radial-gradient(ellipse 60px 40px at 15% 20%, #2d5a2d 0%, transparent 60%),
+    radial-gradient(ellipse 80px 50px at 35% 15%, #1e4f1e 0%, transparent 60%),
+    radial-gradient(ellipse 70px 45px at 60% 25%, #2d5a2d 0%, transparent 60%),
+    radial-gradient(ellipse 90px 55px at 85% 18%, #1a4a1a 0%, transparent 60%),
+    radial-gradient(ellipse 75px 40px at 25% 60%, #2d5a2d 0%, transparent 60%),
+    radial-gradient(ellipse 65px 50px at 50% 70%, #1e4f1e 0%, transparent 60%),
+    radial-gradient(ellipse 85px 45px at 75% 65%, #1a4a1a 0%, transparent 60%),
+    /* Tree trunks */
+    linear-gradient(90deg, transparent 14%, #3e2723 15%, #3e2723 17%, transparent 18%),
+    linear-gradient(90deg, transparent 34%, #5d4037 35%, #5d4037 37%, transparent 38%),
+    linear-gradient(90deg, transparent 59%, #3e2723 60%, #3e2723 62%, transparent 63%),
+    linear-gradient(90deg, transparent 84%, #5d4037 85%, #5d4037 87%, transparent 88%),
+    linear-gradient(90deg, transparent 24%, #3e2723 25%, #3e2723 27%, transparent 28%),
+    linear-gradient(90deg, transparent 49%, #5d4037 50%, #5d4037 52%, transparent 53%),
+    linear-gradient(90deg, transparent 74%, #3e2723 75%, #3e2723 77%, transparent 78%),
+    /* Ground and undergrowth */
+    linear-gradient(180deg, 
+      transparent 0%, 
+      transparent 75%, 
+      #1a3e1a 75%, 
+      #2d5a2d 80%, 
+      #1e4f1e 85%, 
+      #16421e 100%
+    );
+  background-size: 
+    100px 100px, 120px 120px, 110px 110px, 140px 140px,
+    100px 100px, 90px 90px, 130px 130px,
+    100% 300px, 100% 300px, 100% 300px, 100% 300px,
+    100% 300px, 100% 300px, 100% 300px,
+    100% 100%;
   color: #2d3748;
   min-height: 100vh;
   image-rendering: pixelated;
@@ -72,24 +100,49 @@ h1 {
 
 /* Panels */
 .panel { 
-  background: linear-gradient(145deg, #e8f5e8 0%, #d4edda 100%);
-  border: 2px solid #c3e6cb;
-  border-radius: 12px;
+  background: 
+    /* Wood grain pattern */
+    repeating-linear-gradient(
+      90deg,
+      #30140a 0px,
+      #30140a 8px,
+      #2a120a 8px,
+      #2a120a 9px,
+      #30140a 9px,
+      #30140a 12px,
+      #3c1c0d 12px,
+      #3c1c0d 13px,
+      #30140a 13px,
+      #30140a 16px
+    ),
+    /* Wood plank separations */
+    repeating-linear-gradient(
+      0deg,
+      #30140a 0px,
+      #30140a 40px,
+      #1f0d07 40px,
+      #1f0d07 42px,
+      #30140a 42px,
+      #30140a 82px
+    );
+  border: 3px solid #1f0d07;
+  border-radius: 8px;
   padding: 20px;
   box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(92, 51, 23, 0.4);
   position: relative;
   margin-bottom: 15px;
+  color: #f5deb3;
 }
 
 .panel h2 {
   margin: 0 0 15px 0;
-  text-shadow: none;
-  border-bottom: 2px solid #e1bee7;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid #5c3317;
   padding-bottom: 8px;
   font-size: 1.2em;
-  color: #6a1b9a;
+  color: #daa520;
   font-weight: bold;
 }
 
@@ -244,10 +297,10 @@ button:disabled {
   background: 
     repeating-linear-gradient(
       90deg,
-      #4CAF50 0px,
-      #4CAF50 2px,
-      #8BC34A 2px,
-      #8BC34A 4px
+      #32CD32 0px,
+      #32CD32 2px,
+      #228B22 2px,
+      #228B22 4px
     );
   width: 0%; 
   transition: width 0.1s linear;
@@ -303,8 +356,8 @@ button:disabled {
   border-color: #d84315;
 }
 .seer-sprite { 
-  background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
-  border-color: #7b1fa2;
+  background: linear-gradient(135deg, #4b0082 0%, #663399 100%);
+  border-color: #2e004f;
 }
 .elite-sprite { 
   background: linear-gradient(135deg, #ffc107 0%, #ffd54f 100%);
@@ -374,12 +427,20 @@ select, input {
   align-items: center;
   margin: 8px 0;
   padding: 10px;
-  background: linear-gradient(145deg, #f3e5f5 0%, #e1bee7 100%);
-  border: 1px solid #ce93d8;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      #3c1c0d 0px,
+      #3c1c0d 6px,
+      #30140a 6px,
+      #30140a 12px
+    );
+  border: 2px solid #1f0d07;
   border-radius: 6px;
   box-shadow: 
-    0 2px 5px rgba(206, 147, 216, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    0 2px 5px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(92, 51, 23, 0.3);
+  color: #f5deb3;
 }
 
 /* Building Styles */
@@ -432,7 +493,7 @@ select, input {
 
 .building-info h3 {
   margin: 0 0 10px 0;
-  color: #6a1b9a;
+  color: #daa520;
   font-size: 1.3em;
   font-weight: bold;
 }
@@ -461,21 +522,29 @@ select, input {
 }
 
 .upgrade-category {
-  background: linear-gradient(145deg, #e3f2fd 0%, #bbdefb 100%);
-  border: 2px solid #64b5f6;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      #3c1c0d 0px,
+      #3c1c0d 8px,
+      #30140a 8px,
+      #30140a 16px
+    );
+  border: 2px solid #1f0d07;
   border-radius: 10px;
   padding: 15px;
   margin: 10px 0;
   box-shadow: 
-    0 3px 8px rgba(100, 181, 246, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(92, 51, 23, 0.4);
+  color: #f5deb3;
 }
 
 .upgrade-category h4 {
   margin: 0 0 15px 0;
-  color: #1976d2;
+  color: #daa520;
   font-weight: bold;
-  border-bottom: 2px solid #64b5f6;
+  border-bottom: 2px solid #5c3317;
   padding-bottom: 8px;
 }
 
@@ -487,10 +556,10 @@ select, input {
 }
 
 .small-upgrade-btn {
-  background: linear-gradient(135deg, #673ab7 0%, #9575cd 100%);
-  border-color: #512da8;
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+  border-color: #654321;
   box-shadow: 
-    0 3px 8px rgba(103, 58, 183, 0.3),
+    0 3px 8px rgba(139, 69, 19, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   font-size: 12px;
   padding: 8px 12px;
@@ -499,9 +568,9 @@ select, input {
 }
 
 .small-upgrade-btn:hover {
-  background: linear-gradient(135deg, #9575cd 0%, #673ab7 100%);
+  background: linear-gradient(135deg, #a0522d 0%, #8b4513 100%);
   box-shadow: 
-    0 4px 12px rgba(103, 58, 183, 0.4),
+    0 4px 12px rgba(139, 69, 19, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
@@ -509,7 +578,7 @@ select, input {
 .small-upgrade-btn:active {
   transform: translateY(0px);
   box-shadow: 
-    0 2px 4px rgba(103, 58, 183, 0.3),
+    0 2px 4px rgba(139, 69, 19, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
