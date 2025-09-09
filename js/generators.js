@@ -85,7 +85,7 @@ const Generators = {
     const button = document.getElementById(buttonId);
     
     if (button) {
-      VisualEffects.flashElement(button, '#2196F3');
+      // Only use pulse effect, not flash effect to avoid transparency issues
       VisualEffects.pulseButton(buttonId, 'rgba(33, 150, 243, 0.5)');
     }
     

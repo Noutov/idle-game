@@ -167,14 +167,16 @@ button:hover {
   }
 }
 
-/* Generator Item Hover Effect */
+/* Generator Item Hover Effect - No transparency */
 .generator-item {
   transition: all 0.2s ease;
 }
 
 .generator-item:hover {
-  transform: translateX(5px);
-  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 5px 15px rgba(255, 193, 7, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 /* Attack Result Animations */
