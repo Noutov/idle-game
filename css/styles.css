@@ -12,78 +12,7 @@ body {
   font-family: 'Segoe UI', 'Roboto', sans-serif; 
   margin: 0; 
   padding: 20px;
-  background-image: 
-    /* White pixel art clouds */
-    radial-gradient(ellipse 40px 20px at 15% 8%, #f5f5dc 0%, #f5f5dc 70%, transparent 70%),
-    radial-gradient(ellipse 50px 25px at 25% 12%, #ffffff 0%, #ffffff 60%, transparent 60%),
-    radial-gradient(ellipse 35px 18px at 45% 6%, #f5f5dc 0%, #f5f5dc 75%, transparent 75%),
-    radial-gradient(ellipse 45px 22px at 65% 10%, #ffffff 0%, #ffffff 65%, transparent 65%),
-    radial-gradient(ellipse 38px 20px at 85% 8%, #f5f5dc 0%, #f5f5dc 70%, transparent 70%),
-    
-    /* Forest canopy - multiple layers with different green shades */
-    /* Back layer - darkest trees */
-    radial-gradient(ellipse 60px 80px at 8% 45%, #006400 0%, #006400 60%, transparent 60%),
-    radial-gradient(ellipse 70px 90px at 28% 40%, #006400 0%, #006400 65%, transparent 65%),
-    radial-gradient(ellipse 55px 75px at 48% 42%, #006400 0%, #006400 60%, transparent 60%),
-    radial-gradient(ellipse 65px 85px at 68% 38%, #006400 0%, #006400 62%, transparent 62%),
-    radial-gradient(ellipse 60px 80px at 88% 44%, #006400 0%, #006400 60%, transparent 60%),
-    
-    /* Middle layer - medium green trees */
-    radial-gradient(ellipse 50px 70px at 18% 50%, #228B22 0%, #228B22 70%, transparent 70%),
-    radial-gradient(ellipse 65px 85px at 38% 48%, #228B22 0%, #228B22 65%, transparent 65%),
-    radial-gradient(ellipse 55px 75px at 58% 52%, #228B22 0%, #228B22 68%, transparent 68%),
-    radial-gradient(ellipse 60px 80px at 78% 46%, #228B22 0%, #228B22 66%, transparent 66%),
-    
-    /* Front layer - lightest green trees */
-    radial-gradient(ellipse 45px 65px at 13% 55%, #32CD32 0%, #32CD32 75%, transparent 75%),
-    radial-gradient(ellipse 55px 75px at 33% 58%, #90EE90 0%, #90EE90 70%, transparent 70%),
-    radial-gradient(ellipse 50px 70px at 53% 56%, #32CD32 0%, #32CD32 72%, transparent 72%),
-    radial-gradient(ellipse 48px 68px at 73% 54%, #90EE90 0%, #90EE90 74%, transparent 74%),
-    radial-gradient(ellipse 52px 72px at 93% 57%, #32CD32 0%, #32CD32 71%, transparent 71%),
-    
-    /* Tree trunks - brown vertical rectangles */
-    linear-gradient(90deg, transparent 12%, #8B4513 13%, #8B4513 15%, transparent 16%),
-    linear-gradient(90deg, transparent 32%, #654321 33%, #654321 35%, transparent 36%),
-    linear-gradient(90deg, transparent 52%, #8B4513 53%, #8B4513 55%, transparent 56%),
-    linear-gradient(90deg, transparent 72%, #654321 73%, #654321 75%, transparent 76%),
-    linear-gradient(90deg, transparent 92%, #8B4513 93%, #8B4513 95%, transparent 96%),
-    
-    /* Grass ground - light green with texture */
-    repeating-linear-gradient(90deg,
-      #90EE90 0px, #90EE90 3px,
-      #98FB98 3px, #98FB98 6px,
-      #90EE90 6px, #90EE90 12px,
-      #98FB98 12px, #98FB98 15px);
-      
-  background-size: 
-    /* Clouds */
-    200px 100px, 180px 120px, 160px 80px, 190px 110px, 170px 90px,
-    /* Back trees */
-    150px 200px, 180px 220px, 140px 180px, 170px 210px, 160px 200px,
-    /* Middle trees */
-    120px 160px, 150px 180px, 130px 170px, 140px 175px,
-    /* Front trees */
-    100px 140px, 110px 150px, 105px 145px, 108px 148px, 112px 152px,
-    /* Tree trunks */
-    100% 150px, 100% 150px, 100% 150px, 100% 150px, 100% 150px,
-    /* Grass */
-    100% 80px;
-    
-  background-position:
-    /* Clouds */
-    0% 0%, 25% 2%, 45% -2%, 65% 1%, 85% -1%,
-    /* Back trees */
-    0% 35%, 20% 30%, 40% 32%, 60% 28%, 80% 34%,
-    /* Middle trees */
-    10% 40%, 30% 38%, 50% 42%, 70% 36%,
-    /* Front trees */
-    5% 45%, 25% 48%, 45% 46%, 65% 44%, 85% 47%,
-    /* Tree trunks */
-    0% 65%, 0% 65%, 0% 65%, 0% 65%, 0% 65%,
-    /* Grass */
-    0% 100%;
-    
-  background-color: #156115;
+  background: #156115;
   color: #1a1a1a;
   min-height: 100vh;
   image-rendering: pixelated;
