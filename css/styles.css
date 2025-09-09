@@ -744,17 +744,29 @@ select, input {
   body {
     font-size: 14px;
     padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
   }
   
   .game-container {
     grid-template-columns: 1fr;
     gap: 10px;
     max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   h1 {
     font-size: 1.4em;
     margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
   }
   
   .gold-display {
@@ -763,6 +775,10 @@ select, input {
     margin-bottom: 10px;
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .reset-btn {
@@ -775,6 +791,10 @@ select, input {
     padding: 12px;
     margin-bottom: 8px;
     border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .panel h2 {
@@ -844,6 +864,9 @@ select, input {
   /* Combat section mobile */
   .camp-selection {
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .camp-item {
@@ -851,23 +874,58 @@ select, input {
     text-align: center;
     gap: 8px;
     padding: 12px;
+    width: 100%;
+    max-width: 300px;
+    align-items: center;
+    justify-content: center;
   }
   
   .camp-sprite {
     margin: 0 auto 8px auto;
   }
   
+  .camp-info {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .combat-controls {
+    width: 100%;
+    max-width: 300px;
+    margin: 15px auto;
+  }
+  
   .combat-controls input {
     width: 100%;
-    margin: 5px 0;
+    margin: 8px 0;
     min-height: 44px;
     font-size: 16px; /* Prevents zoom on iOS */
+    box-sizing: border-box;
+  }
+  
+  .combat-controls label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
   }
   
   .attack-btn {
     width: 100%;
     min-height: 48px;
-    margin: 10px 0;
+    margin: 15px 0 10px 0;
+  }
+  
+  .camp-cooldown {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .attack-result {
+    margin: 10px auto;
+    max-width: 320px;
+    text-align: center;
+    word-wrap: break-word;
   }
   
   /* Building section mobile */
@@ -902,19 +960,29 @@ select, input {
 @media (max-width: 360px) {
   body {
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .game-container {
+    max-width: 340px;
   }
   
   h1 {
     font-size: 1.2em;
+    max-width: 340px;
   }
   
   .gold-display {
     font-size: 0.8em;
     padding: 8px;
+    max-width: 340px;
   }
   
   .panel {
     padding: 10px;
+    max-width: 340px;
   }
   
   .generator-sprite {
