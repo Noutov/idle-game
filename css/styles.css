@@ -417,6 +417,13 @@ button:disabled {
   color: #1a6b1a;
 }
 
+.generator-total {
+  font-size: 1.0em;
+  font-weight: bold;
+  color: #2d7d32;
+  margin-top: 4px;
+}
+
 /* Combat Section */
 .camp-selection {
   background: linear-gradient(145deg, #ffe6e6 0%, #ffcccc 100%);

@@ -22,6 +22,8 @@ const UI = {
       'chiefGoldCost', 'chiefCooldownCost', 'upgradeGoldBtn', 'upgradeCooldownBtn',
       'villagerCount', 'warriorCount', 'seerCount', 'eliteCount',
       'villagerCost', 'warriorCost', 'seerCost', 'eliteCost',
+      'villagerGPS', 'warriorGPS', 'seerGPS', 'eliteGPS',
+      'villagerTotalGPS', 'warriorTotalGPS', 'seerTotalGPS', 'eliteTotalGPS',
       'buyVillagerBtn', 'buyWarriorBtn', 'buySeerBtn', 'buyEliteBtn',
       'warriorCount2', 'campSelect', 'warriorsToSend', 'attackBtn',
       'campCooldown', 'attackResult', 'resetGameBtn',
@@ -116,6 +118,8 @@ const UI = {
     for (const [type, gen] of Object.entries(GameState.generators)) {
       const countElement = this.elements[type + 'Count'];
       const costElement = this.elements[type + 'Cost'];
+      const gpsElement = this.elements[type + 'GPS'];
+      const totalGpsElement = this.elements[type + 'TotalGPS'];
       
       if (countElement) {
         countElement.textContent = gen.count;
@@ -123,6 +127,21 @@ const UI = {
       
       if (costElement) {
         costElement.textContent = GameUtils.formatNumber(gen.cost);
+      }
+      
+      // Update individual GPS (enhanced by building if available)
+      if (gpsElement) {
+        const enhancedGps = typeof Building !== 'undefined' ? 
+          Building.getEnhancedGPS(type) : gen.gps;
+        gpsElement.textContent = GameUtils.formatNumber(enhancedGps);
+      }
+      
+      // Update total GPS for this generator type
+      if (totalGpsElement) {
+        const enhancedGps = typeof Building !== 'undefined' ? 
+          Building.getEnhancedGPS(type) : gen.gps;
+        const totalGps = gen.count * enhancedGps;
+        totalGpsElement.textContent = GameUtils.formatNumber(totalGps);
       }
     }
     
