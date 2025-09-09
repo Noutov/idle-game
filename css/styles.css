@@ -65,6 +65,11 @@ h1 {
   margin-bottom: 20px;
   grid-column: 1 / -1;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 /* Panels */
@@ -591,19 +596,27 @@ select, input {
   box-shadow: none;
 }
 
+/* Tablet and smaller screens */
 @media (max-width: 768px) {
   body {
     font-size: 13px;
-    padding: 15px;
+    padding: 10px;
   }
   
   h1 {
-    font-size: 1.8em;
+    font-size: 1.6em;
+    margin-bottom: 15px;
   }
   
   .gold-display {
-    font-size: 1.1em;
+    font-size: 1.0em;
     padding: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .panel {
+    padding: 15px;
+    margin-bottom: 10px;
   }
   
   .building-display {
@@ -624,22 +637,206 @@ select, input {
   .small-upgrade-btn {
     width: 100%;
     min-width: auto;
-    font-size: 11px;
+    font-size: 12px;
+    padding: 12px;
   }
   
   button {
-    font-size: 13px;
-    padding: 10px 15px;
+    font-size: 14px;
+    padding: 12px 16px;
+    min-height: 44px; /* Better touch target */
   }
   
   .generator-item {
     gap: 12px;
-    padding: 15px;
+    padding: 12px;
+    margin: 8px 0;
+  }
+  
+  .generator-sprite {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4em;
+  }
+}
+
+/* Smartphone screens */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  .game-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 100%;
+  }
+  
+  h1 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+  }
+  
+  .gold-display {
+    font-size: 0.9em;
+    padding: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .reset-btn {
+    margin: 5px 0 0 0 !important;
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+  }
+  
+  .panel {
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+  
+  .panel h2 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+  }
+  
+  /* Generator improvements for mobile */
+  .generator-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+    padding: 12px;
+  }
+  
+  .generator-info {
+    order: 1;
+    width: 100%;
+  }
+  
+  .generator-sprite {
+    order: 0;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5em;
+    margin: 0 auto 8px auto;
+  }
+  
+  .buy-btn {
+    order: 2;
+    width: 100%;
+    min-height: 48px;
+    font-size: 14px;
+    padding: 12px;
+    margin: 5px 0;
+  }
+  
+  .generator-count, .generator-total {
+    font-size: 1.0em;
+    margin: 2px 0;
+  }
+  
+  /* Chief section mobile optimization */
+  .chief-sprite {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8em;
+  }
+  
+  #chiefBtn {
+    width: 100%;
+    min-height: 48px;
+    margin: 10px 0;
+  }
+  
+  /* Stats rows for mobile */
+  .stats-row {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .stats-row button {
+    width: 100%;
+  }
+  
+  /* Combat section mobile */
+  .camp-selection {
+    padding: 10px;
+  }
+  
+  .camp-selection select,
+  .camp-selection input {
+    width: 100%;
+    margin: 5px 0;
+    min-height: 44px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .attack-btn {
+    width: 100%;
+    min-height: 48px;
+    margin: 10px 0;
+  }
+  
+  /* Building section mobile */
+  .building-sprite {
+    width: 60px;
+    height: 60px;
+    font-size: 2em;
+  }
+  
+  .upgrade-category {
+    padding: 10px;
+    margin: 8px 0;
+  }
+  
+  .upgrade-category h4 {
+    font-size: 1.0em;
+  }
+  
+  .small-upgrade-btn {
+    font-size: 11px;
+    padding: 10px;
+    min-height: 40px;
+  }
+  
+  /* Progress bars */
+  .progress-container {
+    height: 20px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  body {
+    padding: 5px;
+  }
+  
+  h1 {
+    font-size: 1.2em;
+  }
+  
+  .gold-display {
+    font-size: 0.8em;
+    padding: 8px;
+  }
+  
+  .panel {
+    padding: 10px;
   }
   
   .generator-sprite {
     width: 45px;
     height: 45px;
     font-size: 1.3em;
+  }
+  
+  .chief-sprite {
+    width: 60px;
+    height: 60px;
+    font-size: 1.6em;
   }
 }
