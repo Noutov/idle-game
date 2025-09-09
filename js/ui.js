@@ -24,7 +24,7 @@ const UI = {
       'villagerCost', 'warriorCost', 'seerCost', 'eliteCost',
       'buyVillagerBtn', 'buyWarriorBtn', 'buySeerBtn', 'buyEliteBtn',
       'warriorCount2', 'campSelect', 'warriorsToSend', 'attackBtn',
-      'campCooldown', 'attackResult',
+      'campCooldown', 'attackResult', 'resetGameBtn',
       'buildingSprite', 'buildingName', 'buildingDescription', 'buildingUpgradeName', 
       'buildingCost', 'upgradeBuildingBtn', 'generatorUpgrades'
     ];
@@ -46,6 +46,20 @@ const UI = {
     GameEvents.on('buildingChanged', () => this.updateBuilding());
     GameEvents.on('gameLoaded', () => this.updateAll());
     GameEvents.on('offlineProgress', (data) => this.showOfflineProgress(data));
+    GameEvents.on('gameReset', () => this.updateAll());
+
+    // Setup DOM event listeners
+    this.setupDOMEventListeners();
+  },
+
+  // Setup DOM event listeners
+  setupDOMEventListeners() {
+    // Reset game button
+    if (this.elements.resetGameBtn) {
+      this.elements.resetGameBtn.addEventListener('click', () => {
+        this.confirmReset();
+      });
+    }
   },
 
   // Update all UI elements
@@ -342,6 +356,88 @@ const UI = {
           btnElement.disabled = !Building.canUpgradeGenerator(type, camelCase);
         }
       });
+    });
+  },
+
+  // Show reset confirmation dialog
+  confirmReset() {
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
+
+    const dialog = document.createElement('div');
+    dialog.style.cssText = `
+      background: linear-gradient(145deg, #8b4513, #a0522d);
+      border: 4px solid #654321;
+      border-radius: 15px;
+      padding: 30px;
+      color: white;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    `;
+
+    dialog.innerHTML = `
+      <h2>⚠️ Spel Resetten</h2>
+      <p style="margin: 20px 0;">Weet je zeker dat je het hele spel wilt resetten?</p>
+      <p style="color: #ffab40; font-weight: bold; margin: 20px 0;">Alle vooruitgang gaat verloren!</p>
+      <div style="display: flex; gap: 15px; justify-content: center; margin-top: 25px;">
+        <button id="confirmResetBtn" style="
+          background: #d32f2f;
+          color: white;
+          border: 2px solid #b71c1c;
+          border-radius: 5px;
+          padding: 10px 20px;
+          cursor: pointer;
+          font-weight: bold;
+        ">🔄 Ja, Reset</button>
+        <button id="cancelResetBtn" style="
+          background: #4caf50;
+          color: white;
+          border: 2px solid #2e7d32;
+          border-radius: 5px;
+          padding: 10px 20px;
+          cursor: pointer;
+          font-weight: bold;
+        ">❌ Annuleren</button>
+      </div>
+    `;
+
+    modal.appendChild(dialog);
+    document.body.appendChild(modal);
+
+    // Add event listeners
+    dialog.querySelector('#confirmResetBtn').addEventListener('click', () => {
+      modal.remove();
+      if (typeof Game !== 'undefined' && Game.resetGame) {
+        Game.resetGame();
+      } else {
+        GameUtils.resetGame();
+        this.updateAll();
+        this.showNotification('Spel gereset!', 'success');
+      }
+    });
+
+    dialog.querySelector('#cancelResetBtn').addEventListener('click', () => {
+      modal.remove();
+    });
+
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove();
+      }
     });
   },
 
