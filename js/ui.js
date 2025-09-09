@@ -42,7 +42,10 @@ const UI = {
 
   // Setup event listeners for game state changes
   setupEventListeners() {
-    GameEvents.on('goldChanged', () => this.updateGoldDisplay());
+    GameEvents.on('goldChanged', () => {
+      this.updateGoldDisplay();
+      this.updateButtons();
+    });
     GameEvents.on('generatorsChanged', () => this.updateGenerators());
     GameEvents.on('chiefChanged', () => this.updateChief());
     GameEvents.on('campsChanged', () => this.updateCombat());

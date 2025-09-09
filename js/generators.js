@@ -45,7 +45,6 @@ const Generators = {
     const cost = generator.cost;
     
     if (!GameUtils.canAfford(cost)) {
-      UI.showNotification(`Niet genoeg goud! Je hebt ${GameUtils.formatNumber(cost)}💰 nodig.`, 'error');
       return false;
     }
 
