@@ -32,6 +32,10 @@ const Combat = {
   // Initialize combat system
   init() {
     this.setupEventListeners();
+    // Select first camp by default
+    setTimeout(() => {
+      this.selectCamp('camp1');
+    }, 100);
   },
 
   // Setup event listeners
@@ -54,6 +58,44 @@ const Combat = {
         this.updateAttackPreview();
       });
     }
+
+    // Setup camp item selection
+    document.querySelectorAll('.camp-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const campKey = item.getAttribute('data-camp');
+        this.selectCamp(campKey);
+      });
+    });
+  },
+
+  // Select a camp
+  selectCamp(campKey) {
+    // Update hidden select
+    const campSelect = document.getElementById('campSelect');
+    if (campSelect) {
+      campSelect.value = campKey;
+    }
+
+    // Update visual selection
+    document.querySelectorAll('.camp-item').forEach(item => {
+      item.classList.remove('selected');
+    });
+    document.querySelector(`[data-camp="${campKey}"]`).classList.add('selected');
+
+    // Update button text
+    const campNames = {
+      camp1: 'Klein kamp',
+      camp2: 'Middelgroot kamp', 
+      camp3: 'Groot fort'
+    };
+    
+    const selectedCampName = document.getElementById('selectedCampName');
+    if (selectedCampName) {
+      selectedCampName.textContent = campNames[campKey];
+    }
+
+    this.updateCampInfo();
+    UI.updateButtons();
   },
 
   // Attack selected camp
@@ -122,9 +164,9 @@ const Combat = {
 
   // Handle successful attack
   handleAttackSuccess(campKey, camp, warriorsToSend, successChance) {
-    const reward = camp.reward;
+    const scaledBaseReward = this.getScaledReward(camp.reward);
     const bonusMultiplier = this.calculateBonusMultiplier(warriorsToSend, camp.difficulty);
-    const totalReward = Math.floor(reward * bonusMultiplier);
+    const totalReward = Math.floor(scaledBaseReward * bonusMultiplier);
     
     GameUtils.addGold(totalReward);
     
@@ -166,6 +208,18 @@ const Combat = {
     UI.showNotification(`💀 Nederlaag! -${warriorsLost} krijgers`, 'error');
     
     this.checkCombatAchievements(campKey, false, warriorsLost);
+  },
+
+  // Calculate scaled reward based on player progression
+  getScaledReward(baseReward) {
+    // Scale rewards based on total GPS to keep combat relevant
+    const currentGPS = GameUtils.calculateGPS();
+    const scalingFactor = Math.max(1, Math.pow(currentGPS / 10, 0.6)); // Slower scaling
+    
+    // Also consider total gold earned (higher level = higher rewards)
+    const goldMultiplier = Math.max(1, Math.pow(GameState.gold / 1000, 0.3));
+    
+    return Math.floor(baseReward * scalingFactor * goldMultiplier);
   },
 
   // Calculate bonus multiplier for overkill

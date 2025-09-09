@@ -26,7 +26,8 @@ const UI = {
       'villagerTotalGPS', 'warriorTotalGPS', 'seerTotalGPS', 'eliteTotalGPS',
       'buyVillagerBtn', 'buyWarriorBtn', 'buySeerBtn', 'buyEliteBtn',
       'warriorCount2', 'campSelect', 'warriorsToSend', 'attackBtn',
-      'campCooldown', 'attackResult', 'resetGameBtn',
+      'campCooldown', 'attackResult', 'resetGameBtn', 'selectedCampName',
+      'camp1Reward', 'camp2Reward', 'camp3Reward',
       'buildingSprite', 'buildingName', 'buildingDescription', 'buildingUpgradeName', 
       'buildingCost', 'upgradeBuildingBtn', 'generatorUpgrades'
     ];
@@ -160,6 +161,19 @@ const UI = {
     if (this.elements.campCooldown) {
       const campKey = this.elements.campSelect ? this.elements.campSelect.value : 'camp1';
       this.elements.campCooldown.textContent = GameState.camps[campKey]?.timer || 0;
+    }
+
+    // Update dynamic camp rewards
+    if (typeof Combat !== 'undefined') {
+      const baseRewards = { camp1: 100, camp2: 400, camp3: 1500 };
+      
+      Object.keys(baseRewards).forEach(campKey => {
+        const rewardElement = this.elements[campKey + 'Reward'];
+        if (rewardElement) {
+          const scaledReward = Combat.getScaledReward(baseRewards[campKey]);
+          rewardElement.textContent = GameUtils.formatNumber(scaledReward);
+        }
+      });
     }
   },
 

@@ -195,18 +195,40 @@
       </div>
 
       <div class="camp-selection">
-        <label><strong>Kampement:</strong></label><br>
-        <select id="campSelect">
-          <option value="camp1">🏕️ Klein kamp (laag risico, beloning 100💰)</option>
-          <option value="camp2">🏰 Middelgroot kamp (middel risico, beloning 400💰)</option>
-          <option value="camp3">🏛️ Groot fort (hoog risico, beloning 1500💰)</option>
-        </select>
-        <br><br>
-        <label><strong>Aantal krijgers:</strong></label><br>
-        <input type="number" id="warriorsToSend" min="1" value="1" max="0">
-        <br><br>
-        <button id="attackBtn" class="attack-btn">🚀 Aanvallen!</button>
-        <div>Cooldown: <span id="campCooldown">0</span> sec</div>
+        <div class="camp-item" data-camp="camp1">
+          <div class="camp-sprite">🏕️</div>
+          <div class="camp-info">
+            <div><strong>Klein kamp</strong></div>
+            <div class="camp-details">Laag risico • Beloning: <span id="camp1Reward">100</span>💰</div>
+            <div class="camp-difficulty">Minimaal 5 krijgers aanbevolen</div>
+          </div>
+        </div>
+        
+        <div class="camp-item" data-camp="camp2">
+          <div class="camp-sprite">🏰</div>
+          <div class="camp-info">
+            <div><strong>Middelgroot kamp</strong></div>
+            <div class="camp-details">Middel risico • Beloning: <span id="camp2Reward">400</span>💰</div>
+            <div class="camp-difficulty">Minimaal 20 krijgers aanbevolen</div>
+          </div>
+        </div>
+        
+        <div class="camp-item" data-camp="camp3">
+          <div class="camp-sprite">🏛️</div>
+          <div class="camp-info">
+            <div><strong>Groot fort</strong></div>
+            <div class="camp-details">Hoog risico • Beloning: <span id="camp3Reward">1500</span>💰</div>
+            <div class="camp-difficulty">Minimaal 50 krijgers aanbevolen</div>
+          </div>
+        </div>
+        
+        <div class="combat-controls">
+          <input type="hidden" id="campSelect" value="camp1">
+          <label><strong>Aantal krijgers:</strong></label>
+          <input type="number" id="warriorsToSend" min="1" value="1" max="0">
+          <button id="attackBtn" class="attack-btn">🚀 Val <span id="selectedCampName">Klein kamp</span> aan!</button>
+          <div class="camp-cooldown">Cooldown: <span id="campCooldown">0</span> sec</div>
+        </div>
       </div>
       
       <div class="attack-result" id="attackResult">
