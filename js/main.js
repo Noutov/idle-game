@@ -85,6 +85,11 @@ const Game = {
       console.error('Game error:', e.error);
       UI.showNotification('Er is een fout opgetreden!', 'error');
     });
+    
+    // Handle scroll for reset button visibility
+    window.addEventListener('scroll', () => {
+      this.handleResetButtonVisibility();
+    });
   },
   
   // Handle keyboard shortcuts
@@ -389,6 +394,27 @@ const Game = {
     };
     
     input.click();
+  },
+  
+  // Handle reset button visibility based on scroll position
+  handleResetButtonVisibility() {
+    const resetContainer = document.querySelector('.reset-container');
+    if (!resetContainer) return;
+    
+    // Get scroll position
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    // Show reset button when user has scrolled near the bottom
+    // Calculate if user is within 200px of the bottom
+    const nearBottom = (scrollPosition + windowHeight) >= (documentHeight - 200);
+    
+    if (nearBottom) {
+      resetContainer.classList.add('visible');
+    } else {
+      resetContainer.classList.remove('visible');
+    }
   }
 };
 
