@@ -371,25 +371,52 @@ const UI = {
         const camelCase = upgradeType === 'GoldBonus' ? 'goldBonus' : 
                          upgradeType === 'LuckBonus' ? 'luckBonus' : 'speed';
         
+        const isUnlocked = Building.isUpgradeTypeUnlocked(camelCase, GameState.building.level);
+        
         // Update level displays
         const lvlElement = document.getElementById(`${type}${upgradeType}Lvl`);
         if (lvlElement) {
-          lvlElement.textContent = upgradeInfo[camelCase].current;
+          if (isUnlocked) {
+            lvlElement.textContent = upgradeInfo[camelCase].current;
+          } else {
+            lvlElement.textContent = '🔒';
+          }
         }
 
         // Update cost displays
         const costElement = document.getElementById(`${type}${upgradeType}Cost`);
         if (costElement) {
-          costElement.textContent = GameUtils.formatNumber(upgradeInfo[camelCase].cost);
+          if (isUnlocked) {
+            costElement.textContent = GameUtils.formatNumber(upgradeInfo[camelCase].cost);
+          } else {
+            const requiredLevel = this.getUpgradeUnlockLevel(camelCase);
+            costElement.textContent = `Lv.${requiredLevel}`;
+          }
         }
 
         // Update button state
         const btnElement = document.getElementById(`${type}${upgradeType}Btn`);
         if (btnElement) {
-          btnElement.disabled = !Building.canUpgradeGenerator(type, camelCase);
+          if (isUnlocked) {
+            btnElement.disabled = !Building.canUpgradeGenerator(type, camelCase);
+            btnElement.style.opacity = '1';
+          } else {
+            btnElement.disabled = true;
+            btnElement.style.opacity = '0.5';
+          }
         }
       });
     });
+  },
+
+  // Get required building level for upgrade unlock
+  getUpgradeUnlockLevel(upgradeType) {
+    const unlockRequirements = {
+      speed: 1,
+      goldBonus: 2,
+      luckBonus: 3
+    };
+    return unlockRequirements[upgradeType] || 1;
   },
 
   // Show reset confirmation dialog

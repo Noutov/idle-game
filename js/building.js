@@ -220,25 +220,29 @@ const Building = {
   getGeneratorUpgradeInfo(generatorType) {
     const upgrades = GameState.building.upgrades[generatorType];
     const maxLevel = this.getMaxUpgradeLevel(GameState.building.level);
+    const buildingLevel = GameState.building.level;
 
     return {
       speed: {
         current: upgrades.speed,
         max: maxLevel,
         cost: upgrades.speed < maxLevel ? this.getUpgradeCost(generatorType, 'speed', upgrades.speed) : 0,
-        effect: `+${(upgrades.speed * 20)}% snelheid`
+        effect: `+${(upgrades.speed * 20)}% snelheid`,
+        unlocked: this.isUpgradeTypeUnlocked('speed', buildingLevel)
       },
       goldBonus: {
         current: upgrades.goldBonus,
         max: maxLevel,
         cost: upgrades.goldBonus < maxLevel ? this.getUpgradeCost(generatorType, 'goldBonus', upgrades.goldBonus) : 0,
-        effect: `+${(upgrades.goldBonus * 50)}% goud`
+        effect: `+${(upgrades.goldBonus * 50)}% goud`,
+        unlocked: this.isUpgradeTypeUnlocked('goldBonus', buildingLevel)
       },
       luckBonus: {
         current: upgrades.luckBonus,
         max: maxLevel,
         cost: upgrades.luckBonus < maxLevel ? this.getUpgradeCost(generatorType, 'luckBonus', upgrades.luckBonus) : 0,
-        effect: `${(upgrades.luckBonus * 10)}% kans op bonus goud`
+        effect: `${(upgrades.luckBonus * 10)}% kans op bonus goud`,
+        unlocked: this.isUpgradeTypeUnlocked('luckBonus', buildingLevel)
       }
     };
   },
@@ -247,11 +251,27 @@ const Building = {
   canUpgradeGenerator(generatorType, upgradeType) {
     if (GameState.building.level === 0) return false;
     
+    // Check if this upgrade type is unlocked at current building level
+    if (!this.isUpgradeTypeUnlocked(upgradeType, GameState.building.level)) {
+      return false;
+    }
+    
     const currentLevel = GameState.building.upgrades[generatorType][upgradeType];
     const maxLevel = this.getMaxUpgradeLevel(GameState.building.level);
     const cost = this.getUpgradeCost(generatorType, upgradeType, currentLevel);
 
     return currentLevel < maxLevel && GameUtils.canAfford(cost);
+  },
+
+  // Check if upgrade type is unlocked at building level
+  isUpgradeTypeUnlocked(upgradeType, buildingLevel) {
+    const unlockRequirements = {
+      speed: 1,      // Unlocked at building level 1
+      goldBonus: 2,  // Unlocked at building level 2  
+      luckBonus: 3   // Unlocked at building level 3
+    };
+    
+    return buildingLevel >= unlockRequirements[upgradeType];
   },
 
   // Utility function to capitalize first letter
