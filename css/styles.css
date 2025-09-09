@@ -12,38 +12,59 @@ body {
   font-family: 'Segoe UI', 'Roboto', sans-serif; 
   margin: 0; 
   padding: 20px;
-  background: 
-    /* Tree canopy layers with different greens */
-    radial-gradient(ellipse 60px 40px at 15% 20%, #2d5a2d 0%, transparent 60%),
-    radial-gradient(ellipse 80px 50px at 35% 15%, #1e4f1e 0%, transparent 60%),
-    radial-gradient(ellipse 70px 45px at 60% 25%, #2d5a2d 0%, transparent 60%),
-    radial-gradient(ellipse 90px 55px at 85% 18%, #1a4a1a 0%, transparent 60%),
-    radial-gradient(ellipse 75px 40px at 25% 60%, #2d5a2d 0%, transparent 60%),
-    radial-gradient(ellipse 65px 50px at 50% 70%, #1e4f1e 0%, transparent 60%),
-    radial-gradient(ellipse 85px 45px at 75% 65%, #1a4a1a 0%, transparent 60%),
-    /* Tree trunks */
-    linear-gradient(90deg, transparent 14%, #3e2723 15%, #3e2723 17%, transparent 18%),
-    linear-gradient(90deg, transparent 34%, #5d4037 35%, #5d4037 37%, transparent 38%),
-    linear-gradient(90deg, transparent 59%, #3e2723 60%, #3e2723 62%, transparent 63%),
-    linear-gradient(90deg, transparent 84%, #5d4037 85%, #5d4037 87%, transparent 88%),
-    linear-gradient(90deg, transparent 24%, #3e2723 25%, #3e2723 27%, transparent 28%),
-    linear-gradient(90deg, transparent 49%, #5d4037 50%, #5d4037 52%, transparent 53%),
-    linear-gradient(90deg, transparent 74%, #3e2723 75%, #3e2723 77%, transparent 78%),
-    /* Ground and undergrowth */
-    linear-gradient(180deg, 
-      transparent 0%, 
-      transparent 75%, 
-      #1a3e1a 75%, 
-      #2d5a2d 80%, 
-      #1e4f1e 85%, 
-      #16421e 100%
-    );
+  background-image: 
+    /* Pixel art tree pattern - creates distinct tree shapes */
+    conic-gradient(from 0deg at 12% 15%, 
+      transparent 0deg, transparent 60deg,
+      #228B22 60deg, #228B22 120deg,
+      #2F4F2F 120deg, #2F4F2F 180deg,
+      #228B22 180deg, #228B22 240deg,
+      #2F4F2F 240deg, #2F4F2F 300deg,
+      transparent 300deg, transparent 360deg),
+    conic-gradient(from 45deg at 35% 20%, 
+      transparent 0deg, transparent 45deg,
+      #2F4F2F 45deg, #2F4F2F 135deg,
+      #228B22 135deg, #228B22 225deg,
+      #2F4F2F 225deg, #2F4F2F 315deg,
+      transparent 315deg, transparent 360deg),
+    conic-gradient(from 90deg at 65% 18%, 
+      transparent 0deg, transparent 75deg,
+      #228B22 75deg, #228B22 150deg,
+      #2F4F2F 150deg, #2F4F2F 225deg,
+      #228B22 225deg, #228B22 300deg,
+      transparent 300deg, transparent 360deg),
+    conic-gradient(from 30deg at 85% 22%, 
+      transparent 0deg, transparent 60deg,
+      #2F4F2F 60deg, #2F4F2F 120deg,
+      #228B22 120deg, #228B22 240deg,
+      #2F4F2F 240deg, #2F4F2F 300deg,
+      transparent 300deg, transparent 360deg),
+    /* Tree trunks - brown vertical lines */
+    repeating-linear-gradient(90deg,
+      transparent 0px, transparent 60px,
+      #4A4A4A 60px, #4A4A4A 62px,
+      transparent 62px, transparent 70px,
+      #654321 70px, #654321 74px,
+      transparent 74px, transparent 120px,
+      #4A4A4A 120px, #4A4A4A 122px,
+      transparent 122px, transparent 170px,
+      #654321 170px, #654321 174px,
+      transparent 174px, transparent 220px),
+    /* Ground layer with grass pixels */
+    repeating-linear-gradient(180deg,
+      #1a4a1a 0px, #1a4a1a 2px,
+      #228B22 2px, #228B22 4px,
+      #2F4F2F 4px, #2F4F2F 6px,
+      #1a4a1a 6px, #1a4a1a 8px);
   background-size: 
-    100px 100px, 120px 120px, 110px 110px, 140px 140px,
-    100px 100px, 90px 90px, 130px 130px,
-    100% 300px, 100% 300px, 100% 300px, 100% 300px,
-    100% 300px, 100% 300px, 100% 300px,
-    100% 100%;
+    80px 80px, 100px 100px, 90px 90px, 110px 110px,
+    100% 400px,
+    100% 20px;
+  background-position:
+    0% 10%, 20% 5%, 60% 8%, 80% 12%,
+    0% 60%,
+    0% 80%;
+  background-color: #0d2818;
   color: #2d3748;
   min-height: 100vh;
   image-rendering: pixelated;
@@ -101,36 +122,38 @@ h1 {
 /* Panels */
 .panel { 
   background: 
-    /* Wood grain pattern */
-    repeating-linear-gradient(
-      90deg,
-      #30140a 0px,
-      #30140a 8px,
-      #2a120a 8px,
-      #2a120a 9px,
-      #30140a 9px,
-      #30140a 12px,
-      #3c1c0d 12px,
-      #3c1c0d 13px,
-      #30140a 13px,
-      #30140a 16px
-    ),
-    /* Wood plank separations */
+    /* Horizontal wood planks with natural grain */
     repeating-linear-gradient(
       0deg,
-      #30140a 0px,
-      #30140a 40px,
-      #1f0d07 40px,
-      #1f0d07 42px,
-      #30140a 42px,
-      #30140a 82px
+      #30140a 0px, #30140a 25px,      /* Main plank color */
+      #3c1c0d 25px, #3c1c0d 27px,    /* Wood grain line */
+      #30140a 27px, #30140a 30px,    /* Main plank color */
+      #2a120a 30px, #2a120a 32px,    /* Dark grain */
+      #30140a 32px, #30140a 45px,    /* Main plank color */
+      #1f0d07 45px, #1f0d07 48px,    /* Plank separation - dark gap */
+      #30140a 48px, #30140a 73px,    /* Next plank */
+      #3c1c0d 73px, #3c1c0d 75px,    /* Wood grain */
+      #30140a 75px, #30140a 78px,    /* Main plank */
+      #2a120a 78px, #2a120a 80px,    /* Dark grain */
+      #30140a 80px, #30140a 95px,    /* Main plank */
+      #1f0d07 95px, #1f0d07 98px     /* Plank separation */
+    ),
+    /* Subtle horizontal wood grain texture */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 3px,
+      rgba(60, 28, 13, 0.3) 3px, rgba(60, 28, 13, 0.3) 4px,
+      transparent 4px, transparent 8px,
+      rgba(42, 18, 10, 0.2) 8px, rgba(42, 18, 10, 0.2) 9px,
+      transparent 9px, transparent 15px
     );
   border: 3px solid #1f0d07;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 
     0 4px 15px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(92, 51, 23, 0.4);
+    inset 0 1px 0 rgba(92, 51, 23, 0.4),
+    inset 0 -1px 0 rgba(31, 13, 7, 0.6);
   position: relative;
   margin-bottom: 15px;
   color: #f5deb3;
@@ -428,12 +451,21 @@ select, input {
   margin: 8px 0;
   padding: 10px;
   background: 
+    /* Single horizontal wood plank */
+    repeating-linear-gradient(
+      0deg,
+      #30140a 0px, #30140a 15px,      /* Main plank */
+      #3c1c0d 15px, #3c1c0d 16px,    /* Grain line */
+      #30140a 16px, #30140a 20px,    /* Main plank */
+      #2a120a 20px, #2a120a 21px,    /* Dark grain */
+      #30140a 21px, #30140a 35px     /* Main plank */
+    ),
+    /* Horizontal grain texture */
     repeating-linear-gradient(
       90deg,
-      #3c1c0d 0px,
-      #3c1c0d 6px,
-      #30140a 6px,
-      #30140a 12px
+      transparent 0px, transparent 4px,
+      rgba(60, 28, 13, 0.2) 4px, rgba(60, 28, 13, 0.2) 5px,
+      transparent 5px, transparent 12px
     );
   border: 2px solid #1f0d07;
   border-radius: 6px;
@@ -523,12 +555,27 @@ select, input {
 
 .upgrade-category {
   background: 
+    /* Horizontal wood planks pattern */
+    repeating-linear-gradient(
+      0deg,
+      #30140a 0px, #30140a 30px,      /* Main plank */
+      #3c1c0d 30px, #3c1c0d 32px,    /* Wood grain */
+      #30140a 32px, #30140a 35px,    /* Main plank */
+      #2a120a 35px, #2a120a 37px,    /* Dark grain */
+      #30140a 37px, #30140a 60px,    /* Main plank */
+      #1f0d07 60px, #1f0d07 63px,    /* Plank gap */
+      #30140a 63px, #30140a 93px,    /* Next plank */
+      #3c1c0d 93px, #3c1c0d 95px,    /* Wood grain */
+      #30140a 95px, #30140a 98px,    /* Main plank */
+      #2a120a 98px, #2a120a 100px,   /* Dark grain */
+      #30140a 100px, #30140a 120px   /* Main plank */
+    ),
+    /* Subtle grain texture */
     repeating-linear-gradient(
       90deg,
-      #3c1c0d 0px,
-      #3c1c0d 8px,
-      #30140a 8px,
-      #30140a 16px
+      transparent 0px, transparent 5px,
+      rgba(60, 28, 13, 0.15) 5px, rgba(60, 28, 13, 0.15) 6px,
+      transparent 6px, transparent 15px
     );
   border: 2px solid #1f0d07;
   border-radius: 10px;
