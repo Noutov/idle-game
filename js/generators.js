@@ -202,16 +202,14 @@ const Generators = {
       progressBar.style.width = '0%';
     }
 
-    // Visual effects and sprite state update
+    // Visual effects
     const sprite = document.getElementById(`${type}Sprite`);
     if (sprite) {
       VisualEffects.createFloatingGold(sprite, goldReward);
       VisualEffects.createParticles(sprite);
-      sprite.classList.remove('working', 'disabled');
       
-      // Re-enable if not automated
+      // Add pulse effect if not automated
       if (!this.isAutomated(type)) {
-        sprite.classList.add('clickable');
         VisualEffects.pulseElement(sprite, '#4caf50');
       }
     }
@@ -223,8 +221,10 @@ const Generators = {
       }, 500); // Small delay between auto cycles
     }
 
-    // Ensure sprite state is correctly set
-    this.updateGeneratorSprite(type);
+    // Ensure sprite state is correctly set after a small delay
+    setTimeout(() => {
+      this.updateGeneratorSprite(type);
+    }, 50);
 
     // Emit events AFTER sprite state is properly set
     GameEvents.emit('generatorWorked', { type, goldReward });

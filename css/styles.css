@@ -535,12 +535,12 @@ button:disabled {
   border: 3px solid #d4af37;
   border-image: linear-gradient(45deg, #b8860b, #daa520, #b8860b, #cd853f) 1;
   border-radius: 8px;
-  padding: 8px;
+  padding: 12px;
   margin: 8px 0;
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 60px; /* Fixed compact height */
+  min-height: 75px; /* More space for content */
   box-shadow: 
     /* Main shadow */
     0 4px 12px rgba(212, 175, 55, 0.2),
@@ -641,6 +641,12 @@ button:disabled {
 }
 
 /* Generator progress bars */
+.generator-item .progress-container {
+  width: 150px; /* Fixed width for all generator progress bars */
+  height: 12px;
+  flex-shrink: 0; /* Don't shrink when space is tight */
+}
+
 .generator-progress {
   background: linear-gradient(90deg, #4caf50, #66bb6a);
   border-radius: 3px;
@@ -670,8 +676,8 @@ button:disabled {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2px;
-  height: 44px; /* Match sprite height */
+  gap: 4px;
+  min-height: 50px; /* More space for content */
 }
 
 .generator-line1 {
@@ -921,8 +927,8 @@ button:disabled {
     display: flex !important;
     align-items: center;
     gap: 15px;
-    height: 60px;
-    padding: 8px;
+    min-height: 75px;
+    padding: 12px;
   }
   
   .generator-sprite {
@@ -936,8 +942,8 @@ button:disabled {
     display: flex !important;
     flex-direction: column;
     justify-content: center;
-    height: 44px;
-    gap: 2px;
+    min-height: 50px;
+    gap: 4px;
   }
   
   .generator-line1 {
@@ -2155,6 +2161,11 @@ select, input {
     gap: 12px;
     padding: 12px;
     margin: 8px 0;
+    min-height: 70px;
+  }
+  
+  .generator-item .progress-container {
+    width: 120px; /* Smaller on tablets */
   }
   
   .generator-sprite {
@@ -2223,10 +2234,15 @@ select, input {
   
   /* Generator improvements for mobile - compact layout */
   .generator-item {
-    height: 50px; /* Even more compact on mobile */
-    padding: 6px;
+    min-height: 65px; /* More space on mobile too */
+    padding: 10px;
     gap: 8px;
     margin: 6px 0;
+  }
+  
+  .generator-item .progress-container {
+    width: 100px; /* Smaller on phones */
+    height: 10px;
   }
   
   .generator-sprite {
@@ -2236,8 +2252,8 @@ select, input {
   }
   
   .generator-info {
-    height: 38px;
-    gap: 1px;
+    min-height: 45px;
+    gap: 3px;
   }
   
   .generator-line1 {
