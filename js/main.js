@@ -29,6 +29,8 @@ const Game = {
       // Initialize all systems
       UI.init();
       Chief.init();
+      ChiefEnhanced.init();
+      Prestige.init();
       Generators.init();
       Upgrades.init();
       Building.init();
@@ -306,6 +308,8 @@ const Game = {
       // Reset all systems
       GameUtils.resetGame();
       Chief.reset();
+      ChiefEnhanced.reset();
+      Prestige.reset();
       Generators.reset();
       Upgrades.reset();
       Building.reset();

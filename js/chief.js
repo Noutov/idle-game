@@ -81,10 +81,23 @@ const Chief = {
 
   // Complete chief work and give rewards
   completeChiefWork() {
-    const goldEarned = GameState.chief.gold;
+    let goldEarned = GameState.chief.gold;
+    
+    // Apply click streak multiplier if ChiefEnhanced is available
+    if (typeof ChiefEnhanced !== 'undefined') {
+      goldEarned = Math.floor(goldEarned * ChiefEnhanced.getClickStreakMultiplier());
+    }
+    
+    // Apply prestige multiplier
+    if (typeof Prestige !== 'undefined') {
+      goldEarned = Math.floor(goldEarned * Prestige.getPrestigeMultiplier());
+    }
     
     // Add gold to player
     GameUtils.addGold(goldEarned);
+    
+    // Emit chief clicked event for enhanced features
+    GameEvents.emit('chiefClicked');
     
     // Visual effects
     const chiefSprite = document.getElementById('chiefSprite');

@@ -45,11 +45,14 @@ const UI = {
     GameEvents.on('goldChanged', () => {
       this.updateGoldDisplay();
       this.updateButtons();
+      this.updatePrestige();
     });
     GameEvents.on('generatorsChanged', () => this.updateGenerators());
     GameEvents.on('chiefChanged', () => this.updateChief());
+    GameEvents.on('chiefEnhancedChanged', () => this.updateChiefEnhanced());
     GameEvents.on('campsChanged', () => this.updateCombat());
     GameEvents.on('buildingChanged', () => this.updateBuilding());
+    GameEvents.on('prestigeCompleted', () => this.updateAll());
     GameEvents.on('gameLoaded', () => this.updateAll());
     GameEvents.on('offlineProgress', (data) => this.showOfflineProgress(data));
     GameEvents.on('gameReset', () => this.updateAll());
@@ -72,9 +75,11 @@ const UI = {
   updateAll() {
     this.updateGoldDisplay();
     this.updateChief();
+    this.updateChiefEnhanced();
     this.updateGenerators();
     this.updateCombat();
     this.updateBuilding();
+    this.updatePrestige();
     this.updateButtons();
   },
 
@@ -129,9 +134,14 @@ const UI = {
         countElement.textContent = gen.count;
       }
       
+      // Use dynamic cost calculation for display
+      const dynamicCost = GameUtils.calculateGeneratorCost(type, gen.count);
       if (costElement) {
-        costElement.textContent = GameUtils.formatNumber(gen.cost);
+        costElement.textContent = GameUtils.formatNumber(dynamicCost);
       }
+      
+      // Update the actual generator cost in state for consistency
+      gen.cost = dynamicCost;
       
       // Update individual GPS (enhanced by building if available)
       if (gpsElement) {
@@ -157,6 +167,9 @@ const UI = {
     if (this.elements.warriorsToSend) {
       this.elements.warriorsToSend.max = GameState.generators.warrior.count;
     }
+    
+    // Update generator button states
+    this.updateGeneratorButtons();
   },
 
   // Update combat section
@@ -182,23 +195,11 @@ const UI = {
 
   // Update button states (enabled/disabled)
   updateButtons() {
-    // Upgrade buttons
-    if (this.elements.upgradeGoldBtn) {
-      this.elements.upgradeGoldBtn.disabled = !GameUtils.canAfford(GameState.chief.goldCost);
-    }
-    
-    if (this.elements.upgradeCooldownBtn) {
-      this.elements.upgradeCooldownBtn.disabled = 
-        !GameUtils.canAfford(GameState.chief.cooldownCost) || GameState.chief.cooldown <= 500;
-    }
+    // Upgrade buttons with visual feedback
+    this.updateUpgradeButtons();
 
-    // Generator buy buttons
-    for (const [type, gen] of Object.entries(GameState.generators)) {
-      const buyBtn = this.elements['buy' + this.capitalize(type) + 'Btn'];
-      if (buyBtn) {
-        buyBtn.disabled = !GameUtils.canAfford(gen.cost);
-      }
-    }
+    // Generator buy buttons (updated separately for better performance)
+    this.updateGeneratorButtons();
 
     // Chief button
     if (this.elements.chiefBtn) {
@@ -207,6 +208,60 @@ const UI = {
 
     // Attack button
     this.updateAttackButton();
+  },
+
+  // Update upgrade buttons with visual feedback
+  updateUpgradeButtons() {
+    // Chief gold upgrade button
+    if (this.elements.upgradeGoldBtn) {
+      const canAfford = GameUtils.canAfford(GameState.chief.goldCost);
+      this.elements.upgradeGoldBtn.disabled = !canAfford;
+      
+      if (canAfford) {
+        this.elements.upgradeGoldBtn.classList.remove('unaffordable');
+        this.elements.upgradeGoldBtn.classList.add('affordable');
+      } else {
+        this.elements.upgradeGoldBtn.classList.remove('affordable');
+        this.elements.upgradeGoldBtn.classList.add('unaffordable');
+      }
+    }
+    
+    // Chief cooldown upgrade button
+    if (this.elements.upgradeCooldownBtn) {
+      const canAfford = GameUtils.canAfford(GameState.chief.cooldownCost);
+      const maxSpeed = GameState.chief.cooldown <= 500;
+      const disabled = !canAfford || maxSpeed;
+      
+      this.elements.upgradeCooldownBtn.disabled = disabled;
+      
+      if (!disabled) {
+        this.elements.upgradeCooldownBtn.classList.remove('unaffordable');
+        this.elements.upgradeCooldownBtn.classList.add('affordable');
+      } else {
+        this.elements.upgradeCooldownBtn.classList.remove('affordable');
+        this.elements.upgradeCooldownBtn.classList.add('unaffordable');
+      }
+    }
+  },
+
+  // Update generator buy buttons with visual feedback
+  updateGeneratorButtons() {
+    for (const [type, gen] of Object.entries(GameState.generators)) {
+      const buyBtn = this.elements['buy' + this.capitalize(type) + 'Btn'];
+      if (buyBtn) {
+        const canAfford = GameUtils.canAfford(gen.cost);
+        buyBtn.disabled = !canAfford;
+        
+        // Add visual styling based on affordability
+        if (canAfford) {
+          buyBtn.classList.remove('unaffordable');
+          buyBtn.classList.add('affordable');
+        } else {
+          buyBtn.classList.remove('affordable');
+          buyBtn.classList.add('unaffordable');
+        }
+      }
+    }
   },
 
   // Update attack button state
@@ -507,6 +562,125 @@ const UI = {
         modal.remove();
       }
     });
+  },
+
+  // Update chief enhanced features
+  updateChiefEnhanced() {
+    if (typeof ChiefEnhanced === 'undefined') return;
+    
+    const stats = ChiefEnhanced.getStats();
+    
+    // Update click streak display
+    const streakDisplay = document.getElementById('clickStreakDisplay');
+    const streakCount = document.getElementById('clickStreakCount');
+    const streakMultiplier = document.getElementById('clickStreakMultiplier');
+    
+    if (streakDisplay && streakCount && streakMultiplier) {
+      if (stats.clickStreak > 0) {
+        streakDisplay.style.display = 'block';
+        streakCount.textContent = stats.clickStreak;
+        streakMultiplier.textContent = stats.clickMultiplier.toFixed(1);
+      } else {
+        streakDisplay.style.display = 'none';
+      }
+    }
+    
+    // Update generator bonus display
+    const bonusDisplay = document.getElementById('generatorBonusDisplay');
+    const bonusTime = document.getElementById('generatorBonusTime');
+    
+    if (bonusDisplay && bonusTime) {
+      if (stats.generatorBonusActive) {
+        bonusDisplay.style.display = 'block';
+        bonusTime.textContent = stats.generatorBonusTimeLeft;
+      } else {
+        bonusDisplay.style.display = 'none';
+      }
+    }
+    
+    // Update skill buttons
+    this.updateSkillButton('rallySkillBtn', 'rallyStatus', stats.skills.rally);
+    this.updateSkillButton('inspireSkillBtn', 'inspireStatus', stats.skills.inspire);
+    this.updateSkillButton('fortuneSkillBtn', 'fortuneStatus', stats.skills.fortune);
+  },
+
+  // Update individual skill button
+  updateSkillButton(btnId, statusId, skillData) {
+    const button = document.getElementById(btnId);
+    const status = document.getElementById(statusId);
+    
+    if (!button || !status) return;
+    
+    if (btnId === 'rallySkillBtn') {
+      if (skillData.active) {
+        status.textContent = `Actief: ${skillData.duration}s`;
+        button.disabled = true;
+      } else if (skillData.cooldown > 0) {
+        status.textContent = `Cooldown: ${skillData.cooldown}s`;
+        button.disabled = true;
+      } else {
+        status.textContent = '2x snelheid (30s)';
+        button.disabled = false;
+      }
+    } else if (btnId === 'inspireSkillBtn') {
+      if (skillData.stacks > 0) {
+        status.textContent = `${skillData.discount} korting (${5 - skillData.stacks} left)`;
+      } else {
+        status.textContent = '-25% kosten';
+      }
+      button.disabled = !skillData.available;
+    } else if (btnId === 'fortuneSkillBtn') {
+      if (skillData.cooldown > 0) {
+        status.textContent = `Cooldown: ${skillData.cooldown}s`;
+        button.disabled = true;
+      } else {
+        status.textContent = `${skillData.potentialBonus}💰 bonus`;
+        button.disabled = false;
+      }
+    }
+  },
+
+  // Update prestige display
+  updatePrestige() {
+    if (typeof Prestige === 'undefined') return;
+    
+    const stats = Prestige.getStats();
+    
+    // Update prestige stats
+    const totalGoldElement = document.getElementById('totalGoldEarned');
+    if (totalGoldElement) {
+      totalGoldElement.textContent = GameUtils.formatNumber(stats.totalGoldEarned);
+    }
+    
+    const wisdomElement = document.getElementById('wisdomPoints');
+    if (wisdomElement) {
+      wisdomElement.textContent = stats.wisdomPoints;
+    }
+    
+    const prestigeCountElement = document.getElementById('prestigeCount');
+    if (prestigeCountElement) {
+      prestigeCountElement.textContent = stats.prestigeCount;
+    }
+    
+    const bonusElement = document.getElementById('prestigeBonus');
+    if (bonusElement) {
+      bonusElement.textContent = stats.bonusPercentage;
+    }
+    
+    // Update prestige button
+    const prestigeBtn = document.getElementById('prestigeBtn');
+    const prestigeRequirement = document.getElementById('prestigeRequirement');
+    
+    if (prestigeBtn && prestigeRequirement) {
+      if (stats.canPrestige) {
+        prestigeBtn.disabled = false;
+        prestigeRequirement.textContent = `Krijg: ${stats.wisdomGainAvailable} Wijsheid`;
+      } else {
+        prestigeBtn.disabled = true;
+        const needed = GameUtils.formatNumber(stats.goldNeededForPrestige);
+        prestigeRequirement.textContent = `Nog ${needed}💰 nodig`;
+      }
+    }
   },
 
   // Add CSS for notification animations

@@ -30,6 +30,35 @@
             <div class="progress-container">
               <div class="progress-bar" id="chiefProgress"></div>
             </div>
+            
+            <!-- Click Streak Display -->
+            <div class="click-streak" id="clickStreakDisplay" style="display: none;">
+              🔥 Streak: <span id="clickStreakCount">0</span>x (Multiplier: <span id="clickStreakMultiplier">1.0</span>x)
+            </div>
+            
+            <!-- Generator Bonus Display -->
+            <div class="generator-bonus" id="generatorBonusDisplay" style="display: none;">
+              ⚡ Generator Bonus: <span id="generatorBonusTime">0</span>s (+50%)
+            </div>
+          </div>
+        </div>
+        
+        <!-- Chief Skills -->
+        <div class="chief-skills">
+          <h4>🎯 Dorpshoofd Vaardigheden</h4>
+          <div class="skill-buttons">
+            <button id="rallySkillBtn" class="skill-btn rally-btn">
+              🚀 Rally<br>
+              <small id="rallyStatus">2x snelheid (30s)</small>
+            </button>
+            <button id="inspireSkillBtn" class="skill-btn inspire-btn">
+              💡 Inspire<br>
+              <small id="inspireStatus">-25% kosten</small>
+            </button>
+            <button id="fortuneSkillBtn" class="skill-btn fortune-btn">
+              🍀 Fortune<br>
+              <small id="fortuneStatus">2x GPS bonus</small>
+            </button>
           </div>
         </div>
       </div>
@@ -246,6 +275,25 @@
     </div>
   </div>
 
+  <!-- Prestige Section -->
+  <div class="panel prestige-panel">
+    <h2>✨ Prestige - Wedergeboorte</h2>
+    <div class="prestige-info">
+      <div class="prestige-stats">
+        <div>💰 Totaal verdiend: <span id="totalGoldEarned">0</span></div>
+        <div>🧠 Wijsheid Punten: <span id="wisdomPoints">0</span></div>
+        <div>🔄 Prestige Count: <span id="prestigeCount">0</span></div>
+        <div>📈 Huidige Bonus: +<span id="prestigeBonus">0</span>%</div>
+      </div>
+      <div class="prestige-action">
+        <button id="prestigeBtn" class="prestige-btn" disabled>
+          ✨ Prestige<br>
+          <small id="prestigeRequirement">Vereist: 1.0M💰 totaal</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Fixed Reset Button at bottom -->
   <div class="reset-container">
     <button id="resetGameBtn" class="reset-btn">🔄 Reset Spel</button>
@@ -256,6 +304,8 @@
   <script src="js/visual-effects.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/chief.js"></script>
+  <script src="js/chief-enhanced.js"></script>
+  <script src="js/prestige.js"></script>
   <script src="js/generators.js"></script>
   <script src="js/upgrades.js"></script>
   <script src="js/building.js"></script>

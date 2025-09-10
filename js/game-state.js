@@ -14,7 +14,16 @@ const GameState = {
     cooldown: 5000,
     busy: false,
     goldCost: 25,
-    cooldownCost: 75
+    cooldownCost: 75,
+    // New systems
+    generatorBonus: 0, // Seconds remaining of +50% generator bonus
+    clickStreak: 0,
+    lastClickTime: 0,
+    skills: {
+      rally: { cooldown: 0, duration: 0 }, // 2x generator speed
+      inspire: { stacks: 0 }, // Generator cost reduction
+      fortune: { cooldown: 0 } // GPS instant bonus
+    }
   },
 
   // Generators
@@ -55,6 +64,14 @@ const GameState = {
     { name: "Burcht", icon: "🏰", description: "Een machtige vesting die het dorp beschermt", cost: 30000 },
     { name: "Citadel", icon: "🏯", description: "De ultieme versterking van het dorp", cost: 100000 }
   ],
+
+  // Prestige system
+  prestige: {
+    totalGoldEarned: 0,
+    wisdomPoints: 0,
+    prestigeCount: 0,
+    bonusMultiplier: 1 // Based on wisdom points
+  },
 
   // Game settings
   settings: {
@@ -112,8 +129,22 @@ const GameUtils = {
     let gps = 0;
     for (const [type, gen] of Object.entries(GameState.generators)) {
       // Use enhanced GPS if building system is available
-      const enhancedGps = typeof Building !== 'undefined' ? 
+      let enhancedGps = typeof Building !== 'undefined' ? 
         Building.getEnhancedGPS(type) : gen.gps;
+      
+      // Apply chief generator bonus (+50% for 10 seconds after click)
+      if (GameState.chief.generatorBonus > 0) {
+        enhancedGps *= 1.5;
+      }
+      
+      // Apply rally bonus (2x speed)
+      if (GameState.chief.skills.rally.duration > 0) {
+        enhancedGps *= 2;
+      }
+      
+      // Apply prestige wisdom bonus
+      enhancedGps *= GameState.prestige.bonusMultiplier;
+      
       gps += gen.count * enhancedGps;
     }
     return gps;
@@ -137,8 +168,34 @@ const GameUtils = {
   // Add gold
   addGold(amount) {
     GameState.gold += amount;
+    GameState.prestige.totalGoldEarned += amount;
     GameEvents.emit('goldChanged', GameState.gold);
     GameEvents.emit('goldEarned', amount);
+  },
+
+  // Calculate dynamic generator cost with new scaling
+  calculateGeneratorCost(type, currentCount) {
+    const baseCost = this.getDefaultGeneratorCost(type);
+    let cost = baseCost;
+    
+    // New scaling system: 1.15x for first 10, then 1.25x, then 1.4x
+    for (let i = 0; i < currentCount; i++) {
+      if (i < 10) {
+        cost = Math.floor(cost * 1.15);
+      } else if (i < 25) {
+        cost = Math.floor(cost * 1.25);
+      } else {
+        cost = Math.floor(cost * 1.4);
+      }
+    }
+    
+    // Apply inspire discount if available
+    if (GameState.chief.skills.inspire.stacks > 0) {
+      const discount = 0.25 * GameState.chief.skills.inspire.stacks;
+      cost = Math.floor(cost * (1 - Math.min(discount, 0.75))); // Max 75% discount
+    }
+    
+    return cost;
   },
 
   // Save game state to localStorage
@@ -150,7 +207,9 @@ const GameUtils = {
         generators: GameState.generators,
         camps: GameState.camps,
         building: GameState.building,
-        timestamp: Date.now()
+        prestige: GameState.prestige,
+        timestamp: Date.now(),
+        version: '2.0'
       };
       localStorage.setItem('gallischDorpSave', JSON.stringify(saveData));
       GameEvents.emit('gameSaved');
@@ -173,6 +232,12 @@ const GameUtils = {
       Object.assign(GameState.generators, data.generators || {});
       Object.assign(GameState.camps, data.camps || {});
       Object.assign(GameState.building, data.building || {});
+      Object.assign(GameState.prestige, data.prestige || {});
+      
+      // Update prestige multiplier if prestige system is available
+      if (typeof Prestige !== 'undefined') {
+        Prestige.updateWisdomMultiplier();
+      }
 
       // Handle offline progress if enabled
       if (data.timestamp) {

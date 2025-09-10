@@ -42,7 +42,8 @@ const Generators = {
       return false;
     }
 
-    const cost = generator.cost;
+    // Use new dynamic cost calculation
+    const cost = GameUtils.calculateGeneratorCost(type, generator.count);
     
     if (!GameUtils.canAfford(cost)) {
       return false;
@@ -52,8 +53,13 @@ const Generators = {
       // Increase generator count
       generator.count++;
       
-      // Increase cost for next purchase (1.5x multiplier)
-      generator.cost = Math.floor(generator.cost * 1.5);
+      // Update cost for next purchase using new dynamic system
+      generator.cost = GameUtils.calculateGeneratorCost(type, generator.count);
+      
+      // Consume inspire stack if available
+      if (typeof ChiefEnhanced !== 'undefined') {
+        ChiefEnhanced.consumeInspireStack();
+      }
       
       // Visual feedback
       this.showPurchaseEffect(type);
