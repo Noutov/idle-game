@@ -14,6 +14,7 @@
     <div class="gold-display">
       💰 Goudstukken: <span id="gold">0</span> 
       <span style="color: #2e7d32;">(+<span id="gpsDisplay">0</span>/sec)</span>
+      <button id="adventureToggleBtn" class="adventure-header-btn">🗡️ Avontuur</button>
     </div>
 
     <!-- Generators & Dorpshoofd -->
@@ -331,9 +332,6 @@
   </div>
 
   <!-- Adventure Toggle Button -->
-  <div class="adventure-toggle">
-    <button id="adventureToggleBtn" class="adventure-toggle-btn">🗡️ Avontuur</button>
-  </div>
 
   <!-- Adventure Panel (hidden by default) -->
   <div id="adventurePanel" class="adventure-panel" style="display: none;">
@@ -342,137 +340,144 @@
       <button id="adventureToggleBtn2" class="village-return-btn" onclick="document.getElementById('adventureToggleBtn').click()">🏘️ Terug naar Dorp</button>
     </div>
 
-    <!-- Hero Status Panel -->
-    <div class="panel hero-panel">
-      <h2>⚔️ Held Status</h2>
-      <div class="hero-display">
-        <div class="hero-sprite">🛡️</div>
-        <div class="hero-stats">
-          <div class="hero-info">
-            <h3>Held Level <span id="heroLevel">1</span></h3>
-            <div class="stat-bars">
-              <div class="stat-bar hp-bar">
-                <label>❤️ HP: <span id="heroHp">100</span>/<span id="heroMaxHp">100</span></label>
-                <div class="progress-container">
-                  <div class="progress-bar hp" id="heroHpBar" style="width: 100%;"></div>
+    <!-- Compact Adventure Layout -->
+    <div class="adventure-compact-layout">
+      <!-- Left Column: Hero & Combat -->
+      <div class="adventure-left">
+        <!-- Hero Status (Compact) -->
+        <div class="panel hero-panel-compact">
+          <div class="hero-status-compact">
+            <div class="hero-character">🧙‍♂️</div>
+            <div class="hero-info-compact">
+              <div class="hero-level">Held Lv.<span id="heroLevel">1</span></div>
+              <div class="hero-bars">
+                <div class="mini-bar">
+                  <span class="bar-label">❤️</span>
+                  <div class="progress-container mini">
+                    <div class="progress-bar hp" id="heroHpBar" style="width: 100%;"></div>
+                  </div>
+                  <span class="bar-value"><span id="heroHp">100</span>/<span id="heroMaxHp">100</span></span>
+                </div>
+                <div class="mini-bar">
+                  <span class="bar-label">⭐</span>
+                  <div class="progress-container mini">
+                    <div class="progress-bar exp" id="heroExpBar" style="width: 0%;"></div>
+                  </div>
+                  <span class="bar-value"><span id="heroExp">0</span>/<span id="heroExpNext">100</span></span>
                 </div>
               </div>
-              <div class="stat-bar exp-bar">
-                <label>⭐ EXP: <span id="heroExp">0</span>/<span id="heroExpNext">100</span></label>
-                <div class="progress-container">
-                  <div class="progress-bar exp" id="heroExpBar" style="width: 0%;"></div>
+            </div>
+            <div class="hero-stats-compact">
+              <div class="stat-compact">⚔️<span id="heroAttack">10</span></div>
+              <div class="stat-compact">🛡️<span id="heroDefense">5</span></div>
+            </div>
+          </div>
+
+          <!-- Rest Status -->
+          <div id="restStatus" class="rest-status-compact" style="display: none;">
+            <span>😴 Rust: <span id="restTimeLeft">30</span>s</span>
+          </div>
+
+          <!-- Adventure Controls -->
+          <div class="adventure-controls-compact">
+            <button id="startAdventureBtn" class="adventure-btn">🚀 Start</button>
+            <button id="stopAdventureBtn" class="adventure-btn stop" disabled>🛑 Stop</button>
+          </div>
+        </div>
+
+        <!-- Combat Area (Compact) -->
+        <div class="panel combat-panel-compact">
+          <div class="combat-area-compact">
+            <div class="fighter hero-fighter">
+              <div class="character-sprite" id="heroSprite">🧙‍♂️</div>
+              <div class="fighter-name">Held</div>
+            </div>
+            
+            <div class="combat-vs-compact">⚔️</div>
+            
+            <div class="fighter enemy-fighter">
+              <div class="character-sprite" id="enemySprite">👹</div>
+              <div class="fighter-info">
+                <div class="fighter-name" id="enemyName">Goblin</div>
+                <div class="enemy-hp-compact">
+                  <div class="progress-container mini">
+                    <div class="progress-bar enemy-hp" id="enemyHpBar" style="width: 100%;"></div>
+                  </div>
+                  <div class="hp-text">❤️<span id="enemyHp">30</span>/<span id="enemyMaxHp">30</span></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="hero-combat-stats">
-            <div class="stat-item">⚔️ Aanval: <span id="heroAttack">10</span></div>
-            <div class="stat-item">🛡️ Verdediging: <span id="heroDefense">5</span></div>
+
+          <!-- Adventure Stats (Compact) -->
+          <div class="adventure-stats-compact">
+            <span class="stat-compact-item">🌊<span id="currentWave">1</span></span>
+            <span class="stat-compact-item">💀<span id="enemiesDefeated">0</span></span>
+            <span class="stat-compact-item">💰<span id="goldEarned">0</span></span>
           </div>
         </div>
       </div>
 
-      <!-- Rest Status -->
-      <div id="restStatus" class="rest-status" style="display: none;">
-        <p>😴 Held rust uit... <span id="restTimeLeft">30</span>s resterend</p>
-      </div>
-
-      <!-- Adventure Controls -->
-      <div class="adventure-controls">
-        <button id="startAdventureBtn" class="start-adventure-btn">🚀 Start Avontuur</button>
-        <button id="stopAdventureBtn" class="stop-adventure-btn" disabled>🛑 Stop Avontuur</button>
-      </div>
-    </div>
-
-    <!-- Combat Area -->
-    <div class="panel combat-panel">
-      <h2>⚔️ Gevecht</h2>
-      <div id="combatArea" class="combat-area">
-        <div class="combat-participants">
-          <div class="participant hero-participant">
-            <div class="participant-sprite sprite-idle">🛡️</div>
-            <div class="participant-info">
-              <h4>Held</h4>
-            </div>
-          </div>
-          
-          <div class="combat-vs">VS</div>
-          
-          <div class="participant enemy-participant">
-            <div class="participant-sprite sprite-idle" id="enemySprite">👹</div>
-            <div class="participant-info">
-              <h4 id="enemyName">Goblin</h4>
-              <div class="enemy-hp-bar">
-                <label>❤️ <span id="enemyHp">30</span>/<span id="enemyMaxHp">30</span></label>
-                <div class="progress-container">
-                  <div class="progress-bar enemy-hp" id="enemyHpBar" style="width: 100%;"></div>
-                </div>
+      <!-- Right Column: Upgrades -->
+      <div class="adventure-right">
+        <div class="panel upgrades-panel-compact">
+          <h3>⚒️ Upgrades</h3>
+          <div class="upgrade-grid-compact">
+            <div class="upgrade-item-compact">
+              <div class="upgrade-icon">⚔️</div>
+              <div class="upgrade-details">
+                <span class="upgrade-name">Aanval</span>
+                <span class="upgrade-level">Lv.<span id="attackLevel">0</span></span>
               </div>
+              <button id="upgradeAttackBtn" class="upgrade-btn-compact">
+                <span id="attackCost">100</span>💰
+              </button>
+            </div>
+
+            <div class="upgrade-item-compact">
+              <div class="upgrade-icon">🛡️</div>
+              <div class="upgrade-details">
+                <span class="upgrade-name">Verdediging</span>
+                <span class="upgrade-level">Lv.<span id="defenseLevel">0</span></span>
+              </div>
+              <button id="upgradeDefenseBtn" class="upgrade-btn-compact">
+                <span id="defenseCost">150</span>💰
+              </button>
+            </div>
+
+            <div class="upgrade-item-compact">
+              <div class="upgrade-icon">❤️</div>
+              <div class="upgrade-details">
+                <span class="upgrade-name">Gezondheid</span>
+                <span class="upgrade-level">Lv.<span id="healthLevel">0</span></span>
+              </div>
+              <button id="upgradeHealthBtn" class="upgrade-btn-compact">
+                <span id="healthCost">200</span>💰
+              </button>
+            </div>
+
+            <div class="upgrade-item-compact">
+              <div class="upgrade-icon">⚡</div>
+              <div class="upgrade-details">
+                <span class="upgrade-name">Herstel</span>
+                <span class="upgrade-level">Lv.<span id="recoveryLevel">0</span></span>
+              </div>
+              <button id="upgradeRecoveryBtn" class="upgrade-btn-compact">
+                <span id="recoveryCost">300</span>💰
+              </button>
+            </div>
+
+            <div class="upgrade-item-compact">
+              <div class="upgrade-icon">🍀</div>
+              <div class="upgrade-details">
+                <span class="upgrade-name">Geluk</span>
+                <span class="upgrade-level">Lv.<span id="luckLevel">0</span></span>
+              </div>
+              <button id="upgradeLuckBtn" class="upgrade-btn-compact">
+                <span id="luckCost">500</span>💰
+              </button>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Adventure Stats -->
-      <div class="adventure-stats">
-        <div class="stat-item">🌊 Wave: <span id="currentWave">1</span></div>
-        <div class="stat-item">💀 Verslagen: <span id="enemiesDefeated">0</span></div>
-        <div class="stat-item">💰 Verdiend: <span id="goldEarned">0</span></div>
-      </div>
-    </div>
-
-    <!-- Hero Upgrades Panel -->
-    <div class="panel upgrades-panel">
-      <h2>⚒️ Held Upgrades</h2>
-      <div class="upgrade-grid">
-        <div class="upgrade-item">
-          <div class="upgrade-info">
-            <h4>⚔️ Aanval</h4>
-            <p>Level <span id="attackLevel">0</span></p>
-          </div>
-          <button id="upgradeAttackBtn" class="upgrade-btn">
-            <span id="attackCost">100</span>💰
-          </button>
-        </div>
-
-        <div class="upgrade-item">
-          <div class="upgrade-info">
-            <h4>🛡️ Verdediging</h4>
-            <p>Level <span id="defenseLevel">0</span></p>
-          </div>
-          <button id="upgradeDefenseBtn" class="upgrade-btn">
-            <span id="defenseCost">150</span>💰
-          </button>
-        </div>
-
-        <div class="upgrade-item">
-          <div class="upgrade-info">
-            <h4>❤️ Gezondheid</h4>
-            <p>Level <span id="healthLevel">0</span></p>
-          </div>
-          <button id="upgradeHealthBtn" class="upgrade-btn">
-            <span id="healthCost">200</span>💰
-          </button>
-        </div>
-
-        <div class="upgrade-item">
-          <div class="upgrade-info">
-            <h4>⚡ Herstel</h4>
-            <p>Level <span id="recoveryLevel">0</span></p>
-          </div>
-          <button id="upgradeRecoveryBtn" class="upgrade-btn">
-            <span id="recoveryCost">300</span>💰
-          </button>
-        </div>
-
-        <div class="upgrade-item">
-          <div class="upgrade-info">
-            <h4>🍀 Geluk</h4>
-            <p>Level <span id="luckLevel">0</span></p>
-          </div>
-          <button id="upgradeLuckBtn" class="upgrade-btn">
-            <span id="luckCost">500</span>💰
-          </button>
         </div>
       </div>
     </div>

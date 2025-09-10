@@ -375,9 +375,10 @@ button:disabled {
     linear-gradient(135deg, #cd853f 0%, #b8860b 30%, #daa520 60%, #cd853f 100%);
   border: 2px solid #8b4513;
   border-radius: 6px;
-  width: 44px;
+  min-width: 60px; /* Wider for large numbers */
+  width: auto;
   height: 44px; /* Square, 2-line height */
-  padding: 0;
+  padding: 4px 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2415,5 +2416,419 @@ select, input {
     width: 60px;
     height: 60px;
     font-size: 1.6em;
+  }
+}
+
+/* Adventure Header Button */
+.adventure-header-btn {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  border: 2px solid #654321;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.9em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 15px;
+  box-shadow: 0 3px 8px rgba(139, 69, 19, 0.3);
+  transition: all 0.2s ease;
+}
+
+.adventure-header-btn:hover {
+  background: linear-gradient(135deg, #a0522d, #8b4513);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.4);
+}
+
+.adventure-header-btn:active {
+  transform: translateY(0);
+}
+
+/* Compact Adventure Layout */
+.adventure-compact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.adventure-left, .adventure-right {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Compact Hero Panel */
+.hero-panel-compact {
+  padding: 15px;
+}
+
+.hero-status-compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.hero-character {
+  font-size: 2.5em;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f5f5dc 0%, #ddd8c0 100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.hero-info-compact {
+  flex: 1;
+}
+
+.hero-level {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #2e7d32;
+}
+
+.hero-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mini-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8em;
+}
+
+.bar-label {
+  width: 16px;
+  text-align: center;
+}
+
+.progress-container.mini {
+  height: 8px;
+  width: 80px;
+  border-radius: 4px;
+}
+
+.bar-value {
+  font-size: 0.75em;
+  min-width: 50px;
+}
+
+.hero-stats-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-compact {
+  font-size: 0.8em;
+  padding: 2px 6px;
+  background: rgba(139, 69, 19, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(139, 69, 19, 0.2);
+}
+
+.rest-status-compact {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 6px;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.85em;
+  color: #f57c00;
+  margin-bottom: 12px;
+}
+
+.adventure-controls-compact {
+  display: flex;
+  gap: 10px;
+}
+
+.adventure-btn {
+  flex: 1;
+  padding: 10px 8px;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.adventure-btn.stop {
+  background: linear-gradient(135deg, #f44336, #ef5350);
+}
+
+.adventure-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.adventure-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Compact Combat Panel */
+.combat-panel-compact {
+  padding: 15px;
+}
+
+.combat-area-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(139, 69, 19, 0.05);
+  border: 2px solid rgba(139, 69, 19, 0.2);
+  border-radius: 8px;
+}
+
+.fighter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.character-sprite {
+  font-size: 2.2em;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f5f5dc 0%, #ddd8c0 100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.fighter-name {
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.fighter-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.enemy-hp-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.hp-text {
+  font-size: 0.7em;
+  text-align: center;
+}
+
+.combat-vs-compact {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #d32f2f;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.adventure-stats-compact {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px;
+  background: rgba(33, 150, 243, 0.1);
+  border: 1px solid rgba(33, 150, 243, 0.2);
+  border-radius: 6px;
+}
+
+.stat-compact-item {
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #1565c0;
+}
+
+/* Compact Upgrades Panel */
+.upgrades-panel-compact {
+  padding: 15px;
+}
+
+.upgrades-panel-compact h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.1em;
+}
+
+.upgrade-grid-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upgrade-item-compact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: rgba(139, 69, 19, 0.05);
+  border: 1px solid rgba(139, 69, 19, 0.2);
+  border-radius: 6px;
+}
+
+.upgrade-icon {
+  font-size: 1.3em;
+  width: 30px;
+  text-align: center;
+}
+
+.upgrade-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.upgrade-name {
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.upgrade-level {
+  font-size: 0.75em;
+  color: #666;
+}
+
+.upgrade-btn-compact {
+  background: linear-gradient(135deg, #2196f3, #42a5f5);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 65px;
+  transition: all 0.2s ease;
+}
+
+.upgrade-btn-compact:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1976d2, #2196f3);
+  transform: translateY(-1px);
+}
+
+.upgrade-btn-compact:disabled {
+  background: linear-gradient(135deg, #757575, #616161);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Combat Animations for Characters */
+@keyframes heroAttack {
+  0% { transform: translateX(0) scale(1); }
+  50% { transform: translateX(8px) scale(1.05) rotate(5deg); filter: brightness(1.2); }
+  100% { transform: translateX(0) scale(1) rotate(0deg); }
+}
+
+@keyframes enemyAttack {
+  0% { transform: translateX(0) scale(1); }
+  50% { transform: translateX(-8px) scale(1.05) rotate(-5deg); filter: brightness(1.2); }
+  100% { transform: translateX(0) scale(1) rotate(0deg); }
+}
+
+@keyframes hitEffect {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(0.95); filter: brightness(1.5) contrast(1.3); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes deathEffect {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  25% { transform: scale(1.1) rotate(5deg); }
+  50% { transform: scale(0.9) rotate(-5deg); }
+  75% { transform: scale(0.95) rotate(3deg); }
+  100% { transform: scale(0.8) rotate(0deg); opacity: 0.3; filter: grayscale(1); }
+}
+
+.character-sprite.attack-hero {
+  animation: heroAttack 0.4s ease-in-out;
+}
+
+.character-sprite.attack-enemy {
+  animation: enemyAttack 0.4s ease-in-out;
+}
+
+.character-sprite.hit {
+  animation: hitEffect 0.3s ease-in-out;
+}
+
+.character-sprite.death {
+  animation: deathEffect 1s ease-in-out forwards;
+}
+
+/* Mobile Responsiveness for Compact Adventure */
+@media (max-width: 768px) {
+  .adventure-compact-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .hero-character, .character-sprite {
+    width: 40px;
+    height: 40px;
+    font-size: 1.8em;
+  }
+  
+  .progress-container.mini {
+    width: 60px;
+    height: 6px;
+  }
+  
+  .upgrade-grid-compact {
+    gap: 6px;
+  }
+  
+  .upgrade-item-compact {
+    padding: 6px;
+  }
+  
+  .adventure-header-btn {
+    margin-left: 8px;
+    padding: 6px 12px;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-status-compact {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .hero-bars {
+    width: 100%;
+  }
+  
+  .combat-area-compact {
+    padding: 8px;
+  }
+  
+  .fighter {
+    gap: 4px;
   }
 }

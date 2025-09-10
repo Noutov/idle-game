@@ -212,17 +212,15 @@ const Adventure = {
   
   // Initialize combat animations (idle states)
   initializeCombatAnimations() {
-    const heroSprite = document.querySelector('.hero-participant .participant-sprite');
-    const enemySprite = document.querySelector('.enemy-participant .participant-sprite');
+    const heroSprite = document.getElementById('heroSprite');
+    const enemySprite = document.getElementById('enemySprite');
     
     if (heroSprite) {
-      heroSprite.classList.remove('sprite-dying', 'sprite-hit', 'sprite-attacking');
-      this.setIdleAnimation(heroSprite);
+      heroSprite.classList.remove('attack-hero', 'hit', 'death');
     }
     
     if (enemySprite) {
-      enemySprite.classList.remove('sprite-dying', 'sprite-hit', 'sprite-attacking');
-      this.setIdleAnimation(enemySprite);
+      enemySprite.classList.remove('attack-enemy', 'hit', 'death');
     }
   },
   
@@ -473,86 +471,74 @@ const Adventure = {
   
   // Trigger hero attack animation
   triggerHeroAttack() {
-    const heroSprite = document.querySelector('.hero-participant .participant-sprite');
+    const heroSprite = document.getElementById('heroSprite');
     if (heroSprite) {
-      heroSprite.classList.add('sprite-attacking');
+      heroSprite.classList.add('attack-hero');
       setTimeout(() => {
-        heroSprite.classList.remove('sprite-attacking');
-        this.setIdleAnimation(heroSprite);
-      }, 800);
+        heroSprite.classList.remove('attack-hero');
+      }, 400);
     }
   },
   
   // Trigger enemy attack animation  
   triggerEnemyAttack() {
-    const enemySprite = document.querySelector('.enemy-participant .participant-sprite');
+    const enemySprite = document.getElementById('enemySprite');
     if (enemySprite) {
-      enemySprite.classList.add('sprite-attacking');
+      enemySprite.classList.add('attack-enemy');
       setTimeout(() => {
-        enemySprite.classList.remove('sprite-attacking');
-        this.setIdleAnimation(enemySprite);
-      }, 800);
+        enemySprite.classList.remove('attack-enemy');
+      }, 400);
     }
   },
   
   // Trigger hero hit animation
   triggerHeroHit() {
-    const heroSprite = document.querySelector('.hero-participant .participant-sprite');
+    const heroSprite = document.getElementById('heroSprite');
     if (heroSprite) {
-      heroSprite.classList.remove('sprite-idle');
-      heroSprite.classList.add('sprite-hit');
+      heroSprite.classList.add('hit');
       setTimeout(() => {
-        heroSprite.classList.remove('sprite-hit');
-        this.setIdleAnimation(heroSprite);
-      }, 600);
+        heroSprite.classList.remove('hit');
+      }, 300);
     }
   },
   
   // Trigger enemy hit animation
   triggerEnemyHit() {
-    const enemySprite = document.querySelector('.enemy-participant .participant-sprite');
+    const enemySprite = document.getElementById('enemySprite');
     if (enemySprite) {
-      enemySprite.classList.remove('sprite-idle');
-      enemySprite.classList.add('sprite-hit');
+      enemySprite.classList.add('hit');
       setTimeout(() => {
-        enemySprite.classList.remove('sprite-hit');
-        this.setIdleAnimation(enemySprite);
-      }, 600);
+        enemySprite.classList.remove('hit');
+      }, 300);
     }
   },
   
   // Trigger hero death animation
   triggerHeroDeath() {
-    const heroSprite = document.querySelector('.hero-participant .participant-sprite');
+    const heroSprite = document.getElementById('heroSprite');
     if (heroSprite) {
-      heroSprite.classList.remove('sprite-idle', 'sprite-hit');
-      heroSprite.classList.add('sprite-dying');
+      heroSprite.classList.remove('hit', 'attack-hero');
+      heroSprite.classList.add('death');
     }
   },
   
   // Trigger enemy death animation
   triggerEnemyDeath() {
-    const enemySprite = document.querySelector('.enemy-participant .participant-sprite');
+    const enemySprite = document.getElementById('enemySprite');
     if (enemySprite) {
-      enemySprite.classList.remove('sprite-idle', 'sprite-hit');
-      enemySprite.classList.add('sprite-dying');
+      enemySprite.classList.remove('hit', 'attack-enemy');
+      enemySprite.classList.add('death');
     }
   },
   
-  // Set idle animation for sprite
-  setIdleAnimation(sprite) {
-    if (sprite && !sprite.classList.contains('sprite-dying')) {
-      sprite.classList.add('sprite-idle');
-    }
-  },
   
   // Create impact effect at target location
   createImpactEffect(target, damage, isCritical) {
-    const participant = document.querySelector(`.${target}-participant`);
-    if (!participant) return;
+    const targetSprite = target === 'hero' ? document.getElementById('heroSprite') : document.getElementById('enemySprite');
+    if (!targetSprite) return;
     
-    const rect = participant.getBoundingClientRect();
-    const combatArea = document.getElementById('combatArea');
+    const rect = targetSprite.getBoundingClientRect();
+    const combatArea = document.querySelector('.combat-area-compact');
     if (!combatArea) return;
     
     const combatRect = combatArea.getBoundingClientRect();
