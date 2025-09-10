@@ -280,6 +280,15 @@ const Building = {
     return str.charAt(0).toUpperCase() + str.slice(1);
   },
 
+  // Get generator multiplier (for gold rewards)
+  getGeneratorMultiplier(generatorType) {
+    const speedMultiplier = this.getSpeedMultiplier(generatorType);
+    const goldBonus = this.getGoldBonus(generatorType);
+    
+    // Return the total multiplier (speed + gold bonus as multiplier)
+    return speedMultiplier + (goldBonus / GameState.generators[generatorType].gps);
+  },
+
   // Get enhanced GPS for a generator (including bonuses)
   getEnhancedGPS(generatorType) {
     const baseGPS = GameState.generators[generatorType].gps;
