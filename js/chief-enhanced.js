@@ -99,7 +99,7 @@ const ChiefEnhanced = {
   // Activate 10-second generator bonus
   activateGeneratorBonus() {
     GameState.chief.generatorBonus = 10; // 10 seconds of +50% bonus
-    UI.showNotification('Generator Bonus Actief! +50% voor 10 sec', 'success');
+    // Removed notification - status is visible under progress bar
   },
 
   // Get click streak multiplier with progressive scaling
@@ -141,7 +141,7 @@ const ChiefEnhanced = {
     GameState.chief.skills.rally.duration = 30; // 30 seconds
     GameState.chief.skills.rally.cooldown = 300; // 5 minutes cooldown
 
-    UI.showNotification('🚀 Rally! Alle generators werken 2x sneller voor 30 sec!', 'success');
+    // Removed notification - status is visible in skill button
     VisualEffects.celebrate();
     GameEvents.emit('chiefEnhancedChanged');
     return true;
@@ -157,7 +157,7 @@ const ChiefEnhanced = {
     GameState.chief.skills.inspire.stacks++;
     const discount = GameState.chief.skills.inspire.stacks * 25;
 
-    UI.showNotification(`💡 Inspire! Volgende generators ${discount}% goedkoper!`, 'success');
+    // Removed notification - status is visible in skill button
     GameEvents.emit('chiefEnhancedChanged');
     GameEvents.emit('generatorsChanged'); // Update costs
     return true;
@@ -181,7 +181,7 @@ const ChiefEnhanced = {
     GameUtils.addGold(fortuneBonus);
     GameState.chief.skills.fortune.cooldown = 120; // 2 minutes cooldown
 
-    UI.showNotification(`🍀 Fortune! +${GameUtils.formatNumber(fortuneBonus)}💰 bonus!`, 'success');
+    // Removed notification - status is visible in skill button
     
     // Visual effects
     const chiefSprite = document.getElementById('chiefSprite');
