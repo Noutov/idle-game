@@ -21,6 +21,19 @@ const Upgrades = {
     if (upgradeCooldownBtn) {
       upgradeCooldownBtn.addEventListener('click', () => this.upgradeChiefCooldown());
     }
+
+    // Listen to game events to update UI
+    GameEvents.on('buildingChanged', () => {
+      if (typeof UI !== 'undefined' && UI.updateGeneratorUpgrades) {
+        UI.updateGeneratorUpgrades();
+      }
+    });
+
+    GameEvents.on('goldChanged', () => {
+      if (typeof UI !== 'undefined' && UI.updateGeneratorUpgrades) {
+        UI.updateGeneratorUpgrades();
+      }
+    });
   },
 
   // Upgrade chief gold per click

@@ -16,40 +16,27 @@
       <span style="color: #2e7d32;">(+<span id="gpsDisplay">0</span>/sec)</span>
     </div>
 
-    <!-- Dorpshoofd -->
+    <!-- Generators & Dorpshoofd -->
     <div class="panel">
+      <h2>🏭 Generators & 👑 Dorpshoofd</h2>
+      
+      <!-- Dorpshoofd Section -->
       <div class="chief-section">
-        <h2>👑 Dorpshoofd</h2>
-        <div class="chief-sprite" id="chiefSprite">👑</div>
-        <button id="chiefBtn">Vraag raad aan Dorpshoofd</button>
-        <p>(+<span id="chiefGold">1</span> goudstukken per klik, wachttijd <span id="chiefCooldownText">5.0</span>s)</p>
-        <div class="progress-container">
-          <div class="progress-bar" id="chiefProgress"></div>
+        <div class="chief-display">
+          <div class="chief-sprite" id="chiefSprite">👑</div>
+          <div class="chief-info">
+            <button id="chiefBtn">Vraag raad aan Dorpshoofd</button>
+            <p>(+<span id="chiefGold">1</span> goudstukken per klik, wachttijd <span id="chiefCooldownText">5.0</span>s)</p>
+            <div class="progress-container">
+              <div class="progress-bar" id="chiefProgress"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Upgrades -->
-    <div class="panel">
-      <h2>⚒️ Upgrades Dorpshoofd</h2>
-      <div class="stats-row">
-        <span>Goud per klik: <span id="chiefGoldStat">1</span></span>
-        <button id="upgradeGoldBtn" class="upgrade-btn">
-          Upgrade (+1) - <span id="chiefGoldCost">25</span>💰
-        </button>
-      </div>
       
-      <div class="stats-row">
-        <span>Wachttijd: <span id="chiefCooldownStat">5.0</span>s</span>
-        <button id="upgradeCooldownBtn" class="upgrade-btn">
-          Upgrade (-0.5s) - <span id="chiefCooldownCost">75</span>💰
-        </button>
-      </div>
-    </div>
-
-    <!-- Generators -->
-    <div class="panel">
-      <h2>🏭 Generators</h2>
+      <hr style="margin: 20px 0; border: 1px solid #654321;">
+      
+      <!-- Generators Section -->
       
       <div class="generator-item">
         <div class="generator-sprite villager-sprite">👨‍🌾</div>
@@ -100,9 +87,9 @@
       </div>
     </div>
 
-    <!-- Centraal Gebouw -->
+    <!-- Centraal Gebouw & Upgrades -->
     <div class="panel">
-      <h2>🏗️ Centraal Gebouw</h2>
+      <h2>🏗️ Centraal Gebouw & ⚒️ Upgrades</h2>
       
       <div class="building-section">
         <div class="building-display">
@@ -116,6 +103,26 @@
         <div class="building-upgrade">
           <button id="upgradeBuildingBtn" class="upgrade-btn">
             Bouw: <span id="buildingUpgradeName">Houten schuur</span> - <span id="buildingCost">500</span>💰
+          </button>
+        </div>
+      </div>
+
+      <hr style="margin: 20px 0; border: 1px solid #654321;">
+
+      <!-- Dorpshoofd Upgrades -->
+      <div class="upgrade-section">
+        <h3>⚒️ Dorpshoofd Upgrades</h3>
+        <div class="stats-row">
+          <span>Goud per klik: <span id="chiefGoldStat">1</span></span>
+          <button id="upgradeGoldBtn" class="upgrade-btn">
+            Upgrade (+1) - <span id="chiefGoldCost">25</span>💰
+          </button>
+        </div>
+        
+        <div class="stats-row">
+          <span>Wachttijd: <span id="chiefCooldownStat">5.0</span>s</span>
+          <button id="upgradeCooldownBtn" class="upgrade-btn">
+            Upgrade (-0.5s) - <span id="chiefCooldownCost">75</span>💰
           </button>
         </div>
       </div>
@@ -224,7 +231,10 @@
         <div class="combat-controls">
           <input type="hidden" id="campSelect" value="camp1">
           <label><strong>Aantal krijgers:</strong></label>
-          <input type="number" id="warriorsToSend" min="1" value="1" max="0">
+          <div class="warrior-input-group">
+            <input type="number" id="warriorsToSend" min="1" value="1" max="0">
+            <button id="maxWarriorsBtn" class="max-btn">Max</button>
+          </div>
           <button id="attackBtn" class="attack-btn">🚀 Val <span id="selectedCampName">Klein kamp</span> aan!</button>
           <div class="camp-cooldown">Cooldown: <span id="campCooldown">0</span> sec</div>
         </div>

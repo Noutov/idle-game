@@ -63,8 +63,8 @@ const Chief = {
   // Animate progress bar during chief work
   animateProgress() {
     let elapsed = 0;
-    const duration = GameState.chief.cooldown / 1000; // Convert to seconds
-    const updateInterval = 100; // Update every 100ms
+    const duration = Math.max(GameState.chief.cooldown / 1000, 0.1); // Convert to seconds, minimum 0.1s
+    const updateInterval = Math.min(100, GameState.chief.cooldown / 10); // Adjust update rate based on cooldown
     
     const progressInterval = setInterval(() => {
       elapsed += updateInterval / 1000;

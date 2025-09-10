@@ -43,6 +43,7 @@ const Combat = {
     const attackBtn = document.getElementById('attackBtn');
     const campSelect = document.getElementById('campSelect');
     const warriorsInput = document.getElementById('warriorsToSend');
+    const maxWarriorsBtn = document.getElementById('maxWarriorsBtn');
     
     if (attackBtn) {
       attackBtn.addEventListener('click', () => this.attackCamp());
@@ -57,6 +58,10 @@ const Combat = {
         UI.updateButtons();
         this.updateAttackPreview();
       });
+    }
+
+    if (maxWarriorsBtn) {
+      maxWarriorsBtn.addEventListener('click', () => this.setMaxWarriors());
     }
 
     // Setup camp item selection
@@ -191,6 +196,16 @@ const Combat = {
     this.checkCombatAchievements(campKey, true, totalReward);
   },
 
+  // Set maximum warriors for attack
+  setMaxWarriors() {
+    const warriorsInput = document.getElementById('warriorsToSend');
+    if (warriorsInput) {
+      warriorsInput.value = GameState.generators.warrior.count;
+      UI.updateButtons();
+      this.updateAttackPreview();
+    }
+  },
+
   // Handle failed attack
   handleAttackFailure(campKey, camp, warriorsToSend, successChance) {
     // Calculate warrior losses (not always all warriors die)
@@ -200,6 +215,9 @@ const Combat = {
     GameState.generators.warrior.count -= warriorsLost;
     GameState.generators.warrior.count = Math.max(0, GameState.generators.warrior.count);
     
+    // Adjust warrior prices when warriors are lost
+    this.adjustWarriorPrices(warriorsLost);
+    
     const message = `❌ Mislukt! Je bent ${warriorsLost} krijgers kwijtgeraakt... (${Math.round(successChance * 100)}% kans had je)`;
     UI.showAttackResult(message, 'failure');
     
@@ -208,6 +226,26 @@ const Combat = {
     UI.showNotification(`💀 Nederlaag! -${warriorsLost} krijgers`, 'error');
     
     this.checkCombatAchievements(campKey, false, warriorsLost);
+  },
+
+  // Adjust warrior prices when warriors are lost
+  adjustWarriorPrices(warriorsLost) {
+    // Reduce warrior cost based on losses (supply/demand effect)
+    const reductionPercentage = Math.min(warriorsLost * 0.02, 0.3); // Max 30% reduction
+    const currentCost = GameState.generators.warrior.cost;
+    const baseCost = GameUtils.getDefaultGeneratorCost('warrior');
+    
+    // Calculate new cost, ensuring it doesn't go below 50% of base cost
+    const newCost = Math.max(
+      Math.floor(currentCost * (1 - reductionPercentage)),
+      Math.floor(baseCost * 0.5)
+    );
+    
+    if (newCost < currentCost) {
+      GameState.generators.warrior.cost = newCost;
+      UI.showNotification(`Krijgers zijn goedkoper geworden! Nu ${newCost}💰`, 'info');
+      GameEvents.emit('generatorsChanged');
+    }
   },
 
   // Calculate scaled reward based on player progression

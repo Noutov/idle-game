@@ -375,12 +375,15 @@ const UI = {
                          upgradeType === 'LuckBonus' ? 'luckBonus' : 'speed';
         
         const isUnlocked = Building.isUpgradeTypeUnlocked(camelCase, GameState.building.level);
+        const currentLevel = upgradeInfo[camelCase].current;
+        const maxLevel = upgradeInfo[camelCase].max;
+        const cost = upgradeInfo[camelCase].cost;
         
         // Update level displays
         const lvlElement = document.getElementById(`${type}${upgradeType}Lvl`);
         if (lvlElement) {
           if (isUnlocked) {
-            lvlElement.textContent = upgradeInfo[camelCase].current;
+            lvlElement.textContent = `${currentLevel}/${maxLevel}`;
           } else {
             lvlElement.textContent = '🔒';
           }
@@ -389,8 +392,10 @@ const UI = {
         // Update cost displays
         const costElement = document.getElementById(`${type}${upgradeType}Cost`);
         if (costElement) {
-          if (isUnlocked) {
-            costElement.textContent = GameUtils.formatNumber(upgradeInfo[camelCase].cost);
+          if (isUnlocked && currentLevel < maxLevel) {
+            costElement.textContent = GameUtils.formatNumber(cost);
+          } else if (isUnlocked && currentLevel >= maxLevel) {
+            costElement.textContent = 'MAX';
           } else {
             const requiredLevel = this.getUpgradeUnlockLevel(camelCase);
             costElement.textContent = `Lv.${requiredLevel}`;
@@ -400,9 +405,9 @@ const UI = {
         // Update button state
         const btnElement = document.getElementById(`${type}${upgradeType}Btn`);
         if (btnElement) {
-          if (isUnlocked) {
+          if (isUnlocked && currentLevel < maxLevel) {
             btnElement.disabled = !Building.canUpgradeGenerator(type, camelCase);
-            btnElement.style.opacity = '1';
+            btnElement.style.opacity = Building.canUpgradeGenerator(type, camelCase) ? '1' : '0.7';
           } else {
             btnElement.disabled = true;
             btnElement.style.opacity = '0.5';
