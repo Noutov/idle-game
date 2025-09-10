@@ -373,7 +373,7 @@ const UI = {
     const notification = document.createElement('div');
     notification.style.cssText = `
       position: fixed;
-      top: 20px;
+      top: 80px;
       right: 20px;
       background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
       color: white;
