@@ -169,12 +169,13 @@ h1 {
     #daa520 50%, 
     #8b4513 80%, 
     transparent 100%) 1;
-  padding-bottom: 12px;
+  padding: 0 40px 12px 40px; /* Add horizontal padding for decorative elements */
   font-size: 1.2em;
   color: #daa520;
   font-weight: bold;
   position: relative;
   overflow: hidden;
+  text-align: center; /* Center the title text */
 }
 
 /* Celtic knot decorations for panel headers - static */
