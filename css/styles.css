@@ -361,16 +361,28 @@ button:disabled {
     /* Bronze/copper metallic gradient */
     linear-gradient(135deg, #cd853f 0%, #b8860b 30%, #daa520 60%, #cd853f 100%);
   border: 2px solid #8b4513;
-  border-radius: 8px;
+  border-radius: 6px;
+  width: 44px;
+  height: 44px; /* Square, 2-line height */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  font-weight: bold;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  flex-shrink: 0;
   box-shadow: 
     /* Outer shadow */
-    0 6px 15px rgba(139, 69, 19, 0.4),
-    0 3px 8px rgba(0, 0, 0, 0.2),
+    0 3px 8px rgba(139, 69, 19, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.2),
     /* Inner metallic bevel */
-    inset 0 2px 0 rgba(255, 255, 255, 0.4),
-    inset 0 -2px 0 rgba(139, 69, 19, 0.6),
-    inset 2px 0 0 rgba(255, 255, 255, 0.2),
-    inset -2px 0 0 rgba(139, 69, 19, 0.4);
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(139, 69, 19, 0.6),
+    inset 1px 0 0 rgba(255, 255, 255, 0.2),
+    inset -1px 0 0 rgba(139, 69, 19, 0.4);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -395,7 +407,7 @@ button:disabled {
     inset -3px 0 0 rgba(139, 69, 19, 0.5),
     /* Outer glow */
     0 0 15px rgba(255, 215, 0, 0.3);
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-1px) scale(1.08);
 }
 
 /* Affordable state - bright and inviting */
@@ -495,7 +507,7 @@ button:disabled {
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* Generators */
+/* Generators - Compact Layout */
 .generator-item {
   background: 
     /* Parchment texture overlay */
@@ -508,16 +520,17 @@ button:disabled {
     linear-gradient(145deg, #f5f0e8 0%, #f0e6d2 50%, #e8d7bb 100%);
   border: 3px solid #d4af37;
   border-image: linear-gradient(45deg, #b8860b, #daa520, #b8860b, #cd853f) 1;
-  border-radius: 12px;
-  padding: 15px;
-  margin: 12px 0;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px 0;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
+  height: 60px; /* Fixed compact height */
   box-shadow: 
     /* Main shadow */
-    0 6px 20px rgba(212, 175, 55, 0.2),
-    0 3px 10px rgba(0, 0, 0, 0.1),
+    0 4px 12px rgba(212, 175, 55, 0.2),
+    0 2px 6px rgba(0, 0, 0, 0.1),
     /* Inner parchment effect */
     inset 0 1px 0 rgba(255, 255, 255, 0.8),
     inset 0 -1px 0 rgba(139, 115, 85, 0.3),
@@ -561,18 +574,24 @@ button:disabled {
 }
 
 .generator-sprite {
-  width: 50px;
-  height: 50px;
-  border: 2px solid #424242;
-  border-radius: 8px;
+  width: 44px;
+  height: 44px; /* Square, 2-line height */
+  border: 2px solid transparent;
+  border-image: linear-gradient(45deg, #8b4513, #cd853f, #8b4513) 1;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5em;
+  font-size: 1.4em;
   flex-shrink: 0;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 60%),
+    linear-gradient(135deg, #f5f0e8 0%, #e8d7bb 100%);
   box-shadow: 
-    0 3px 8px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255,255,255,0.3);
+    0 2px 6px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    inset 0 -1px 0 rgba(139, 115, 85, 0.3);
+  transition: all 0.2s ease;
 }
 
 .villager-sprite { 
@@ -595,6 +614,24 @@ button:disabled {
 .generator-info {
   flex: 1;
   color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  height: 44px; /* Match sprite height */
+}
+
+.generator-line1 {
+  font-size: 0.9em;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+.generator-line2 {
+  font-size: 0.85em;
+  color: #2d7d32;
+  font-weight: bold;
+  line-height: 1.1;
 }
 
 .generator-count {
@@ -818,45 +855,46 @@ button:disabled {
   opacity: 0.9;
 }
 
-/* Desktop - keep original generator layout */
+/* Desktop - compact square layout */
 @media (min-width: 769px) {
   .generator-item {
     display: flex !important;
     align-items: center;
     gap: 15px;
+    height: 60px;
+    padding: 8px;
   }
   
   .generator-sprite {
-    width: 50px;
-    height: 50px;
-    font-size: 1.5em;
-    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    font-size: 1.4em;
   }
   
   .generator-info {
     flex: 1;
-    display: block !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    height: 44px;
+    gap: 2px;
   }
   
-  .generator-info .generator-name {
-    font-size: 1em;
-    margin-bottom: 4px;
-  }
-  
-  .generator-info .generator-count {
-    font-size: 1.2em;
+  .generator-line1 {
+    font-size: 0.9em;
     font-weight: bold;
-    color: #1a6b1a;
-    margin-bottom: 4px;
   }
   
-  .generator-total {
-    font-size: 1.0em;
-    font-weight: bold;
+  .generator-line2 {
+    font-size: 0.85em;
     color: #2d7d32;
+    font-weight: bold;
   }
   
   .buy-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 0.75em;
     flex-shrink: 0;
   }
 }
@@ -1365,63 +1403,37 @@ select, input {
     margin-bottom: 10px;
   }
   
-  /* Generator improvements for mobile */
+  /* Generator improvements for mobile - compact layout */
   .generator-item {
-    display: grid;
-    grid-template-areas: 
-      "sprite name-count"
-      "total buy-btn";
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-    gap: 8px 12px;
-    padding: 12px;
-    align-items: center;
+    height: 50px; /* Even more compact on mobile */
+    padding: 6px;
+    gap: 8px;
+    margin: 6px 0;
   }
   
   .generator-sprite {
-    grid-area: sprite;
-    width: 40px;
-    height: 40px;
-    font-size: 1.3em;
-    align-self: start;
+    width: 38px;
+    height: 38px;
+    font-size: 1.2em;
   }
   
   .generator-info {
-    grid-area: name-count;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    height: 38px;
+    gap: 1px;
   }
   
-  .generator-info .generator-name {
-    font-size: 0.9em;
-    font-weight: bold;
+  .generator-line1 {
+    font-size: 0.8em;
   }
   
-  .generator-info .generator-count {
-    font-size: 0.85em;
-    color: #1a6b1a;
-    font-weight: normal;
-    margin: 0;
-  }
-  
-  .generator-total {
-    grid-area: total;
-    font-size: 0.85em;
-    font-weight: bold;
-    color: #2d7d32;
-    margin: 0;
+  .generator-line2 {
+    font-size: 0.75em;
   }
   
   .buy-btn {
-    grid-area: buy-btn;
-    min-height: 40px;
-    font-size: 13px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    white-space: nowrap;
-    justify-self: end;
+    width: 38px;
+    height: 38px;
+    font-size: 0.7em;
   }
   
   .generator-count, .generator-total {
