@@ -192,7 +192,17 @@ const Generators = {
     // Give reward
     GameUtils.addGold(goldReward);
 
-    // Visual effects
+    // Reset progress first
+    generator.busy = false;
+    generator.progress = 0;
+
+    // Reset progress bar visual
+    const progressBar = document.getElementById(`${type}Progress`);
+    if (progressBar) {
+      progressBar.style.width = '0%';
+    }
+
+    // Visual effects and sprite state update
     const sprite = document.getElementById(`${type}Sprite`);
     if (sprite) {
       VisualEffects.createFloatingGold(sprite, goldReward);
@@ -206,20 +216,19 @@ const Generators = {
       }
     }
 
-    // Reset progress
-    generator.busy = false;
-    generator.progress = 0;
-
-    // Emit events
-    GameEvents.emit('generatorWorked', { type, goldReward });
-    GameEvents.emit('goldChanged');
-
     // Auto-restart if automated
     if (this.isAutomated(type)) {
       setTimeout(() => {
         this.startGeneratorWork(type);
       }, 500); // Small delay between auto cycles
     }
+
+    // Ensure sprite state is correctly set
+    this.updateGeneratorSprite(type);
+
+    // Emit events AFTER sprite state is properly set
+    GameEvents.emit('generatorWorked', { type, goldReward });
+    GameEvents.emit('goldChanged');
   },
 
   // Animate generator progress bar
