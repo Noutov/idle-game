@@ -125,6 +125,29 @@ const VisualEffects = {
     }
   },
 
+  // Pulse effect for elements (like sprites)
+  pulseElement(element, color = 'rgba(255, 215, 0, 0.6)') {
+    if (!element) return;
+
+    element.style.animation = 'none';
+    element.offsetHeight; // Trigger reflow
+    element.style.animation = `elementPulse 0.8s ease`;
+
+    // Add keyframes if not already present
+    if (!document.querySelector('#elementPulseKeyframes')) {
+      const style = document.createElement('style');
+      style.id = 'elementPulseKeyframes';
+      style.textContent = `
+        @keyframes elementPulse {
+          0% { transform: scale(1); box-shadow: 0 0 0 0 ${color}; }
+          50% { transform: scale(1.08); box-shadow: 0 0 20px 5px ${color}; }
+          100% { transform: scale(1); box-shadow: 0 0 0 15px transparent; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  },
+
   // Number count-up animation
   animateNumber(element, startValue, endValue, duration = 1000) {
     if (!element) return;

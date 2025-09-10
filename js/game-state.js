@@ -210,6 +210,7 @@ const GameUtils = {
         camps: GameState.camps,
         building: GameState.building,
         prestige: GameState.prestige,
+        adventure: GameState.adventure,
         timestamp: Date.now(),
         version: '2.0'
       };
@@ -235,6 +236,7 @@ const GameUtils = {
       Object.assign(GameState.camps, data.camps || {});
       Object.assign(GameState.building, data.building || {});
       Object.assign(GameState.prestige, data.prestige || {});
+      Object.assign(GameState.adventure, data.adventure || {});
       
       // Update prestige multiplier if prestige system is available
       if (typeof Prestige !== 'undefined') {

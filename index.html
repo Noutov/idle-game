@@ -23,10 +23,9 @@
       <!-- Dorpshoofd Section -->
       <div class="chief-section">
         <div class="chief-display">
-          <div class="chief-sprite" id="chiefSprite">👑</div>
+          <div class="chief-sprite clickable" id="chiefSprite" title="Klik voor raad van dorpshoofd">👑</div>
           <div class="chief-info">
-            <button id="chiefBtn">Vraag raad aan Dorpshoofd</button>
-            <p>(+<span id="chiefGold">1</span> goudstukken per klik, wachttijd <span id="chiefCooldownText">5.0</span>s)</p>
+            <p><strong>Dorpshoofd</strong> (+<span id="chiefGold">1</span> goudstukken per klik, wachttijd <span id="chiefCooldownText">5.0</span>s)</p>
             <div class="progress-container">
               <div class="progress-bar" id="chiefProgress"></div>
             </div>
@@ -316,6 +315,154 @@
     </div>
   </div>
 
+  <!-- Adventure Toggle Button -->
+  <div class="adventure-toggle">
+    <button id="adventureToggleBtn" class="adventure-toggle-btn">🗡️ Avontuur</button>
+  </div>
+
+  <!-- Adventure Panel (hidden by default) -->
+  <div id="adventurePanel" class="adventure-panel" style="display: none;">
+    <div class="adventure-header">
+      <h1>🗡️ Avonturen Modus</h1>
+      <button id="adventureToggleBtn2" class="village-return-btn" onclick="document.getElementById('adventureToggleBtn').click()">🏘️ Terug naar Dorp</button>
+    </div>
+
+    <!-- Hero Status Panel -->
+    <div class="panel hero-panel">
+      <h2>⚔️ Held Status</h2>
+      <div class="hero-display">
+        <div class="hero-sprite">🛡️</div>
+        <div class="hero-stats">
+          <div class="hero-info">
+            <h3>Held Level <span id="heroLevel">1</span></h3>
+            <div class="stat-bars">
+              <div class="stat-bar hp-bar">
+                <label>❤️ HP: <span id="heroHp">100</span>/<span id="heroMaxHp">100</span></label>
+                <div class="progress-container">
+                  <div class="progress-bar hp" id="heroHpBar" style="width: 100%;"></div>
+                </div>
+              </div>
+              <div class="stat-bar exp-bar">
+                <label>⭐ EXP: <span id="heroExp">0</span>/<span id="heroExpNext">100</span></label>
+                <div class="progress-container">
+                  <div class="progress-bar exp" id="heroExpBar" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-combat-stats">
+            <div class="stat-item">⚔️ Aanval: <span id="heroAttack">10</span></div>
+            <div class="stat-item">🛡️ Verdediging: <span id="heroDefense">5</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rest Status -->
+      <div id="restStatus" class="rest-status" style="display: none;">
+        <p>😴 Held rust uit... <span id="restTimeLeft">30</span>s resterend</p>
+      </div>
+
+      <!-- Adventure Controls -->
+      <div class="adventure-controls">
+        <button id="startAdventureBtn" class="start-adventure-btn">🚀 Start Avontuur</button>
+        <button id="stopAdventureBtn" class="stop-adventure-btn" disabled>🛑 Stop Avontuur</button>
+      </div>
+    </div>
+
+    <!-- Combat Area -->
+    <div class="panel combat-panel">
+      <h2>⚔️ Gevecht</h2>
+      <div id="combatArea" class="combat-area">
+        <div class="combat-participants">
+          <div class="participant hero-participant">
+            <div class="participant-sprite sprite-idle">🛡️</div>
+            <div class="participant-info">
+              <h4>Held</h4>
+            </div>
+          </div>
+          
+          <div class="combat-vs">VS</div>
+          
+          <div class="participant enemy-participant">
+            <div class="participant-sprite sprite-idle" id="enemySprite">👹</div>
+            <div class="participant-info">
+              <h4 id="enemyName">Goblin</h4>
+              <div class="enemy-hp-bar">
+                <label>❤️ <span id="enemyHp">30</span>/<span id="enemyMaxHp">30</span></label>
+                <div class="progress-container">
+                  <div class="progress-bar enemy-hp" id="enemyHpBar" style="width: 100%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adventure Stats -->
+      <div class="adventure-stats">
+        <div class="stat-item">🌊 Wave: <span id="currentWave">1</span></div>
+        <div class="stat-item">💀 Verslagen: <span id="enemiesDefeated">0</span></div>
+        <div class="stat-item">💰 Verdiend: <span id="goldEarned">0</span></div>
+      </div>
+    </div>
+
+    <!-- Hero Upgrades Panel -->
+    <div class="panel upgrades-panel">
+      <h2>⚒️ Held Upgrades</h2>
+      <div class="upgrade-grid">
+        <div class="upgrade-item">
+          <div class="upgrade-info">
+            <h4>⚔️ Aanval</h4>
+            <p>Level <span id="attackLevel">0</span></p>
+          </div>
+          <button id="upgradeAttackBtn" class="upgrade-btn">
+            <span id="attackCost">100</span>💰
+          </button>
+        </div>
+
+        <div class="upgrade-item">
+          <div class="upgrade-info">
+            <h4>🛡️ Verdediging</h4>
+            <p>Level <span id="defenseLevel">0</span></p>
+          </div>
+          <button id="upgradeDefenseBtn" class="upgrade-btn">
+            <span id="defenseCost">150</span>💰
+          </button>
+        </div>
+
+        <div class="upgrade-item">
+          <div class="upgrade-info">
+            <h4>❤️ Gezondheid</h4>
+            <p>Level <span id="healthLevel">0</span></p>
+          </div>
+          <button id="upgradeHealthBtn" class="upgrade-btn">
+            <span id="healthCost">200</span>💰
+          </button>
+        </div>
+
+        <div class="upgrade-item">
+          <div class="upgrade-info">
+            <h4>⚡ Herstel</h4>
+            <p>Level <span id="recoveryLevel">0</span></p>
+          </div>
+          <button id="upgradeRecoveryBtn" class="upgrade-btn">
+            <span id="recoveryCost">300</span>💰
+          </button>
+        </div>
+
+        <div class="upgrade-item">
+          <div class="upgrade-info">
+            <h4>🍀 Geluk</h4>
+            <p>Level <span id="luckLevel">0</span></p>
+          </div>
+          <button id="upgradeLuckBtn" class="upgrade-btn">
+            <span id="luckCost">500</span>💰
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Fixed Reset Button at bottom -->
   <div class="reset-container">
     <button id="resetGameBtn" class="reset-btn">🔄 Reset Spel</button>
@@ -332,6 +479,7 @@
   <script src="js/upgrades.js"></script>
   <script src="js/building.js"></script>
   <script src="js/combat.js"></script>
+  <script src="js/adventure.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

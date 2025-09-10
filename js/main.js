@@ -35,6 +35,7 @@ const Game = {
       Upgrades.init();
       Building.init();
       Combat.init();
+      Adventure.init();
       
       // Setup global event listeners
       this.setupGlobalEvents();
@@ -166,6 +167,9 @@ const Game = {
       
       // Process combat cooldowns
       Combat.processCooldowns();
+      
+      // Process adventure timers
+      Adventure.processTick();
       
       // Update UI
       UI.updateAll();
@@ -315,6 +319,7 @@ const Game = {
       Upgrades.reset();
       Building.reset();
       Combat.reset();
+      Adventure.reset();
       
       // Restart game
       this.isInitialized = false;
@@ -333,6 +338,7 @@ const Game = {
         generators: GameState.generators,
         camps: GameState.camps,
         building: GameState.building,
+        adventure: GameState.adventure,
         timestamp: Date.now(),
         version: '1.0'
       };
@@ -379,6 +385,7 @@ const Game = {
             Object.assign(GameState.generators, saveData.generators || {});
             Object.assign(GameState.camps, saveData.camps || {});
             Object.assign(GameState.building, saveData.building || {});
+            Object.assign(GameState.adventure, saveData.adventure || {});
             
             // Save to localStorage
             GameUtils.saveGame();
@@ -434,4 +441,5 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
   window.GameState = GameState;
   window.GameUtils = GameUtils;
   window.addGold = (amount) => GameUtils.addGold(amount);
+  window.analyzeBalance = () => Adventure.analyzeBalance();
 }

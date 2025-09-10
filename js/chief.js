@@ -12,14 +12,9 @@ const Chief = {
   // Setup event listeners
   setupEventListeners() {
     const chiefSprite = document.getElementById('chiefSprite');
-    const chiefBtn = document.getElementById('chiefBtn');
     
     if (chiefSprite) {
       chiefSprite.addEventListener('click', () => this.clickChief());
-    }
-    
-    if (chiefBtn) {
-      chiefBtn.addEventListener('click', () => this.clickChief());
     }
   },
 
@@ -42,16 +37,11 @@ const Chief = {
     GameState.chief.busy = true;
     
     const chiefSprite = document.getElementById('chiefSprite');
-    const chiefBtn = document.getElementById('chiefBtn');
     
-    // Add working animation
+    // Add working animation and disable click
     if (chiefSprite) {
-      chiefSprite.classList.add('working');
-    }
-    
-    // Disable button
-    if (chiefBtn) {
-      chiefBtn.disabled = true;
+      chiefSprite.classList.add('working', 'disabled');
+      chiefSprite.classList.remove('clickable');
     }
 
     // Start progress animation
@@ -104,14 +94,9 @@ const Chief = {
     if (chiefSprite) {
       VisualEffects.createFloatingGold(chiefSprite, goldEarned);
       VisualEffects.createParticles(chiefSprite);
-      chiefSprite.classList.remove('working');
-    }
-    
-    // Re-enable button
-    const chiefBtn = document.getElementById('chiefBtn');
-    if (chiefBtn) {
-      chiefBtn.disabled = false;
-      VisualEffects.pulseButton('chiefBtn');
+      chiefSprite.classList.remove('working', 'disabled');
+      chiefSprite.classList.add('clickable');
+      VisualEffects.pulseElement(chiefSprite);
     }
     
     // Reset progress bar
@@ -254,12 +239,8 @@ const Chief = {
     
     const chiefSprite = document.getElementById('chiefSprite');
     if (chiefSprite) {
-      chiefSprite.classList.remove('working');
-    }
-    
-    const chiefBtn = document.getElementById('chiefBtn');
-    if (chiefBtn) {
-      chiefBtn.disabled = false;
+      chiefSprite.classList.remove('working', 'disabled');
+      chiefSprite.classList.add('clickable');
     }
     
     UI.updateProgressBar(0);
