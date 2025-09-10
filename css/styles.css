@@ -647,6 +647,49 @@ button:disabled {
   opacity: 0.9;
 }
 
+/* Desktop - keep original generator layout */
+@media (min-width: 769px) {
+  .generator-item {
+    display: flex !important;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .generator-sprite {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5em;
+    flex-shrink: 0;
+  }
+  
+  .generator-info {
+    flex: 1;
+    display: block !important;
+  }
+  
+  .generator-info .generator-name {
+    font-size: 1em;
+    margin-bottom: 4px;
+  }
+  
+  .generator-info .generator-count {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #1a6b1a;
+    margin-bottom: 4px;
+  }
+  
+  .generator-total {
+    font-size: 1.0em;
+    font-weight: bold;
+    color: #2d7d32;
+  }
+  
+  .buy-btn {
+    flex-shrink: 0;
+  }
+}
+
 /* Mobile responsiveness for new elements */
 @media (max-width: 768px) {
   .skill-buttons {
@@ -1153,32 +1196,61 @@ select, input {
   
   /* Generator improvements for mobile */
   .generator-item {
-    flex-direction: column;
-    text-align: center;
-    gap: 8px;
+    display: grid;
+    grid-template-areas: 
+      "sprite name-count"
+      "total buy-btn";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 8px 12px;
     padding: 12px;
-  }
-  
-  .generator-info {
-    order: 1;
-    width: 100%;
+    align-items: center;
   }
   
   .generator-sprite {
-    order: 0;
-    width: 50px;
-    height: 50px;
-    font-size: 1.5em;
-    margin: 0 auto 8px auto;
+    grid-area: sprite;
+    width: 40px;
+    height: 40px;
+    font-size: 1.3em;
+    align-self: start;
+  }
+  
+  .generator-info {
+    grid-area: name-count;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .generator-info .generator-name {
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+  
+  .generator-info .generator-count {
+    font-size: 0.85em;
+    color: #1a6b1a;
+    font-weight: normal;
+    margin: 0;
+  }
+  
+  .generator-total {
+    grid-area: total;
+    font-size: 0.85em;
+    font-weight: bold;
+    color: #2d7d32;
+    margin: 0;
   }
   
   .buy-btn {
-    order: 2;
-    width: 100%;
-    min-height: 48px;
-    font-size: 14px;
-    padding: 12px;
-    margin: 5px 0;
+    grid-area: buy-btn;
+    min-height: 40px;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    justify-self: end;
   }
   
   .generator-count, .generator-total {
