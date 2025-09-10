@@ -716,7 +716,8 @@ const UI = {
       } else {
         prestigeBtn.disabled = true;
         const needed = GameUtils.formatNumber(stats.goldNeededForPrestige);
-        prestigeRequirement.textContent = `Nog ${needed}💰 nodig`;
+        const threshold = GameUtils.formatNumber(stats.currentThreshold);
+        prestigeRequirement.textContent = `Vereist: ${threshold}💰 totaal (nog ${needed}💰)`;
       }
     }
   },

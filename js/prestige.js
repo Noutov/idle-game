@@ -21,9 +21,14 @@ const Prestige = {
     }
   },
 
+  // Get current prestige threshold (increases each time)
+  getCurrentThreshold() {
+    return this.PRESTIGE_THRESHOLD * Math.pow(10, GameState.prestige.prestigeCount);
+  },
+
   // Check if prestige is available
   canPrestige() {
-    return GameState.prestige.totalGoldEarned >= this.PRESTIGE_THRESHOLD;
+    return GameState.prestige.totalGoldEarned >= this.getCurrentThreshold();
   },
 
   // Calculate wisdom points that would be gained
@@ -31,8 +36,9 @@ const Prestige = {
     if (!this.canPrestige()) return 0;
     
     const totalGold = GameState.prestige.totalGoldEarned;
-    // Formula: sqrt(totalGold / 1M) for wisdom points
-    return Math.floor(Math.sqrt(totalGold / 1000000));
+    const currentThreshold = this.getCurrentThreshold();
+    // Formula: sqrt(totalGold / currentThreshold) for wisdom points
+    return Math.floor(Math.sqrt(totalGold / currentThreshold)) + 1;
   },
 
   // Get current prestige multiplier from wisdom
@@ -49,7 +55,7 @@ const Prestige = {
   // Show prestige confirmation dialog
   showPrestigeConfirmation() {
     if (!this.canPrestige()) {
-      const needed = GameUtils.formatNumber(this.PRESTIGE_THRESHOLD - GameState.prestige.totalGoldEarned);
+      const needed = GameUtils.formatNumber(this.getCurrentThreshold() - GameState.prestige.totalGoldEarned);
       UI.showNotification(`Je hebt ${needed}💰 meer nodig voor Prestige!`, 'error');
       return;
     }
@@ -233,7 +239,8 @@ const Prestige = {
       currentMultiplier: this.getPrestigeMultiplier(),
       bonusPercentage: ((this.getPrestigeMultiplier() - 1) * 100).toFixed(1),
       wisdomGainAvailable: this.calculateWisdomGain(),
-      goldNeededForPrestige: Math.max(0, this.PRESTIGE_THRESHOLD - GameState.prestige.totalGoldEarned)
+      goldNeededForPrestige: Math.max(0, this.getCurrentThreshold() - GameState.prestige.totalGoldEarned),
+      currentThreshold: this.getCurrentThreshold()
     };
   },
 
