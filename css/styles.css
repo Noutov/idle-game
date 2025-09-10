@@ -724,32 +724,38 @@ button:disabled {
 }
 
 .chief-skills {
-  margin-top: 15px;
-  padding-top: 15px;
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid #654321;
+}
+
+.chief-skills h4 {
+  margin: 0 0 6px 0; /* Reduce header margin */
+  font-size: 0.9em; /* Smaller header */
 }
 
 .skill-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 10px;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 .skill-btn {
   background: linear-gradient(145deg, #4caf50, #2e7d32);
   color: white;
   border: 2px solid #1b5e20;
-  border-radius: 8px;
-  padding: 10px 8px;
+  border-radius: 6px;
+  padding: 6px 4px;
   cursor: pointer;
   font-weight: bold;
   transition: all 0.3s;
-  min-height: 60px;
+  min-height: 40px; /* Reduced from 60px */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 0.8em; /* Smaller text */
 }
 
 .skill-btn:hover:not(:disabled) {
@@ -769,9 +775,10 @@ button:disabled {
 }
 
 .skill-btn small {
-  font-size: 0.7em;
-  margin-top: 2px;
+  font-size: 0.65em; /* Even smaller */
+  margin-top: 1px;
   opacity: 0.9;
+  line-height: 1.1; /* Tighter line spacing */
 }
 
 .rally-btn:not(:disabled) {
@@ -900,7 +907,18 @@ button:disabled {
 /* Mobile responsiveness for new elements */
 @media (max-width: 768px) {
   .skill-buttons {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr); /* Keep 3 columns on mobile too */
+    gap: 4px; /* Smaller gap on mobile */
+  }
+  
+  .skill-btn {
+    min-height: 35px; /* Even smaller on mobile */
+    padding: 4px 2px;
+    font-size: 0.7em;
+  }
+  
+  .skill-btn small {
+    font-size: 0.6em;
   }
   
   .prestige-info {
