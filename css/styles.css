@@ -597,13 +597,52 @@ button:disabled {
   justify-content: center;
   font-size: 1.4em;
   flex-shrink: 0;
-  background: 
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 60%),
-    linear-gradient(135deg, #f5f0e8 0%, #e8d7bb 100%);
-  box-shadow: 
-    0 2px 6px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255,255,255,0.6),
-    inset 0 -1px 0 rgba(139, 115, 85, 0.3);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+/* Generator clickable states */
+.generator-sprite.clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.generator-sprite.clickable:hover {
+  transform: translateY(-2px) scale(1.05);
+  border-image: linear-gradient(45deg, #4caf50, #66bb6a, #4caf50) 1;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+.generator-sprite.clickable:active {
+  transform: translateY(0px) scale(1.02);
+}
+
+/* Generator disabled/working states */
+.generator-sprite.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.generator-sprite.working {
+  animation: generatorWorking 2s ease-in-out infinite;
+}
+
+@keyframes generatorWorking {
+  0%, 100% { 
+    transform: scale(1); 
+    filter: brightness(1);
+  }
+  50% { 
+    transform: scale(1.02); 
+    filter: brightness(1.2);
+  }
+}
+
+/* Generator progress bars */
+.generator-progress {
+  background: linear-gradient(90deg, #4caf50, #66bb6a);
+  border-radius: 3px;
   transition: all 0.2s ease;
 }
 

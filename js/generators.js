@@ -16,9 +16,10 @@ const Generators = {
   // Initialize generator system
   init() {
     this.setupEventListeners();
+    this.initializeGeneratorStates();
   },
 
-  // Setup event listeners for buy buttons
+  // Setup event listeners for buy buttons and generator sprites
   setupEventListeners() {
     const buyButtons = [
       { id: 'buyVillagerBtn', type: 'villager' },
@@ -28,10 +29,27 @@ const Generators = {
       { id: 'buyEliteBtn', type: 'elite' }
     ];
 
+    const generatorSprites = [
+      { id: 'villagerSprite', type: 'villager' },
+      { id: 'traderSprite', type: 'trader' },
+      { id: 'warriorSprite', type: 'warrior' },
+      { id: 'seerSprite', type: 'seer' },
+      { id: 'eliteSprite', type: 'elite' }
+    ];
+
+    // Buy button listeners
     buyButtons.forEach(({ id, type }) => {
       const button = document.getElementById(id);
       if (button) {
         button.addEventListener('click', () => this.buyGenerator(type));
+      }
+    });
+
+    // Generator sprite click listeners
+    generatorSprites.forEach(({ id, type }) => {
+      const sprite = document.getElementById(id);
+      if (sprite) {
+        sprite.addEventListener('click', () => this.clickGenerator(type));
       }
     });
   },
@@ -73,6 +91,9 @@ const Generators = {
         'success'
       );
       
+      // Update sprite clickability
+      this.updateGeneratorSprite(type);
+      
       // Update displays
       GameEvents.emit('generatorsChanged');
       GameEvents.emit('goldChanged');
@@ -84,6 +105,147 @@ const Generators = {
     }
     
     return false;
+  },
+
+  // Click a generator to manually trigger work
+  clickGenerator(type) {
+    const generator = GameState.generators[type];
+    if (!generator) {
+      console.error(`Unknown generator type: ${type}`);
+      return false;
+    }
+
+    // Check if generator has any units
+    if (generator.count <= 0) {
+      UI.showNotification(`Je hebt geen ${this.config[type].name}!`, 'warning');
+      return false;
+    }
+
+    // Check if already working
+    if (generator.busy) {
+      VisualEffects.showTooltip(
+        document.getElementById(`${type}Sprite`),
+        'Al bezig met werken...',
+        2000
+      );
+      return false;
+    }
+
+    // Check if automated (building level)
+    if (this.isAutomated(type)) {
+      UI.showNotification(`${this.config[type].name} werken automatisch!`, 'info');
+      return false;
+    }
+
+    // Start manual work
+    this.startGeneratorWork(type);
+    return true;
+  },
+
+  // Check if generator is automated by building level
+  isAutomated(type) {
+    const generator = GameState.generators[type];
+    const buildingLevel = GameState.building.level;
+    return buildingLevel >= generator.autoLevel;
+  },
+
+  // Start generator work (manual or auto)
+  startGeneratorWork(type) {
+    const generator = GameState.generators[type];
+    generator.busy = true;
+    generator.progress = 0;
+    generator.lastWorkTime = Date.now();
+
+    // Update sprite visual state
+    const sprite = document.getElementById(`${type}Sprite`);
+    if (sprite) {
+      sprite.classList.add('working', 'disabled');
+      sprite.classList.remove('clickable');
+    }
+
+    // Start progress animation
+    this.animateGeneratorProgress(type);
+    
+    // Schedule work completion
+    setTimeout(() => {
+      this.completeGeneratorWork(type);
+    }, generator.workTime);
+  },
+
+  // Complete generator work and give rewards
+  completeGeneratorWork(type) {
+    const generator = GameState.generators[type];
+    if (!generator.busy) return; // Already completed or cancelled
+
+    // Calculate gold reward (GPS * count * time in seconds)
+    const timeInSeconds = generator.workTime / 1000;
+    let goldReward = Math.floor(generator.gps * generator.count * timeInSeconds);
+
+    // Apply building bonuses if available
+    if (typeof Building !== 'undefined') {
+      goldReward = Math.floor(goldReward * Building.getGeneratorMultiplier(type));
+    }
+
+    // Apply prestige multiplier
+    goldReward = Math.floor(goldReward * GameState.prestige.bonusMultiplier);
+
+    // Give reward
+    GameUtils.addGold(goldReward);
+
+    // Visual effects
+    const sprite = document.getElementById(`${type}Sprite`);
+    if (sprite) {
+      VisualEffects.createFloatingGold(sprite, goldReward);
+      VisualEffects.createParticles(sprite);
+      sprite.classList.remove('working', 'disabled');
+      
+      // Re-enable if not automated
+      if (!this.isAutomated(type)) {
+        sprite.classList.add('clickable');
+        VisualEffects.pulseElement(sprite, '#4caf50');
+      }
+    }
+
+    // Reset progress
+    generator.busy = false;
+    generator.progress = 0;
+
+    // Emit events
+    GameEvents.emit('generatorWorked', { type, goldReward });
+    GameEvents.emit('goldChanged');
+
+    // Auto-restart if automated
+    if (this.isAutomated(type)) {
+      setTimeout(() => {
+        this.startGeneratorWork(type);
+      }, 500); // Small delay between auto cycles
+    }
+  },
+
+  // Animate generator progress bar
+  animateGeneratorProgress(type) {
+    const generator = GameState.generators[type];
+    const progressBar = document.getElementById(`${type}Progress`);
+    if (!progressBar || !generator.busy) return;
+
+    const startTime = generator.lastWorkTime;
+    const duration = generator.workTime;
+
+    const updateProgress = () => {
+      if (!generator.busy) return;
+
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min((elapsed / duration) * 100, 100);
+      
+      progressBar.style.width = `${progress}%`;
+      generator.progress = progress;
+
+      if (progress < 100) {
+        requestAnimationFrame(updateProgress);
+      }
+    };
+
+    requestAnimationFrame(updateProgress);
   },
 
   // Show visual effect when purchasing generator
@@ -104,24 +266,55 @@ const Generators = {
     }
   },
 
-  // Process generator income (called every second)
+  // Process generator income and automation (called every second)
   processIncome() {
     let totalIncome = 0;
     
     for (const [type, generator] of Object.entries(GameState.generators)) {
-      // Get enhanced GPS including building bonuses
-      const enhancedGps = typeof Building !== 'undefined' ? 
-        Building.getEnhancedGPS(type) : generator.gps;
-      const income = generator.count * enhancedGps;
-      totalIncome += income;
+      if (generator.count <= 0) continue;
+
+      // Check if this generator should be automated
+      if (this.isAutomated(type) && !generator.busy) {
+        // Start automated work cycle
+        this.startGeneratorWork(type);
+      }
+
+      // Old system: passive income for automated generators only
+      if (this.isAutomated(type) && generator.busy) {
+        // Enhanced old system provides baseline income even during work
+        const enhancedGps = typeof Building !== 'undefined' ? 
+          Building.getEnhancedGPS(type) : generator.gps;
+        const passiveIncome = Math.floor(generator.count * enhancedGps * 0.3); // 30% passive income
+        totalIncome += passiveIncome;
+      }
     }
     
     if (totalIncome > 0) {
       GameUtils.addGold(totalIncome);
-      return totalIncome;
     }
     
-    return 0;
+    return totalIncome;
+  },
+
+  // Initialize generator UI states on game load
+  initializeGeneratorStates() {
+    const types = ['villager', 'trader', 'warrior', 'seer', 'elite'];
+    
+    types.forEach(type => {
+      const generator = GameState.generators[type];
+      const sprite = document.getElementById(`${type}Sprite`);
+      
+      if (sprite && generator) {
+        // Set initial state
+        sprite.classList.remove('working', 'disabled');
+        
+        if (generator.count > 0 && !this.isAutomated(type)) {
+          sprite.classList.add('clickable');
+        } else {
+          sprite.classList.remove('clickable');
+        }
+      }
+    });
   },
 
   // Get total generators owned
@@ -300,10 +493,32 @@ const Generators = {
     for (const [type, generator] of Object.entries(GameState.generators)) {
       generator.count = 0;
       generator.cost = GameUtils.getDefaultGeneratorCost(type);
+      generator.busy = false;
+      generator.progress = 0;
+      generator.lastWorkTime = 0;
     }
     
     this.stopAllAutoBuy();
+    this.initializeGeneratorStates();
     GameEvents.emit('generatorsChanged');
+  },
+
+  // Update generator sprite visual state
+  updateGeneratorSprite(type) {
+    const generator = GameState.generators[type];
+    const sprite = document.getElementById(`${type}Sprite`);
+    
+    if (!sprite) return;
+    
+    sprite.classList.remove('working', 'disabled', 'clickable');
+    
+    if (generator.count > 0) {
+      if (generator.busy) {
+        sprite.classList.add('working', 'disabled');
+      } else if (!this.isAutomated(type)) {
+        sprite.classList.add('clickable');
+      }
+    }
   },
 
   // Utility function to capitalize first letter

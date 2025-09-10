@@ -28,11 +28,57 @@ const GameState = {
 
   // Generators
   generators: {
-    villager: { count: 0, cost: 5, gps: 1 },
-    trader: { count: 0, cost: 25, gps: 3 },
-    warrior: { count: 0, cost: 100, gps: 5 },
-    seer: { count: 0, cost: 500, gps: 20 },
-    elite: { count: 0, cost: 2000, gps: 100 }
+    villager: { 
+      count: 0, 
+      cost: 5, 
+      gps: 1,
+      // Manual click system
+      busy: false,
+      progress: 0,
+      workTime: 2000, // 2 seconds - fast
+      lastWorkTime: 0,
+      autoLevel: 1 // Building level required for auto-work
+    },
+    trader: { 
+      count: 0, 
+      cost: 25, 
+      gps: 3,
+      busy: false,
+      progress: 0,
+      workTime: 4000, // 4 seconds
+      lastWorkTime: 0,
+      autoLevel: 2
+    },
+    warrior: { 
+      count: 0, 
+      cost: 100, 
+      gps: 5,
+      busy: false,
+      progress: 0,
+      workTime: 6000, // 6 seconds
+      lastWorkTime: 0,
+      autoLevel: 3
+    },
+    seer: { 
+      count: 0, 
+      cost: 500, 
+      gps: 20,
+      busy: false,
+      progress: 0,
+      workTime: 10000, // 10 seconds
+      lastWorkTime: 0,
+      autoLevel: 4
+    },
+    elite: { 
+      count: 0, 
+      cost: 2000, 
+      gps: 100,
+      busy: false,
+      progress: 0,
+      workTime: 15000, // 15 seconds - slow but powerful
+      lastWorkTime: 0,
+      autoLevel: 5
+    }
   },
 
   // Camps for attacking
