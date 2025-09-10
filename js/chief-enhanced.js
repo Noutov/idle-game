@@ -102,9 +102,33 @@ const ChiefEnhanced = {
     UI.showNotification('Generator Bonus Actief! +50% voor 10 sec', 'success');
   },
 
-  // Get click streak multiplier
+  // Get click streak multiplier with progressive scaling
   getClickStreakMultiplier() {
-    return 1 + (GameState.chief.clickStreak * 0.1); // +10% per streak level
+    const streak = GameState.chief.clickStreak;
+    if (streak === 0) return 1;
+    
+    // Calculate base multiplier that scales with game progression
+    const totalGoldEarned = GameState.prestige.totalGoldEarned;
+    const progressFactor = Math.max(0.3, 1 - (totalGoldEarned / 100000)); // Scale down as player progresses
+    
+    // Early game: much higher bonuses, Late game: more moderate
+    // Streak 1: +50% → +15%, Streak 5: +200% → +75%, Streak 10: +400% → +150%
+    let multiplier;
+    if (streak <= 3) {
+      // First 3 clicks: exponential growth
+      multiplier = 1 + (Math.pow(streak, 1.8) * 0.5 * progressFactor);
+    } else if (streak <= 7) {
+      // Clicks 4-7: linear growth  
+      const baseBonus = Math.pow(3, 1.8) * 0.5 * progressFactor;
+      multiplier = 1 + baseBonus + ((streak - 3) * 0.3 * progressFactor);
+    } else {
+      // Clicks 8-10: diminishing returns
+      const baseBonus = Math.pow(3, 1.8) * 0.5 * progressFactor + (4 * 0.3 * progressFactor);
+      multiplier = 1 + baseBonus + ((streak - 7) * 0.15 * progressFactor);
+    }
+    
+    // Ensure minimum meaningful bonus even in late game
+    return Math.max(multiplier, 1 + (streak * 0.05));
   },
 
   // Rally Skill: 2x generator speed for 30 seconds

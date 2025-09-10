@@ -258,7 +258,7 @@ const Upgrades = {
     return {
       chiefGoldLevel: GameState.chief.gold,
       chiefGoldCost: GameState.chief.goldCost,
-      chiefCooldownLevel: 2000 - GameState.chief.cooldown,
+      chiefCooldownLevel: (5000 - GameState.chief.cooldown) / 500,
       chiefCooldownCost: GameState.chief.cooldownCost,
       totalUpgradesAffordable: this.countAffordableUpgrades(),
       recommendedUpgrade: this.getRecommendations()[0]
@@ -293,8 +293,8 @@ const Upgrades = {
     }
     
     // Calculate spent on chief cooldown upgrades
-    const cooldownLevel = (2000 - GameState.chief.cooldown) / 500;
-    let cooldownCost = 100; // Initial cost
+    const cooldownLevel = (5000 - GameState.chief.cooldown) / 500;
+    let cooldownCost = 75; // Initial cost
     for (let i = 0; i < cooldownLevel; i++) {
       total += cooldownCost;
       cooldownCost = Math.floor(cooldownCost * 2);

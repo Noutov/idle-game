@@ -494,6 +494,27 @@ button:disabled {
   font-size: 0.9em;
   color: #ff8f00;
   font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+/* High streak visual enhancement */
+.click-streak.high-streak {
+  background: rgba(255, 87, 34, 0.3);
+  border: 2px solid #ff5722;
+  color: #ff3d00;
+  animation: streakPulse 1s infinite alternate;
+  box-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
+}
+
+@keyframes streakPulse {
+  from { 
+    transform: scale(1); 
+    box-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
+  }
+  to { 
+    transform: scale(1.02); 
+    box-shadow: 0 0 15px rgba(255, 87, 34, 0.7);
+  }
 }
 
 .chief-skills {

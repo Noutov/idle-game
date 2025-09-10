@@ -97,16 +97,41 @@ const UI = {
 
   // Update chief-related UI elements
   updateChief() {
+    // Calculate effective gold including multipliers
+    const baseGold = GameState.chief.gold;
+    let effectiveGold = baseGold;
+    
+    // Apply streak multiplier if available
+    if (typeof ChiefEnhanced !== 'undefined') {
+      effectiveGold = Math.floor(effectiveGold * ChiefEnhanced.getClickStreakMultiplier());
+    }
+    
+    // Apply prestige multiplier if available
+    if (typeof Prestige !== 'undefined') {
+      effectiveGold = Math.floor(effectiveGold * Prestige.getPrestigeMultiplier());
+    }
+    
+    // Update main gold display
     if (this.elements.chiefGold) {
-      this.elements.chiefGold.textContent = GameState.chief.gold;
+      if (effectiveGold > baseGold) {
+        // Show both base and effective gold when multiplied
+        this.elements.chiefGold.innerHTML = `<span style="text-decoration: line-through; opacity: 0.7;">${baseGold}</span> ${effectiveGold}`;
+      } else {
+        this.elements.chiefGold.textContent = baseGold;
+      }
     }
     
     if (this.elements.chiefCooldownText) {
       this.elements.chiefCooldownText.textContent = (GameState.chief.cooldown / 1000).toFixed(1);
     }
     
+    // Update stats display
     if (this.elements.chiefGoldStat) {
-      this.elements.chiefGoldStat.textContent = GameState.chief.gold;
+      if (effectiveGold > baseGold) {
+        this.elements.chiefGoldStat.innerHTML = `<span style="text-decoration: line-through; opacity: 0.7;">${baseGold}</span> ${effectiveGold}`;
+      } else {
+        this.elements.chiefGoldStat.textContent = baseGold;
+      }
     }
     
     if (this.elements.chiefCooldownStat) {
@@ -579,11 +604,24 @@ const UI = {
       if (stats.clickStreak > 0) {
         streakDisplay.style.display = 'block';
         streakCount.textContent = stats.clickStreak;
-        streakMultiplier.textContent = stats.clickMultiplier.toFixed(1);
+        // Show bonus percentage instead of raw multiplier for clarity
+        const bonusPercent = Math.round((stats.clickMultiplier - 1) * 100);
+        streakMultiplier.textContent = `+${bonusPercent}%`;
+        
+        // Add visual emphasis for high streaks
+        if (stats.clickStreak >= 7) {
+          streakDisplay.classList.add('high-streak');
+        } else {
+          streakDisplay.classList.remove('high-streak');
+        }
       } else {
         streakDisplay.style.display = 'none';
+        streakDisplay.classList.remove('high-streak');
       }
     }
+    
+    // Update chief gold display when streak changes
+    this.updateChief();
     
     // Update generator bonus display
     const bonusDisplay = document.getElementById('generatorBonusDisplay');
