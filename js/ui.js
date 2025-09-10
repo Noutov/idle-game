@@ -47,7 +47,10 @@ const UI = {
       this.updateButtons();
       this.updatePrestige();
     });
-    GameEvents.on('generatorsChanged', () => this.updateGenerators());
+    GameEvents.on('generatorsChanged', () => {
+      this.updateGenerators();
+      this.updateButtons(); // Also update button states when generators change
+    });
     GameEvents.on('chiefChanged', () => this.updateChief());
     GameEvents.on('chiefEnhancedChanged', () => this.updateChiefEnhanced());
     GameEvents.on('campsChanged', () => this.updateCombat());
@@ -450,9 +453,9 @@ const UI = {
     ['villager', 'trader', 'warrior', 'seer', 'elite'].forEach(type => {
       const upgradeInfo = Building.getGeneratorUpgradeInfo(type);
 
-      ['Speed', 'GoldBonus', 'LuckBonus'].forEach(upgradeType => {
-        const camelCase = upgradeType === 'GoldBonus' ? 'goldBonus' : 
-                         upgradeType === 'LuckBonus' ? 'luckBonus' : 'speed';
+      ['Speed', 'Gold', 'Luck'].forEach(upgradeType => {
+        const camelCase = upgradeType === 'Gold' ? 'goldBonus' : 
+                         upgradeType === 'Luck' ? 'luckBonus' : 'speed';
         
         const isUnlocked = Building.isUpgradeTypeUnlocked(camelCase, GameState.building.level);
         const currentLevel = upgradeInfo[camelCase].current;
@@ -483,7 +486,9 @@ const UI = {
         }
 
         // Update button state
-        const btnElement = document.getElementById(`${type}${upgradeType}Btn`);
+        const btnSuffix = upgradeType === 'Gold' ? 'GoldBonusBtn' : 
+                          upgradeType === 'Luck' ? 'LuckBonusBtn' : 'SpeedBtn';
+        const btnElement = document.getElementById(`${type}${btnSuffix}`);
         if (btnElement) {
           if (isUnlocked && currentLevel < maxLevel) {
             btnElement.disabled = !Building.canUpgradeGenerator(type, camelCase);
@@ -497,13 +502,14 @@ const UI = {
     });
   },
 
-  // Get required building level for upgrade unlock
+  // Get the building level required to unlock an upgrade type
   getUpgradeUnlockLevel(upgradeType) {
     const unlockRequirements = {
-      speed: 1,
-      goldBonus: 2,
-      luckBonus: 3
+      speed: 1,      // Unlocked at building level 1
+      goldBonus: 2,  // Unlocked at building level 2  
+      luckBonus: 3   // Unlocked at building level 3
     };
+    
     return unlockRequirements[upgradeType] || 1;
   },
 
