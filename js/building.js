@@ -18,7 +18,7 @@ const Building = {
     }
 
     // Generator upgrade listeners
-    ['villager', 'warrior', 'seer', 'elite'].forEach(type => {
+    ['villager', 'trader', 'warrior', 'seer', 'elite'].forEach(type => {
       const speedBtn = document.getElementById(`${type}SpeedBtn`);
       const goldBtn = document.getElementById(`${type}GoldBonusBtn`);
       const luckBtn = document.getElementById(`${type}LuckBonusBtn`);
@@ -131,9 +131,10 @@ const Building = {
   getUpgradeCost(generatorType, upgradeType, currentLevel) {
     const baseCosts = {
       villager: { speed: 100, goldBonus: 150, luckBonus: 200 },
-      warrior: { speed: 300, goldBonus: 450, luckBonus: 600 },
-      seer: { speed: 800, goldBonus: 1200, luckBonus: 1600 },
-      elite: { speed: 2000, goldBonus: 3000, luckBonus: 4000 }
+      trader: { speed: 200, goldBonus: 300, luckBonus: 400 },
+      warrior: { speed: 400, goldBonus: 600, luckBonus: 800 },
+      seer: { speed: 1000, goldBonus: 1500, luckBonus: 2000 },
+      elite: { speed: 2500, goldBonus: 3750, luckBonus: 5000 }
     };
 
     const baseCost = baseCosts[generatorType][upgradeType];
@@ -295,6 +296,7 @@ const Building = {
       upgradeCost: 500,
       upgrades: {
         villager: { speed: 0, goldBonus: 0, luckBonus: 0 },
+        trader: { speed: 0, goldBonus: 0, luckBonus: 0 },
         warrior: { speed: 0, goldBonus: 0, luckBonus: 0 },
         seer: { speed: 0, goldBonus: 0, luckBonus: 0 },
         elite: { speed: 0, goldBonus: 0, luckBonus: 0 }

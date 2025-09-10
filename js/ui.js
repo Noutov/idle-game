@@ -20,11 +20,11 @@ const UI = {
       'gold', 'gpsDisplay', 'chiefSprite', 'chiefBtn', 'chiefProgress',
       'chiefGold', 'chiefCooldownText', 'chiefGoldStat', 'chiefCooldownStat',
       'chiefGoldCost', 'chiefCooldownCost', 'upgradeGoldBtn', 'upgradeCooldownBtn',
-      'villagerCount', 'warriorCount', 'seerCount', 'eliteCount',
-      'villagerCost', 'warriorCost', 'seerCost', 'eliteCost',
-      'villagerGPS', 'warriorGPS', 'seerGPS', 'eliteGPS',
-      'villagerTotalGPS', 'warriorTotalGPS', 'seerTotalGPS', 'eliteTotalGPS',
-      'buyVillagerBtn', 'buyWarriorBtn', 'buySeerBtn', 'buyEliteBtn',
+      'villagerCount', 'traderCount', 'warriorCount', 'seerCount', 'eliteCount',
+      'villagerCost', 'traderCost', 'warriorCost', 'seerCost', 'eliteCost',
+      'villagerGPS', 'traderGPS', 'warriorGPS', 'seerGPS', 'eliteGPS',
+      'villagerTotalGPS', 'traderTotalGPS', 'warriorTotalGPS', 'seerTotalGPS', 'eliteTotalGPS',
+      'buyVillagerBtn', 'buyTraderBtn', 'buyWarriorBtn', 'buySeerBtn', 'buyEliteBtn',
       'warriorCount2', 'campSelect', 'warriorsToSend', 'attackBtn',
       'campCooldown', 'attackResult', 'resetGameBtn', 'selectedCampName',
       'camp1Reward', 'camp2Reward', 'camp3Reward',
@@ -447,7 +447,7 @@ const UI = {
   updateGeneratorUpgrades() {
     if (typeof Building === 'undefined' || GameState.building.level === 0) return;
 
-    ['villager', 'warrior', 'seer', 'elite'].forEach(type => {
+    ['villager', 'trader', 'warrior', 'seer', 'elite'].forEach(type => {
       const upgradeInfo = Building.getGeneratorUpgradeInfo(type);
 
       ['Speed', 'GoldBonus', 'LuckBonus'].forEach(upgradeType => {

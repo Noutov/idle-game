@@ -210,6 +210,7 @@ const Prestige = {
       upgradeCost: 500,
       upgrades: {
         villager: { speed: 0, goldBonus: 0, luckBonus: 0 },
+        trader: { speed: 0, goldBonus: 0, luckBonus: 0 },
         warrior: { speed: 0, goldBonus: 0, luckBonus: 0 },
         seer: { speed: 0, goldBonus: 0, luckBonus: 0 },
         elite: { speed: 0, goldBonus: 0, luckBonus: 0 }

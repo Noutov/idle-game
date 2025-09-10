@@ -131,8 +131,9 @@ const Game = {
       case 'Digit2':
       case 'Digit3':
       case 'Digit4':
+      case 'Digit5':
         const generatorIndex = parseInt(event.code.slice(-1)) - 1;
-        const generatorTypes = ['villager', 'warrior', 'seer', 'elite'];
+        const generatorTypes = ['villager', 'trader', 'warrior', 'seer', 'elite'];
         if (generatorTypes[generatorIndex]) {
           Generators.buyGenerator(generatorTypes[generatorIndex]);
         }

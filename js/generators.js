@@ -7,6 +7,7 @@ const Generators = {
   // Generator type configurations
   config: {
     villager: { name: 'Dorpelingen', emoji: '👨‍🌾', baseGps: 1 },
+    trader: { name: 'Handelsui', emoji: '🏺', baseGps: 3 },
     warrior: { name: 'Krijgers', emoji: '🛡️', baseGps: 5 },
     seer: { name: 'Zieners', emoji: '🔮', baseGps: 20 },
     elite: { name: 'Elite Krijgers', emoji: '⚔️', baseGps: 100 }
@@ -21,6 +22,7 @@ const Generators = {
   setupEventListeners() {
     const buyButtons = [
       { id: 'buyVillagerBtn', type: 'villager' },
+      { id: 'buyTraderBtn', type: 'trader' },
       { id: 'buyWarriorBtn', type: 'warrior' },
       { id: 'buySeerBtn', type: 'seer' },
       { id: 'buyEliteBtn', type: 'elite' }
