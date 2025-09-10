@@ -316,9 +316,9 @@ const Upgrades = {
   // Reset all upgrades
   reset() {
     GameState.chief.gold = 1;
-    GameState.chief.goldCost = 50;
-    GameState.chief.cooldown = 2000;
-    GameState.chief.cooldownCost = 100;
+    GameState.chief.goldCost = 25;
+    GameState.chief.cooldown = 5000;
+    GameState.chief.cooldownCost = 75;
     
     GameEvents.emit('chiefChanged');
   }
