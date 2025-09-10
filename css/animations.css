@@ -1,4 +1,97 @@
-/* Pixel Art Animations for Gallisch Dorp Game */
+/* Enhanced Animations for Gallisch Dorp Game */
+
+/* Magical sparkle effects */
+@keyframes magicalSparkle {
+  0% { 
+    opacity: 0; 
+    transform: scale(0) rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  20% { 
+    opacity: 1; 
+    transform: scale(1) rotate(72deg);
+    filter: hue-rotate(72deg);
+  }
+  40% { 
+    opacity: 0.8; 
+    transform: scale(1.2) rotate(144deg);
+    filter: hue-rotate(144deg);
+  }
+  60% { 
+    opacity: 0.6; 
+    transform: scale(0.8) rotate(216deg);
+    filter: hue-rotate(216deg);
+  }
+  80% { 
+    opacity: 0.3; 
+    transform: scale(0.5) rotate(288deg);
+    filter: hue-rotate(288deg);
+  }
+  100% { 
+    opacity: 0; 
+    transform: scale(0) rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Breathing/pulsing effect for important elements */
+@keyframes magicalBreathing {
+  0%, 100% { 
+    transform: scale(1);
+    filter: brightness(1) drop-shadow(0 0 5px rgba(218, 165, 32, 0.3));
+  }
+  50% { 
+    transform: scale(1.03);
+    filter: brightness(1.1) drop-shadow(0 0 15px rgba(218, 165, 32, 0.6));
+  }
+}
+
+/* Gold shimmer effect */
+@keyframes gentleGoldShimmer {
+  0%, 100% { 
+    filter: brightness(1) saturate(1);
+    text-shadow: 
+      1px 1px 2px rgba(0, 0, 0, 0.3),
+      0 0 8px rgba(255, 215, 0, 0.4);
+  }
+  25% { 
+    filter: brightness(1.05) saturate(1.1);
+    text-shadow: 
+      1px 1px 2px rgba(0, 0, 0, 0.3),
+      0 0 12px rgba(255, 215, 0, 0.6);
+  }
+  50% { 
+    filter: brightness(1.1) saturate(1.2);
+    text-shadow: 
+      1px 1px 2px rgba(0, 0, 0, 0.3),
+      0 0 16px rgba(255, 215, 0, 0.8);
+  }
+  75% { 
+    filter: brightness(1.05) saturate(1.1);
+    text-shadow: 
+      1px 1px 2px rgba(0, 0, 0, 0.3),
+      0 0 12px rgba(255, 215, 0, 0.6);
+  }
+}
+
+/* Celtic rune glow animation */
+@keyframes celticRuneGlow {
+  0%, 100% { 
+    color: #cd853f;
+    text-shadow: 0 0 8px rgba(205, 133, 63, 0.6);
+    transform: rotate(0deg) scale(1);
+  }
+  33% { 
+    color: #daa520;
+    text-shadow: 0 0 12px rgba(218, 165, 32, 0.8);
+    transform: rotate(120deg) scale(1.1);
+  }
+  66% { 
+    color: #ffd700;
+    text-shadow: 0 0 16px rgba(255, 215, 0, 1);
+    transform: rotate(240deg) scale(1.2);
+  }
+}
 
 /* Chief Working Animation - Pixel Perfect */
 .chief-sprite.working {
