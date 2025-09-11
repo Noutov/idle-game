@@ -157,6 +157,13 @@ const Generators = {
   // Start generator work (manual or auto)
   startGeneratorWork(type) {
     const generator = GameState.generators[type];
+    
+    // Prevent starting work if already busy
+    if (generator.busy) {
+      console.warn(`Generator ${type} already busy`);
+      return;
+    }
+    
     generator.busy = true;
     generator.progress = 0;
     generator.lastWorkTime = Date.now();
@@ -186,11 +193,15 @@ const Generators = {
     // Ensure minimum work time of 200ms
     effectiveWorkTime = Math.max(effectiveWorkTime, 200);
 
+    // Store effective work time on generator for reference
+    generator.effectiveWorkTime = effectiveWorkTime;
+    generator.workStartTime = Date.now();
+
     // Start progress animation with effective work time
-    this.animateGeneratorProgress(type, effectiveWorkTime);
+    this.animateGeneratorProgress(type);
     
     // Schedule work completion with effective work time
-    setTimeout(() => {
+    generator.workTimeout = setTimeout(() => {
       this.completeGeneratorWork(type);
     }, effectiveWorkTime);
   },
@@ -200,8 +211,14 @@ const Generators = {
     const generator = GameState.generators[type];
     if (!generator.busy) return; // Already completed or cancelled
 
-    // Calculate gold reward (GPS * count * time in seconds)
-    const timeInSeconds = generator.workTime / 1000;
+    // Clear the timeout to prevent multiple executions
+    if (generator.workTimeout) {
+      clearTimeout(generator.workTimeout);
+      generator.workTimeout = null;
+    }
+
+    // Calculate gold reward using effective work time
+    const timeInSeconds = (generator.effectiveWorkTime || generator.workTime) / 1000;
     let goldReward = Math.floor(generator.gps * generator.count * timeInSeconds);
 
     // Apply building bonuses if available
@@ -220,9 +237,11 @@ const Generators = {
     // Give reward
     GameUtils.addGold(goldReward);
 
-    // Reset progress first
+    // Reset progress and state
     generator.busy = false;
     generator.progress = 0;
+    generator.effectiveWorkTime = null;
+    generator.workStartTime = null;
 
     // Reset progress bar visual
     const progressBar = document.getElementById(`${type}Progress`);
@@ -242,6 +261,9 @@ const Generators = {
       }
     }
 
+    // Update sprite state immediately
+    this.updateGeneratorSprite(type);
+
     // Auto-restart if automated
     if (this.isAutomated(type)) {
       setTimeout(() => {
@@ -249,30 +271,22 @@ const Generators = {
       }, 500); // Small delay between auto cycles
     }
 
-    // Ensure sprite state is correctly set after a small delay
-    setTimeout(() => {
-      this.updateGeneratorSprite(type);
-    }, 50);
-
-    // Emit events AFTER sprite state is properly set
+    // Emit events
     GameEvents.emit('generatorWorked', { type, goldReward });
     GameEvents.emit('goldChanged');
   },
 
   // Animate generator progress bar
-  animateGeneratorProgress(type, effectiveWorkTime = null) {
+  animateGeneratorProgress(type) {
     const generator = GameState.generators[type];
     const progressBar = document.getElementById(`${type}Progress`);
     if (!progressBar || !generator.busy) return;
 
-    const startTime = generator.lastWorkTime;
-    // Use effective work time if provided, otherwise use base work time
-    const duration = effectiveWorkTime || generator.workTime;
-
     const updateProgress = () => {
       if (!generator.busy) return;
 
-      const elapsed = Date.now() - startTime;
+      const elapsed = Date.now() - generator.workStartTime;
+      const duration = generator.effectiveWorkTime;
       const progress = Math.min((elapsed / duration) * 100, 100);
       
       progressBar.style.width = `${progress}%`;
@@ -534,6 +548,14 @@ const Generators = {
       generator.busy = false;
       generator.progress = 0;
       generator.lastWorkTime = 0;
+      generator.effectiveWorkTime = null;
+      generator.workStartTime = null;
+      
+      // Clear any pending timeouts
+      if (generator.workTimeout) {
+        clearTimeout(generator.workTimeout);
+        generator.workTimeout = null;
+      }
     }
     
     this.stopAllAutoBuy();

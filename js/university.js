@@ -240,19 +240,14 @@ const University = {
       speedUpResearchBtn.addEventListener('click', () => this.speedUpResearch());
     }
 
-    // University toggle button
-    const universityToggleBtn = document.getElementById('universityToggleBtn');
-    const universityPanel = document.getElementById('universityPanel');
-    if (universityToggleBtn && universityPanel) {
-      universityToggleBtn.addEventListener('click', () => {
-        const isVisible = universityPanel.style.display !== 'none';
-        universityPanel.style.display = isVisible ? 'none' : 'block';
-        
-        if (!isVisible) {
-          // Hide other panels
-          const adventurePanel = document.getElementById('adventurePanel');
-          if (adventurePanel) adventurePanel.style.display = 'none';
-        }
+    // Research toggle button
+    const toggleResearchBtn = document.getElementById('toggleResearchBtn');
+    const researchCategories = document.getElementById('researchCategories');
+    if (toggleResearchBtn && researchCategories) {
+      toggleResearchBtn.addEventListener('click', () => {
+        const isVisible = researchCategories.style.display !== 'none';
+        researchCategories.style.display = isVisible ? 'none' : 'block';
+        toggleResearchBtn.textContent = isVisible ? '📋 Toon Onderzoek' : '📋 Verberg Onderzoek';
       });
     }
 
@@ -539,25 +534,24 @@ const University = {
 
   // Update university building display
   updateUniversityBuilding() {
-    const universityLevel = document.getElementById('universityLevel');
+    const universityName = document.getElementById('universityName');
     const universityDescription = document.getElementById('universityDescription');
     const upgradeUniversityBtn = document.getElementById('upgradeUniversityBtn');
     const universityCost = document.getElementById('universityCost');
-    const universityToggleBtn = document.getElementById('universityToggleBtn');
-    const universityPanel = document.getElementById('universityPanel');
+    const universitySection = document.getElementById('universitySection');
+    const universitySeparator = document.getElementById('universitySeparator');
 
-    if (universityLevel) {
-      universityLevel.textContent = GameState.university.level;
-    }
-
-    // Show university button once player has 30+ total generators
+    // Show university section once player has 30+ total generators
     const totalGenerators = this.getTotalGeneratorCount();
-    if (universityToggleBtn && totalGenerators >= 30) {
-      universityToggleBtn.style.display = 'inline-block';
-      universityPanel.style.display = 'block';
+    if (universitySection && totalGenerators >= 30) {
+      universitySection.style.display = 'block';
+      if (universitySeparator) universitySeparator.style.display = 'block';
     }
 
     if (GameState.university.level === 0) {
+      if (universityName) {
+        universityName.textContent = 'Geen universiteit';
+      }
       if (universityDescription) {
         universityDescription.textContent = 'Bouw een universiteit om onderzoek te starten (vereist 50 totale generators)';
       }
@@ -574,6 +568,9 @@ const University = {
         }
       }
     } else {
+      if (universityName) {
+        universityName.textContent = 'Universiteit';
+      }
       if (universityDescription) {
         universityDescription.textContent = 'Universiteit actief! Onderzoek nieuwe technologieën om je generators te verbeteren.';
       }
@@ -584,17 +581,11 @@ const University = {
 
     // Show/hide research sections based on university level
     const currentResearch = document.getElementById('currentResearch');
-    const researchCategories = document.getElementById('researchCategories');
-    const researchStats = document.getElementById('researchStats');
 
     if (GameState.university.level > 0) {
       if (currentResearch) currentResearch.style.display = 'block';
-      if (researchCategories) researchCategories.style.display = 'block';
-      if (researchStats) researchStats.style.display = 'block';
     } else {
       if (currentResearch) currentResearch.style.display = 'none';
-      if (researchCategories) researchCategories.style.display = 'none';
-      if (researchStats) researchStats.style.display = 'none';
     }
   },
 

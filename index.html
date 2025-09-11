@@ -15,7 +15,6 @@
       💰 Goudstukken: <span id="gold">0</span> 
       <span style="color: #2e7d32;">(+<span id="gpsDisplay">0</span>/sec)</span>
       <button id="adventureToggleBtn" class="adventure-header-btn">🗡️ Avontuur</button>
-      <button id="universityToggleBtn" class="university-header-btn" style="display: none;">🎓 Universiteit</button>
     </div>
 
     <!-- Generators & Dorpshoofd -->
@@ -457,109 +456,6 @@
     </div>
   </div>
 
-  <!-- University Section -->
-  <div class="panel university-panel" id="universityPanel" style="display: none;">
-    <h2>🎓 Universiteit - Research & Development</h2>
-    
-    <!-- University Building Status -->
-    <div class="university-building">
-      <div class="building-status" id="universityStatus">
-        <div class="university-icon">🏛️</div>
-        <div class="university-info">
-          <div class="university-level">Universiteit Niveau: <span id="universityLevel">0</span></div>
-          <div class="university-description" id="universityDescription">
-            Bouw een universiteit om onderzoek te starten (vereist 50 totale generators)
-          </div>
-        </div>
-        <button id="upgradeUniversityBtn" class="university-upgrade-btn" style="display: none;">
-          Bouw Universiteit - <span id="universityCost">10000</span>💰
-        </button>
-      </div>
-    </div>
-
-    <!-- Current Research -->
-    <div class="current-research" id="currentResearch" style="display: none;">
-      <h3>🔬 Huidig Onderzoek</h3>
-      <div class="research-in-progress">
-        <div class="research-header">
-          <div class="research-icon" id="activeResearchIcon">📚</div>
-          <div class="research-details">
-            <div class="research-name" id="activeResearchName">Geen actief onderzoek</div>
-            <div class="research-description" id="activeResearchDescription"></div>
-          </div>
-        </div>
-        <div class="research-progress">
-          <div class="progress-container">
-            <div class="progress-bar research-progress-bar" id="researchProgressBar"></div>
-          </div>
-          <div class="research-time">
-            <span id="researchTimeLeft">00:00</span> / <span id="researchTotalTime">00:00</span>
-          </div>
-        </div>
-        <div class="research-actions">
-          <button id="speedUpResearchBtn" class="speed-up-btn">
-            ⚡ Versnellen - <span id="speedUpCost">0</span>💰
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Available Research -->
-    <div class="research-categories" id="researchCategories" style="display: none;">
-      <h3>📋 Beschikbaar Onderzoek</h3>
-      
-      <!-- General Research -->
-      <div class="research-category">
-        <h4>📚 Algemeen</h4>
-        <div class="research-grid" id="generalResearch">
-        </div>
-      </div>
-
-      <!-- Generator Specific Research -->
-      <div class="research-category">
-        <h4>👨‍🌾 Dorpelingen</h4>
-        <div class="research-grid" id="villagerResearch">
-        </div>
-      </div>
-
-      <div class="research-category">
-        <h4>🏺 Handelsui</h4>
-        <div class="research-grid" id="traderResearch">
-        </div>
-      </div>
-
-      <div class="research-category">
-        <h4>🛡️ Krijgers</h4>
-        <div class="research-grid" id="warriorResearch">
-        </div>
-      </div>
-
-      <div class="research-category">
-        <h4>🔮 Zieners</h4>
-        <div class="research-grid" id="seerResearch">
-        </div>
-      </div>
-
-      <div class="research-category">
-        <h4>⚔️ Elite Krijgers</h4>
-        <div class="research-grid" id="eliteResearch">
-        </div>
-      </div>
-    </div>
-
-    <!-- Research Statistics -->
-    <div class="research-stats" id="researchStats" style="display: none;">
-      <div class="stat-item">
-        <span class="stat-label">Voltooid:</span>
-        <span class="stat-value" id="completedResearchCount">0</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label">Totaal besteed:</span>
-        <span class="stat-value"><span id="totalResearchSpent">0</span>💰</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Adventure Toggle Button -->
 
   <!-- Adventure Panel (hidden by default) -->
@@ -705,6 +601,109 @@
               <button id="upgradeLuckBtn" class="upgrade-btn-compact">
                 <span id="luckCost">500</span>💰
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr style="margin: 20px 0; border: 1px solid #654321;" id="universitySeparator" style="display: none;">
+
+      <!-- University Section -->
+      <div class="university-section" id="universitySection" style="display: none;">
+        <h3>🎓 Universiteit</h3>
+        
+        <!-- University Building Status -->
+        <div class="university-building">
+          <div class="building-display">
+            <div class="university-sprite" id="universitySprite">🏛️</div>
+            <div class="university-info">
+              <h3 id="universityName">Geen universiteit</h3>
+              <p id="universityDescription">Bouw een universiteit om onderzoek te starten (vereist 50 totale generators)</p>
+            </div>
+          </div>
+          
+          <div class="university-upgrade">
+            <button id="upgradeUniversityBtn" class="upgrade-btn" style="display: none;">
+              Bouw: Universiteit - <span id="universityCost">10000</span>💰
+            </button>
+          </div>
+        </div>
+
+        <!-- Current Research -->
+        <div class="current-research" id="currentResearch" style="display: none;">
+          <h4>🔬 Huidig Onderzoek</h4>
+          <div class="research-in-progress">
+            <div class="research-header">
+              <div class="research-icon" id="activeResearchIcon">📚</div>
+              <div class="research-details">
+                <div class="research-name" id="activeResearchName">Geen actief onderzoek</div>
+                <div class="research-description" id="activeResearchDescription">Selecteer een onderzoek om te starten</div>
+              </div>
+            </div>
+            <div class="research-progress">
+              <div class="progress-container">
+                <div class="progress-bar research-progress-bar" id="researchProgressBar"></div>
+              </div>
+              <div class="research-time">
+                <span id="researchTimeLeft">00:00</span> / <span id="researchTotalTime">00:00</span>
+              </div>
+            </div>
+            <div class="research-actions">
+              <button id="speedUpResearchBtn" class="speed-up-btn">
+                ⚡ Versnellen - <span id="speedUpCost">0</span>💰
+              </button>
+              <button id="toggleResearchBtn" class="toggle-research-btn">
+                📋 Toon Onderzoek
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Available Research (Collapsible) -->
+        <div class="research-categories" id="researchCategories" style="display: none;">
+          <h4>📋 Beschikbaar Onderzoek</h4>
+          
+          <!-- General Research -->
+          <div class="research-category">
+            <h5>📚 Algemeen</h5>
+            <div class="research-grid" id="generalResearch"></div>
+          </div>
+
+          <!-- Generator Specific Research -->
+          <div class="research-category">
+            <h5>👨‍🌾 Dorpelingen</h5>
+            <div class="research-grid" id="villagerResearch"></div>
+          </div>
+
+          <div class="research-category">
+            <h5>🏺 Handelsui</h5>
+            <div class="research-grid" id="traderResearch"></div>
+          </div>
+
+          <div class="research-category">
+            <h5>🛡️ Krijgers</h5>
+            <div class="research-grid" id="warriorResearch"></div>
+          </div>
+
+          <div class="research-category">
+            <h5>🔮 Zieners</h5>
+            <div class="research-grid" id="seerResearch"></div>
+          </div>
+
+          <div class="research-category">
+            <h5>⚔️ Elite Krijgers</h5>
+            <div class="research-grid" id="eliteResearch"></div>
+          </div>
+
+          <!-- Research Statistics -->
+          <div class="research-stats" id="researchStats">
+            <div class="stat-item">
+              <span class="stat-label">Voltooid:</span>
+              <span class="stat-value" id="completedResearchCount">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Totaal besteed:</span>
+              <span class="stat-value"><span id="totalResearchSpent">0</span>💰</span>
             </div>
           </div>
         </div>
