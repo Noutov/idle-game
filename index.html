@@ -31,7 +31,9 @@
       <!-- Dorpshoofd Section -->
       <div class="chief-section">
         <div class="chief-display">
-          <div class="chief-sprite clickable" id="chiefSprite" title="🖱️ KLIK om goud te verdienen!">👑</div>
+          <button class="chief-sprite clickable" id="chiefBtn" title="🖱️ KLIK om goud te verdienen!">
+            <div id="chiefSprite">👑</div>
+          </button>
           <div class="chief-info">
             <p><strong>Dorpshoofd</strong> (+<span id="chiefGold">1</span> goudstukken per klik, wachttijd <span id="chiefCooldownText">5.0</span>s)</p>
             <div class="progress-container">
@@ -528,6 +530,58 @@
                 <span id="luckCost">500</span>💰
               </button>
             </div>
+          </div>
+        </div>
+
+        <!-- Camp Attack System -->
+        <div class="panel">
+          <h3>⚔️ Kamp Aanvallen</h3>
+          <div class="stats-row">
+            <span>Beschikbare krijgers: <strong><span id="warriorCount2">0</span></strong></span>
+          </div>
+
+          <div class="camp-selection">
+            <div class="camp-item" data-camp="camp1">
+              <div class="camp-sprite">🏕️</div>
+              <div class="camp-info">
+                <div><strong>Klein kamp</strong></div>
+                <div class="camp-details">Laag risico • Beloning: <span id="camp1Reward">100</span>💰</div>
+                <div class="camp-difficulty">Minimaal 5 krijgers aanbevolen</div>
+              </div>
+            </div>
+            
+            <div class="camp-item" data-camp="camp2">
+              <div class="camp-sprite">🏰</div>
+              <div class="camp-info">
+                <div><strong>Middelgroot kamp</strong></div>
+                <div class="camp-details">Middel risico • Beloning: <span id="camp2Reward">400</span>💰</div>
+                <div class="camp-difficulty">Minimaal 20 krijgers aanbevolen</div>
+              </div>
+            </div>
+            
+            <div class="camp-item" data-camp="camp3">
+              <div class="camp-sprite">🏛️</div>
+              <div class="camp-info">
+                <div><strong>Groot fort</strong></div>
+                <div class="camp-details">Hoog risico • Beloning: <span id="camp3Reward">1500</span>💰</div>
+                <div class="camp-difficulty">Minimaal 50 krijgers aanbevolen</div>
+              </div>
+            </div>
+            
+            <div class="combat-controls">
+              <input type="hidden" id="campSelect" value="camp1">
+              <label><strong>Aantal krijgers:</strong></label>
+              <div class="warrior-input-group">
+                <input type="number" id="warriorsToSend" min="1" value="1" max="0">
+                <button id="maxWarriorsBtn" class="max-btn">Max</button>
+              </div>
+              <button id="attackBtn" class="attack-btn">🚀 Val <span id="selectedCampName">Klein kamp</span> aan!</button>
+              <div class="camp-cooldown">Cooldown: <span id="campCooldown">0</span> sec</div>
+            </div>
+          </div>
+          
+          <div class="attack-result" id="attackResult">
+            Kies een kamp en val aan met je krijgers!
           </div>
         </div>
       </div>

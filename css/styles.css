@@ -433,6 +433,19 @@ h1 {
     inset 0 -2px 0 rgba(139, 69, 19, 0.3);
 }
 
+/* Chief Button Styling */
+#chiefBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+#chiefBtn:disabled {
+  cursor: not-allowed;
+}
+
 /* Buttons */
 button { 
   background: linear-gradient(135deg, #4CAF50 0%, #66bb6a 100%);
