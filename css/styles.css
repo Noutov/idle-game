@@ -2206,10 +2206,19 @@ select, input {
   }
   
   .small-upgrade-btn {
-    width: 100%;
-    min-width: auto;
     font-size: 12px;
     padding: 12px;
+    min-width: 80px;
+  }
+  
+  /* Override for generator upgrade cards to keep them compact */
+  .generator-upgrade-card .small-upgrade-btn {
+    width: auto !important;
+    min-width: 60px !important;
+    font-size: 0.75em !important;
+    padding: 8px 10px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
   }
   
   button {
@@ -2473,6 +2482,18 @@ select, input {
     font-size: 11px;
     padding: 10px;
     min-height: 40px;
+    min-width: 70px;
+  }
+  
+  /* Specific overrides for generator upgrade cards on small screens */
+  .generator-upgrade-card .small-upgrade-btn {
+    width: auto !important;
+    min-width: 55px !important;
+    font-size: 0.7em !important;
+    padding: 6px 8px !important;
+    min-height: 32px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
   }
   
   /* Progress bars */

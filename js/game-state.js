@@ -127,7 +127,7 @@ const GameState = {
   // University research system
   university: {
     level: 0, // University building level
-    upgradeCost: 10000, // Cost to build/upgrade university
+    upgradeCost: 100000, // Cost to build/upgrade university
     research: {
       active: null, // Currently researching upgrade id
       queue: [], // Queue of researches

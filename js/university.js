@@ -264,9 +264,8 @@ const University = {
   // Check if university can be built/upgraded
   canUpgradeUniversity() {
     if (GameState.university.level === 0) {
-      // First university requires 50 total generators
-      const totalGenerators = this.getTotalGeneratorCount();
-      return totalGenerators >= 50 && GameUtils.canAfford(GameState.university.upgradeCost);
+      // First university requires 100,000 gold
+      return GameUtils.canAfford(100000);
     }
     // Further upgrades possible but for now just level 1
     return false;
@@ -279,7 +278,7 @@ const University = {
       return false;
     }
 
-    if (GameUtils.spendGold(GameState.university.upgradeCost)) {
+    if (GameUtils.spendGold(100000)) {
       GameState.university.level++;
       
       if (GameState.university.level === 1) {
@@ -541,9 +540,8 @@ const University = {
     const universitySection = document.getElementById('universitySection');
     const universitySeparator = document.getElementById('universitySeparator');
 
-    // Show university section once player has 50 total generators
-    const totalGenerators = this.getTotalGeneratorCount();
-    if (universitySection && totalGenerators >= 50) {
+    // Show university section always
+    if (universitySection) {
       universitySection.style.display = 'block';
       if (universitySeparator) universitySeparator.style.display = 'block';
     }
@@ -553,17 +551,17 @@ const University = {
         universityName.textContent = 'Geen universiteit';
       }
       if (universityDescription) {
-        universityDescription.textContent = 'Bouw een universiteit om onderzoek te starten (vereist 50 totale generators)';
+        universityDescription.textContent = 'Bouw een universiteit om onderzoek te starten (kost 100.000 goud)';
       }
       if (upgradeUniversityBtn) {
         if (this.canUpgradeUniversity()) {
           upgradeUniversityBtn.style.display = 'block';
           upgradeUniversityBtn.disabled = false;
           if (universityCost) {
-            universityCost.textContent = GameUtils.formatNumber(GameState.university.upgradeCost);
+            universityCost.textContent = GameUtils.formatNumber(100000);
           }
         } else {
-          upgradeUniversityBtn.style.display = totalGenerators >= 50 ? 'block' : 'none';
+          upgradeUniversityBtn.style.display = 'block';
           upgradeUniversityBtn.disabled = true;
         }
       }
