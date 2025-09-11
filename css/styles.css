@@ -44,25 +44,32 @@ body {
 
 @media (max-width: 768px) {
   .game-header {
-    padding: 12px 15px;
+    padding: 10px 15px;
   }
   
   .game-header h1 {
-    font-size: 1.5em;
+    font-size: 1.4em;
+    margin-bottom: 8px;
   }
   
   .tab-content-container {
     padding: 15px;
-    padding-bottom: 85px;
+    padding-bottom: 80px;
+    max-height: calc(100vh - 120px);
+  }
+  
+  .bottom-nav {
+    height: 60px;
   }
   
   .nav-btn {
-    font-size: 1.1em;
-    padding: 6px 8px;
+    font-size: 1em;
+    padding: 6px 4px;
   }
   
   .nav-btn span {
     font-size: 0.65em;
+    margin-top: 2px;
   }
 }
 
