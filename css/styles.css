@@ -45,7 +45,7 @@ body {
 /* Fixed Header */
 .game-header {
   background: linear-gradient(145deg, #1b5e20, #2e7d32);
-  padding: 8px 15px;
+  padding: 4px 15px;
   border-bottom: 3px solid #4caf50;
   position: sticky;
   top: 0;
@@ -54,7 +54,7 @@ body {
 }
 
 .game-header h1 {
-  margin: 0 0 6px 0;
+  margin: 0 0 2px 0;
   text-align: center;
   font-size: 1.5em;
   color: white;
@@ -143,12 +143,12 @@ body {
 
 @media (max-width: 768px) {
   .game-header {
-    padding: 10px 15px;
+    padding: 6px 15px;
   }
   
   .game-header h1 {
     font-size: 1.4em;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
   
   .tab-content-container {
@@ -174,12 +174,12 @@ body {
 
 @media (max-width: 480px) {
   .game-header {
-    padding: 8px 12px;
+    padding: 4px 12px;
   }
   
   .game-header h1 {
     font-size: 1.2em;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
   }
   
   .tab-content-container {
