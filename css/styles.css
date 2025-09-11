@@ -40,29 +40,47 @@ body {
   min-height: 100vh;
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 40px; /* Space for compact fixed header */
+  padding-top: 50px; /* Space for single clean header */
 }
 
-/* Fixed Header */
-.game-header {
-  background: linear-gradient(145deg, #1b5e20, #2e7d32);
-  padding: 1px 15px;
-  border-bottom: 1px solid #4caf50;
+/* Single Clean Header */
+.main-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  width: 100%;
+  background: linear-gradient(135deg, #1b5e20, #2e7d32);
+  border-bottom: 1px solid #4caf50;
   z-index: 1000;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  padding: 4px 0;
 }
 
-.game-header h1 {
-  margin: 0;
-  text-align: center;
-  font-size: 1.3em;
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.game-title {
   color: white;
-  line-height: 1.2;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.gold-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-size: 1em;
+}
+
+.gps-info {
+  color: #81c784;
+  font-size: 0.9em;
 }
 
 /* Tab Content Container */
@@ -148,17 +166,16 @@ body {
 
 @media (max-width: 768px) {
   .game-container {
-    padding-top: 35px; /* Compact header on tablet */
+    padding-top: 45px; /* Space for header on tablet */
   }
   
-  .game-header {
-    padding: 1px 15px;
+  .game-title {
+    font-size: 1.1em;
   }
   
-  .game-header h1 {
-    font-size: 1.2em;
-    margin: 0;
-    line-height: 1.1;
+  .gold-info {
+    font-size: 0.9em;
+    gap: 8px;
   }
   
   .tab-content-container {
@@ -184,17 +201,20 @@ body {
 
 @media (max-width: 480px) {
   .game-container {
-    padding-top: 30px; /* Ultra compact header on mobile */
+    padding-top: 40px; /* Space for header on mobile */
   }
   
-  .game-header {
-    padding: 1px 12px;
+  .header-content {
+    padding: 0 10px;
   }
   
-  .game-header h1 {
-    font-size: 1.1em;
-    margin: 0;
-    line-height: 1;
+  .game-title {
+    font-size: 1em;
+  }
+  
+  .gold-info {
+    font-size: 0.85em;
+    gap: 5px;
   }
   
   .tab-content-container {
