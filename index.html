@@ -397,147 +397,6 @@
 
       <!-- Avontuur Tab -->
       <div class="tab-content" id="avontuurTab">
-        <!-- Hero Panel -->
-        <div class="panel hero-panel">
-          <h2>🧙‍♂️ Held</h2>
-          <div class="hero-display">
-            <div class="hero-sprite">🧙‍♂️</div>
-            <div class="hero-stats">
-              <div class="hero-info">
-                <h3>Held Lv.<span id="heroLevel">1</span></h3>
-                <div class="stat-bars">
-                  <div class="stat-bar">
-                    <label>❤️ HP:</label>
-                    <div class="progress-container">
-                      <div class="progress-bar hp" id="heroHpBar" style="width: 100%;"></div>
-                    </div>
-                    <span><span id="heroHp">100</span>/<span id="heroMaxHp">100</span></span>
-                  </div>
-                  <div class="stat-bar">
-                    <label>⭐ EXP:</label>
-                    <div class="progress-container">
-                      <div class="progress-bar exp" id="heroExpBar" style="width: 0%;"></div>
-                    </div>
-                    <span><span id="heroExp">0</span>/<span id="heroExpNext">100</span></span>
-                  </div>
-                </div>
-              </div>
-              <div class="hero-combat-stats">
-                <div class="stat-item">⚔️ <span id="heroAttack">10</span></div>
-                <div class="stat-item">🛡️ <span id="heroDefense">5</span></div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Rest Status -->
-          <div id="restStatus" class="rest-status" style="display: none;">
-            <p>😴 Held rust: <span id="restTimeLeft">30</span> seconden</p>
-          </div>
-          
-          <!-- Adventure Controls -->
-          <div class="adventure-controls">
-            <button id="startAdventureBtn" class="start-adventure-btn">🚀 Start Avontuur</button>
-            <button id="stopAdventureBtn" class="stop-adventure-btn" disabled>🛑 Stop Avontuur</button>
-          </div>
-        </div>
-        
-        <!-- Combat Panel -->
-        <div class="panel combat-panel">
-          <h2>⚔️ Gevecht</h2>
-          <div class="combat-area">
-            <div class="fighter hero-fighter">
-              <div class="character-sprite" id="heroSprite">🧙‍♂️</div>
-              <div class="fighter-name">Held</div>
-            </div>
-            
-            <div class="combat-vs">VS</div>
-            
-            <div class="fighter enemy-fighter">
-              <div class="character-sprite" id="enemySprite">👹</div>
-              <div class="fighter-info">
-                <div class="fighter-name" id="enemyName">Goblin</div>
-                <div class="enemy-hp">
-                  <div class="progress-container">
-                    <div class="progress-bar enemy-hp" id="enemyHpBar" style="width: 100%;"></div>
-                  </div>
-                  <div class="hp-text">❤️<span id="enemyHp">30</span>/<span id="enemyMaxHp">30</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Adventure Stats -->
-          <div class="adventure-stats">
-            <span>🌊 Golf: <span id="currentWave">1</span></span>
-            <span>💀 Vijanden verslagen: <span id="enemiesDefeated">0</span></span>
-            <span>💰 Goud verdiend: <span id="goldEarned">0</span></span>
-          </div>
-        </div>
-        
-        <!-- Hero Upgrades -->
-        <div class="panel upgrades-panel">
-          <h2>⚒️ Held Upgrades</h2>
-          <div class="upgrade-grid">
-            <div class="upgrade-item">
-              <div class="upgrade-icon">⚔️</div>
-              <div class="upgrade-info">
-                <span class="upgrade-name">Aanval</span>
-                <span class="upgrade-level">Lv.<span id="attackLevel">0</span></span>
-              </div>
-              <button id="upgradeAttackBtn" class="upgrade-btn">
-                <span id="attackCost">100</span>💰
-              </button>
-            </div>
-            
-            <div class="upgrade-item">
-              <div class="upgrade-icon">🛡️</div>
-              <div class="upgrade-info">
-                <span class="upgrade-name">Verdediging</span>
-                <span class="upgrade-level">Lv.<span id="defenseLevel">0</span></span>
-              </div>
-              <button id="upgradeDefenseBtn" class="upgrade-btn">
-                <span id="defenseCost">150</span>💰
-              </button>
-            </div>
-            
-            <div class="upgrade-item">
-              <div class="upgrade-icon">❤️</div>
-              <div class="upgrade-info">
-                <span class="upgrade-name">Gezondheid</span>
-                <span class="upgrade-level">Lv.<span id="healthLevel">0</span></span>
-              </div>
-              <button id="upgradeHealthBtn" class="upgrade-btn">
-                <span id="healthCost">200</span>💰
-              </button>
-            </div>
-            
-            <div class="upgrade-item">
-              <div class="upgrade-icon">⚡</div>
-              <div class="upgrade-info">
-                <span class="upgrade-name">Herstel</span>
-                <span class="upgrade-level">Lv.<span id="recoveryLevel">0</span></span>
-              </div>
-              <button id="upgradeRecoveryBtn" class="upgrade-btn">
-                <span id="recoveryCost">300</span>💰
-              </button>
-            </div>
-            
-            <div class="upgrade-item">
-              <div class="upgrade-icon">🍀</div>
-              <div class="upgrade-info">
-                <span class="upgrade-name">Geluk</span>
-                <span class="upgrade-level">Lv.<span id="luckLevel">0</span></span>
-              </div>
-              <button id="upgradeLuckBtn" class="upgrade-btn">
-                <span id="luckCost">500</span>💰
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Roman Camps Attack Panel -->
-        <div class="panel">
-          <h2>⚔️ Val Romeinse kampementen aan</h2>
       <div class="stats-row">
         <span>Beschikbare krijgers: <strong><span id="warriorCount2">0</span></strong></span>
       </div>
@@ -587,24 +446,6 @@
       </div>
         </div>
 
-        <!-- Prestige Section -->
-        <div class="panel prestige-panel">
-    <h2>✨ Prestige - Wedergeboorte</h2>
-    <div class="prestige-info">
-      <div class="prestige-stats">
-        <div>💰 Totaal verdiend: <span id="totalGoldEarned">0</span></div>
-        <div>🧠 Wijsheid Punten: <span id="wisdomPoints">0</span></div>
-        <div>🔄 Prestige Count: <span id="prestigeCount">0</span></div>
-        <div>📈 Huidige Bonus: +<span id="prestigeBonus">0</span>%</div>
-      </div>
-      <div class="prestige-action">
-        <button id="prestigeBtn" class="prestige-btn" disabled>
-          ✨ Prestige<br>
-          <small id="prestigeRequirement">Vereist: 1.0M💰 totaal</small>
-        </button>
-      </div>
-        </div>
-      </div>
 
       <!-- Onderzoek Tab (University) -->
       <div class="tab-content" id="onderzoekTab">
@@ -709,8 +550,6 @@
     </div>
 
 
-      <!-- Left Column: Hero & Combat -->
-      <div class="adventure-left">
         <!-- Hero Status (Compact) -->
         <div class="panel hero-panel-compact">
           <div class="hero-status-compact">
