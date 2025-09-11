@@ -590,9 +590,9 @@ button:disabled {
 .generator-sprite {
   width: 44px;
   height: 44px; /* Square, 2-line height */
-  border: 2px solid transparent;
-  border-image: linear-gradient(45deg, #8b4513, #cd853f, #8b4513) 1;
-  border-radius: 6px;
+  background: linear-gradient(145deg, #8b4513, #a0522d);
+  border: 2px solid #654321;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -600,22 +600,50 @@ button:disabled {
   flex-shrink: 0;
   transition: all 0.3s ease;
   user-select: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Generator clickable states */
 .generator-sprite.clickable {
   cursor: pointer;
   position: relative;
+  background: linear-gradient(145deg, #4caf50, #2e7d32);
+  border-color: #1b5e20;
+  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
+}
+
+.generator-sprite.clickable::before {
+  content: "👆";
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  font-size: 0.8em;
+  opacity: 0.8;
+  animation: clickHint 2s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .generator-sprite.clickable:hover {
-  transform: translateY(-2px) scale(1.05);
-  border-image: linear-gradient(45deg, #4caf50, #66bb6a, #4caf50) 1;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+  transform: translateY(-2px) scale(1.08);
+  background: linear-gradient(145deg, #66bb6a, #4caf50);
+  border-color: #2e7d32;
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
 }
 
 .generator-sprite.clickable:active {
   transform: translateY(0px) scale(1.02);
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+}
+
+@keyframes clickHint {
+  0%, 100% { 
+    opacity: 0.6;
+    transform: translateY(0px);
+  }
+  50% { 
+    opacity: 1;
+    transform: translateY(-2px);
+  }
 }
 
 /* Generator disabled/working states */
@@ -623,10 +651,43 @@ button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
+  background: linear-gradient(145deg, #666, #888);
+  border-color: #444;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.generator-sprite.disabled::before {
+  content: "🚫";
+  opacity: 0.8;
+  animation: none;
 }
 
 .generator-sprite.working {
   animation: generatorWorking 2s ease-in-out infinite;
+  background: linear-gradient(145deg, #ff9800, #f57c00);
+  border-color: #ef6c00;
+  box-shadow: 0 3px 8px rgba(255, 152, 0, 0.4);
+}
+
+.generator-sprite.working::before {
+  content: "⚡";
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  font-size: 0.9em;
+  opacity: 1;
+  animation: workingIndicator 1s ease-in-out infinite;
+}
+
+@keyframes workingIndicator {
+  0%, 100% { 
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  50% { 
+    opacity: 0.7;
+    transform: rotate(10deg) scale(1.1);
+  }
 }
 
 @keyframes generatorWorking {
@@ -2173,6 +2234,18 @@ select, input {
     height: 50px;
     font-size: 1.4em;
   }
+  
+  .generator-sprite.clickable::before {
+    font-size: 0.9em;
+    top: -10px;
+    right: -6px;
+  }
+  
+  .generator-sprite.working::before {
+    font-size: 0.8em;
+    top: -8px;
+    right: -4px;
+  }
 }
 
 /* Smartphone screens */
@@ -2249,6 +2322,20 @@ select, input {
     width: 38px;
     height: 38px;
     font-size: 1.2em;
+  }
+  
+  .generator-sprite.clickable::before {
+    content: "👆";
+    font-size: 0.7em;
+    top: -8px;
+    right: -4px;
+  }
+  
+  .generator-sprite.working::before {
+    content: "⚡";
+    font-size: 0.7em;
+    top: -6px;
+    right: -2px;
   }
   
   .generator-info {
