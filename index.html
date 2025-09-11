@@ -15,6 +15,7 @@
       💰 Goudstukken: <span id="gold">0</span> 
       <span style="color: #2e7d32;">(+<span id="gpsDisplay">0</span>/sec)</span>
       <button id="adventureToggleBtn" class="adventure-header-btn">🗡️ Avontuur</button>
+      <button id="universityToggleBtn" class="university-header-btn" style="display: none;">🎓 Universiteit</button>
     </div>
 
     <!-- Generators & Dorpshoofd -->
@@ -163,18 +164,28 @@
       <!-- Dorpshoofd Upgrades -->
       <div class="upgrade-section">
         <h3>⚒️ Dorpshoofd Upgrades</h3>
-        <div class="stats-row">
-          <span>Goud per klik: <span id="chiefGoldStat">1</span></span>
-          <button id="upgradeGoldBtn" class="upgrade-btn">
-            Upgrade (+1) - <span id="chiefGoldCost">25</span>💰
-          </button>
-        </div>
-        
-        <div class="stats-row">
-          <span>Wachttijd: <span id="chiefCooldownStat">5.0</span>s</span>
-          <button id="upgradeCooldownBtn" class="upgrade-btn">
-            Upgrade (-0.5s) - <span id="chiefCooldownCost">75</span>💰
-          </button>
+        <div class="chief-upgrade-grid">
+          <div class="chief-upgrade-card">
+            <div class="upgrade-icon">💰</div>
+            <div class="upgrade-info">
+              <div class="upgrade-title">Goud per Klik</div>
+              <div class="upgrade-value"><span id="chiefGoldStat">1</span></div>
+            </div>
+            <button id="upgradeGoldBtn" class="upgrade-btn">
+              (+1) - <span id="chiefGoldCost">25</span>💰
+            </button>
+          </div>
+          
+          <div class="chief-upgrade-card">
+            <div class="upgrade-icon">⚡</div>
+            <div class="upgrade-info">
+              <div class="upgrade-title">Snelheid</div>
+              <div class="upgrade-value"><span id="chiefCooldownStat">5.0</span>s</div>
+            </div>
+            <button id="upgradeCooldownBtn" class="upgrade-btn">
+              (-0.5s) - <span id="chiefCooldownCost">75</span>💰
+            </button>
+          </div>
         </div>
       </div>
 
@@ -184,76 +195,191 @@
         
         <div class="upgrade-category">
           <h4>👨‍🌾 Dorpelingen</h4>
-          <div class="upgrade-buttons">
-            <button id="villagerSpeedBtn" class="small-upgrade-btn">
-              Snelheid Lv.<span id="villagerSpeedLvl">0</span> - <span id="villagerSpeedCost">100</span>💰
-            </button>
-            <button id="villagerGoldBonusBtn" class="small-upgrade-btn">
-              Goud Lv.<span id="villagerGoldLvl">0</span> - <span id="villagerGoldCost">150</span>💰
-            </button>
-            <button id="villagerLuckBonusBtn" class="small-upgrade-btn">
-              Geluk Lv.<span id="villagerLuckLvl">0</span> - <span id="villagerLuckCost">200</span>💰
-            </button>
+          <div class="generator-upgrade-grid">
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">⏩</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Snelheid</div>
+                <div class="upgrade-level">Lv.<span id="villagerSpeedLvl">0</span></div>
+              </div>
+              <button id="villagerSpeedBtn" class="small-upgrade-btn">
+                <span id="villagerSpeedCost">100</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🪙</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Goud</div>
+                <div class="upgrade-level">Lv.<span id="villagerGoldLvl">0</span></div>
+              </div>
+              <button id="villagerGoldBonusBtn" class="small-upgrade-btn">
+                <span id="villagerGoldCost">150</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🍀</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Geluk</div>
+                <div class="upgrade-level">Lv.<span id="villagerLuckLvl">0</span></div>
+              </div>
+              <button id="villagerLuckBonusBtn" class="small-upgrade-btn">
+                <span id="villagerLuckCost">200</span>💰
+              </button>
+            </div>
           </div>
         </div>
 
         <div class="upgrade-category">
           <h4>🏺 Handelsui</h4>
-          <div class="upgrade-buttons">
-            <button id="traderSpeedBtn" class="small-upgrade-btn">
-              Snelheid Lv.<span id="traderSpeedLvl">0</span> - <span id="traderSpeedCost">200</span>💰
-            </button>
-            <button id="traderGoldBonusBtn" class="small-upgrade-btn">
-              Goud Lv.<span id="traderGoldLvl">0</span> - <span id="traderGoldCost">300</span>💰
-            </button>
-            <button id="traderLuckBonusBtn" class="small-upgrade-btn">
-              Geluk Lv.<span id="traderLuckLvl">0</span> - <span id="traderLuckCost">400</span>💰
-            </button>
+          <div class="generator-upgrade-grid">
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">⏩</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Snelheid</div>
+                <div class="upgrade-level">Lv.<span id="traderSpeedLvl">0</span></div>
+              </div>
+              <button id="traderSpeedBtn" class="small-upgrade-btn">
+                <span id="traderSpeedCost">200</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🪙</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Goud</div>
+                <div class="upgrade-level">Lv.<span id="traderGoldLvl">0</span></div>
+              </div>
+              <button id="traderGoldBonusBtn" class="small-upgrade-btn">
+                <span id="traderGoldCost">300</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🍀</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Geluk</div>
+                <div class="upgrade-level">Lv.<span id="traderLuckLvl">0</span></div>
+              </div>
+              <button id="traderLuckBonusBtn" class="small-upgrade-btn">
+                <span id="traderLuckCost">400</span>💰
+              </button>
+            </div>
           </div>
         </div>
 
         <div class="upgrade-category">
           <h4>🛡️ Krijgers</h4>
-          <div class="upgrade-buttons">
-            <button id="warriorSpeedBtn" class="small-upgrade-btn">
-              Snelheid Lv.<span id="warriorSpeedLvl">0</span> - <span id="warriorSpeedCost">300</span>💰
-            </button>
-            <button id="warriorGoldBonusBtn" class="small-upgrade-btn">
-              Goud Lv.<span id="warriorGoldLvl">0</span> - <span id="warriorGoldCost">450</span>💰
-            </button>
-            <button id="warriorLuckBonusBtn" class="small-upgrade-btn">
-              Geluk Lv.<span id="warriorLuckLvl">0</span> - <span id="warriorLuckCost">600</span>💰
-            </button>
+          <div class="generator-upgrade-grid">
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">⏩</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Snelheid</div>
+                <div class="upgrade-level">Lv.<span id="warriorSpeedLvl">0</span></div>
+              </div>
+              <button id="warriorSpeedBtn" class="small-upgrade-btn">
+                <span id="warriorSpeedCost">300</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🪙</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Goud</div>
+                <div class="upgrade-level">Lv.<span id="warriorGoldLvl">0</span></div>
+              </div>
+              <button id="warriorGoldBonusBtn" class="small-upgrade-btn">
+                <span id="warriorGoldCost">450</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🍀</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Geluk</div>
+                <div class="upgrade-level">Lv.<span id="warriorLuckLvl">0</span></div>
+              </div>
+              <button id="warriorLuckBonusBtn" class="small-upgrade-btn">
+                <span id="warriorLuckCost">600</span>💰
+              </button>
+            </div>
           </div>
         </div>
 
         <div class="upgrade-category">
           <h4>🔮 Zieners</h4>
-          <div class="upgrade-buttons">
-            <button id="seerSpeedBtn" class="small-upgrade-btn">
-              Snelheid Lv.<span id="seerSpeedLvl">0</span> - <span id="seerSpeedCost">800</span>💰
-            </button>
-            <button id="seerGoldBonusBtn" class="small-upgrade-btn">
-              Goud Lv.<span id="seerGoldLvl">0</span> - <span id="seerGoldCost">1200</span>💰
-            </button>
-            <button id="seerLuckBonusBtn" class="small-upgrade-btn">
-              Geluk Lv.<span id="seerLuckLvl">0</span> - <span id="seerLuckCost">1600</span>💰
-            </button>
+          <div class="generator-upgrade-grid">
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">⏩</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Snelheid</div>
+                <div class="upgrade-level">Lv.<span id="seerSpeedLvl">0</span></div>
+              </div>
+              <button id="seerSpeedBtn" class="small-upgrade-btn">
+                <span id="seerSpeedCost">800</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🪙</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Goud</div>
+                <div class="upgrade-level">Lv.<span id="seerGoldLvl">0</span></div>
+              </div>
+              <button id="seerGoldBonusBtn" class="small-upgrade-btn">
+                <span id="seerGoldCost">1200</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🍀</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Geluk</div>
+                <div class="upgrade-level">Lv.<span id="seerLuckLvl">0</span></div>
+              </div>
+              <button id="seerLuckBonusBtn" class="small-upgrade-btn">
+                <span id="seerLuckCost">1600</span>💰
+              </button>
+            </div>
           </div>
         </div>
 
         <div class="upgrade-category">
           <h4>⚔️ Elite Krijgers</h4>
-          <div class="upgrade-buttons">
-            <button id="eliteSpeedBtn" class="small-upgrade-btn">
-              Snelheid Lv.<span id="eliteSpeedLvl">0</span> - <span id="eliteSpeedCost">2000</span>💰
-            </button>
-            <button id="eliteGoldBonusBtn" class="small-upgrade-btn">
-              Goud Lv.<span id="eliteGoldLvl">0</span> - <span id="eliteGoldCost">3000</span>💰
-            </button>
-            <button id="eliteLuckBonusBtn" class="small-upgrade-btn">
-              Geluk Lv.<span id="eliteLuckLvl">0</span> - <span id="eliteLuckCost">4000</span>💰
-            </button>
+          <div class="generator-upgrade-grid">
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">⏩</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Snelheid</div>
+                <div class="upgrade-level">Lv.<span id="eliteSpeedLvl">0</span></div>
+              </div>
+              <button id="eliteSpeedBtn" class="small-upgrade-btn">
+                <span id="eliteSpeedCost">2000</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🪙</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Goud</div>
+                <div class="upgrade-level">Lv.<span id="eliteGoldLvl">0</span></div>
+              </div>
+              <button id="eliteGoldBonusBtn" class="small-upgrade-btn">
+                <span id="eliteGoldCost">3000</span>💰
+              </button>
+            </div>
+            
+            <div class="generator-upgrade-card">
+              <div class="upgrade-icon">🍀</div>
+              <div class="upgrade-info">
+                <div class="upgrade-title">Geluk</div>
+                <div class="upgrade-level">Lv.<span id="eliteLuckLvl">0</span></div>
+              </div>
+              <button id="eliteLuckBonusBtn" class="small-upgrade-btn">
+                <span id="eliteLuckCost">4000</span>💰
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -327,6 +453,109 @@
           ✨ Prestige<br>
           <small id="prestigeRequirement">Vereist: 1.0M💰 totaal</small>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- University Section -->
+  <div class="panel university-panel" id="universityPanel" style="display: none;">
+    <h2>🎓 Universiteit - Research & Development</h2>
+    
+    <!-- University Building Status -->
+    <div class="university-building">
+      <div class="building-status" id="universityStatus">
+        <div class="university-icon">🏛️</div>
+        <div class="university-info">
+          <div class="university-level">Universiteit Niveau: <span id="universityLevel">0</span></div>
+          <div class="university-description" id="universityDescription">
+            Bouw een universiteit om onderzoek te starten (vereist 50 totale generators)
+          </div>
+        </div>
+        <button id="upgradeUniversityBtn" class="university-upgrade-btn" style="display: none;">
+          Bouw Universiteit - <span id="universityCost">10000</span>💰
+        </button>
+      </div>
+    </div>
+
+    <!-- Current Research -->
+    <div class="current-research" id="currentResearch" style="display: none;">
+      <h3>🔬 Huidig Onderzoek</h3>
+      <div class="research-in-progress">
+        <div class="research-header">
+          <div class="research-icon" id="activeResearchIcon">📚</div>
+          <div class="research-details">
+            <div class="research-name" id="activeResearchName">Geen actief onderzoek</div>
+            <div class="research-description" id="activeResearchDescription"></div>
+          </div>
+        </div>
+        <div class="research-progress">
+          <div class="progress-container">
+            <div class="progress-bar research-progress-bar" id="researchProgressBar"></div>
+          </div>
+          <div class="research-time">
+            <span id="researchTimeLeft">00:00</span> / <span id="researchTotalTime">00:00</span>
+          </div>
+        </div>
+        <div class="research-actions">
+          <button id="speedUpResearchBtn" class="speed-up-btn">
+            ⚡ Versnellen - <span id="speedUpCost">0</span>💰
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Available Research -->
+    <div class="research-categories" id="researchCategories" style="display: none;">
+      <h3>📋 Beschikbaar Onderzoek</h3>
+      
+      <!-- General Research -->
+      <div class="research-category">
+        <h4>📚 Algemeen</h4>
+        <div class="research-grid" id="generalResearch">
+        </div>
+      </div>
+
+      <!-- Generator Specific Research -->
+      <div class="research-category">
+        <h4>👨‍🌾 Dorpelingen</h4>
+        <div class="research-grid" id="villagerResearch">
+        </div>
+      </div>
+
+      <div class="research-category">
+        <h4>🏺 Handelsui</h4>
+        <div class="research-grid" id="traderResearch">
+        </div>
+      </div>
+
+      <div class="research-category">
+        <h4>🛡️ Krijgers</h4>
+        <div class="research-grid" id="warriorResearch">
+        </div>
+      </div>
+
+      <div class="research-category">
+        <h4>🔮 Zieners</h4>
+        <div class="research-grid" id="seerResearch">
+        </div>
+      </div>
+
+      <div class="research-category">
+        <h4>⚔️ Elite Krijgers</h4>
+        <div class="research-grid" id="eliteResearch">
+        </div>
+      </div>
+    </div>
+
+    <!-- Research Statistics -->
+    <div class="research-stats" id="researchStats" style="display: none;">
+      <div class="stat-item">
+        <span class="stat-label">Voltooid:</span>
+        <span class="stat-value" id="completedResearchCount">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Totaal besteed:</span>
+        <span class="stat-value"><span id="totalResearchSpent">0</span>💰</span>
       </div>
     </div>
   </div>
@@ -495,6 +724,7 @@
   <script src="js/chief.js"></script>
   <script src="js/chief-enhanced.js"></script>
   <script src="js/prestige.js"></script>
+  <script src="js/university.js"></script>
   <script src="js/generators.js"></script>
   <script src="js/upgrades.js"></script>
   <script src="js/building.js"></script>

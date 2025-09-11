@@ -121,6 +121,24 @@ const GameState = {
     bonusMultiplier: 1 // Based on wisdom points
   },
 
+  // University research system
+  university: {
+    level: 0, // University building level
+    upgradeCost: 10000, // Cost to build/upgrade university
+    research: {
+      active: null, // Currently researching upgrade id
+      queue: [], // Queue of researches
+      startTime: 0,
+      duration: 0,
+      baseCost: 0,
+      speedUpCost: 0
+    },
+    completed: [], // Array of completed research ids
+    discovered: [], // Array of discovered but not yet researched upgrades
+    totalCompleted: 0,
+    totalSpent: 0
+  },
+
   // Game settings
   settings: {
     autoSave: true,
@@ -190,6 +208,11 @@ const GameUtils = {
         enhancedGps *= 2;
       }
       
+      // Apply university gold bonus
+      if (typeof University !== 'undefined') {
+        enhancedGps *= University.getGoldBonus(type);
+      }
+      
       // Apply prestige wisdom bonus
       enhancedGps *= GameState.prestige.bonusMultiplier;
       
@@ -256,6 +279,7 @@ const GameUtils = {
         camps: GameState.camps,
         building: GameState.building,
         prestige: GameState.prestige,
+        university: GameState.university,
         adventure: GameState.adventure,
         timestamp: Date.now(),
         version: '2.0'
@@ -282,6 +306,7 @@ const GameUtils = {
       Object.assign(GameState.camps, data.camps || {});
       Object.assign(GameState.building, data.building || {});
       Object.assign(GameState.prestige, data.prestige || {});
+      Object.assign(GameState.university, data.university || {});
       Object.assign(GameState.adventure, data.adventure || {});
       
       // Update prestige multiplier if prestige system is available

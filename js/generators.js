@@ -62,8 +62,13 @@ const Generators = {
       return false;
     }
 
-    // Use new dynamic cost calculation
-    const cost = GameUtils.calculateGeneratorCost(type, generator.count);
+    // Use new dynamic cost calculation with university bonuses
+    let cost = GameUtils.calculateGeneratorCost(type, generator.count);
+    
+    // Apply university cost reduction
+    if (typeof University !== 'undefined') {
+      cost = Math.floor(cost * University.getCostReduction(type));
+    }
     
     if (!GameUtils.canAfford(cost)) {
       return false;
@@ -163,13 +168,31 @@ const Generators = {
       sprite.classList.remove('clickable');
     }
 
-    // Start progress animation
-    this.animateGeneratorProgress(type);
+    // Calculate effective work time with speed multipliers
+    let effectiveWorkTime = generator.workTime;
     
-    // Schedule work completion
+    // Apply building speed multiplier
+    if (typeof Building !== 'undefined') {
+      const speedMultiplier = Building.getSpeedMultiplier(type);
+      effectiveWorkTime = Math.floor(effectiveWorkTime / speedMultiplier);
+    }
+    
+    // Apply university speed bonus
+    if (typeof University !== 'undefined') {
+      const universitySpeedBonus = University.getSpeedBonus(type);
+      effectiveWorkTime = Math.floor(effectiveWorkTime / universitySpeedBonus);
+    }
+    
+    // Ensure minimum work time of 200ms
+    effectiveWorkTime = Math.max(effectiveWorkTime, 200);
+
+    // Start progress animation with effective work time
+    this.animateGeneratorProgress(type, effectiveWorkTime);
+    
+    // Schedule work completion with effective work time
     setTimeout(() => {
       this.completeGeneratorWork(type);
-    }, generator.workTime);
+    }, effectiveWorkTime);
   },
 
   // Complete generator work and give rewards
@@ -184,6 +207,11 @@ const Generators = {
     // Apply building bonuses if available
     if (typeof Building !== 'undefined') {
       goldReward = Math.floor(goldReward * Building.getGeneratorMultiplier(type));
+    }
+
+    // Apply university gold bonus
+    if (typeof University !== 'undefined') {
+      goldReward = Math.floor(goldReward * University.getGoldBonus(type));
     }
 
     // Apply prestige multiplier
@@ -232,13 +260,14 @@ const Generators = {
   },
 
   // Animate generator progress bar
-  animateGeneratorProgress(type) {
+  animateGeneratorProgress(type, effectiveWorkTime = null) {
     const generator = GameState.generators[type];
     const progressBar = document.getElementById(`${type}Progress`);
     if (!progressBar || !generator.busy) return;
 
     const startTime = generator.lastWorkTime;
-    const duration = generator.workTime;
+    // Use effective work time if provided, otherwise use base work time
+    const duration = effectiveWorkTime || generator.workTime;
 
     const updateProgress = () => {
       if (!generator.busy) return;

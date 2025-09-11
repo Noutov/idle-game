@@ -31,6 +31,7 @@ const Game = {
       Chief.init();
       ChiefEnhanced.init();
       Prestige.init();
+      University.init();
       Generators.init();
       Upgrades.init();
       Building.init();
@@ -171,8 +172,14 @@ const Game = {
       // Process adventure timers
       Adventure.processTick();
       
+      // Process university research
+      University.updateResearch();
+      
       // Update UI
       UI.updateAll();
+      
+      // Update university UI
+      University.updateUI();
       
       // Emit tick event for other systems
       GameEvents.emit('tick', { deltaTime, income });
@@ -315,6 +322,7 @@ const Game = {
       Chief.reset();
       ChiefEnhanced.reset();
       Prestige.reset();
+      University.reset();
       Generators.reset();
       Upgrades.reset();
       Building.reset();
