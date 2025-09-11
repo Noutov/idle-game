@@ -541,9 +541,9 @@ const University = {
     const universitySection = document.getElementById('universitySection');
     const universitySeparator = document.getElementById('universitySeparator');
 
-    // Show university section once player has 30+ total generators
+    // Show university section once player has any generators
     const totalGenerators = this.getTotalGeneratorCount();
-    if (universitySection && totalGenerators >= 30) {
+    if (universitySection && totalGenerators >= 10) {
       universitySection.style.display = 'block';
       if (universitySeparator) universitySeparator.style.display = 'block';
     }
@@ -563,7 +563,7 @@ const University = {
             universityCost.textContent = GameUtils.formatNumber(GameState.university.upgradeCost);
           }
         } else {
-          upgradeUniversityBtn.style.display = totalGenerators >= 30 ? 'block' : 'none';
+          upgradeUniversityBtn.style.display = totalGenerators >= 10 ? 'block' : 'none';
           upgradeUniversityBtn.disabled = true;
         }
       }

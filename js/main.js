@@ -450,4 +450,13 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
   window.GameUtils = GameUtils;
   window.addGold = (amount) => GameUtils.addGold(amount);
   window.analyzeBalance = () => Adventure.analyzeBalance();
+  window.addGenerators = () => {
+    GameUtils.addGold(50000);
+    for(let i = 0; i < 15; i++) {
+      Generators.buyGenerator('villager');
+    }
+    for(let i = 0; i < 10; i++) {
+      Generators.buyGenerator('trader');
+    }
+  };
 }
