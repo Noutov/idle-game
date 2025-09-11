@@ -540,11 +540,7 @@ const University = {
     const universitySection = document.getElementById('universitySection');
     const universitySeparator = document.getElementById('universitySeparator');
 
-    // Show university section always
-    if (universitySection) {
-      universitySection.style.display = 'block';
-      if (universitySeparator) universitySeparator.style.display = 'block';
-    }
+    // University is now always visible in the main panel - no need to show/hide
 
     if (GameState.university.level === 0) {
       if (universityName) {
