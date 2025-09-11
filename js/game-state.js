@@ -7,6 +7,9 @@
 const GameState = {
   // Gold currency
   gold: 0,
+  
+  // Tutorial state
+  tutorialActive: false,
 
   // Chief stats
   chief: {

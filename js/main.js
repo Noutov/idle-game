@@ -328,6 +328,7 @@ const Game = {
       Building.reset();
       Combat.reset();
       Adventure.reset();
+      if (typeof Tutorial !== 'undefined') Tutorial.reset();
       
       // Restart game
       this.isInitialized = false;

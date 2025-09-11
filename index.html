@@ -15,6 +15,7 @@
       💰 Goudstukken: <span id="gold">0</span> 
       <span style="color: #2e7d32;">(+<span id="gpsDisplay">0</span>/sec)</span>
       <button id="adventureToggleBtn" class="adventure-header-btn">🗡️ Avontuur</button>
+      <button id="helpBtn" class="help-btn" title="Tutorial openen">❓</button>
     </div>
 
     <!-- Generators & Dorpshoofd -->
@@ -711,6 +712,101 @@
     </div>
   </div>
 
+  <!-- Tutorial Modal -->
+  <div id="tutorialModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content tutorial-modal">
+      <div class="modal-header">
+        <h2>🏰 Welkom bij Didam Clicker!</h2>
+        <button id="closeTutorialBtn" class="close-modal-btn">&times;</button>
+      </div>
+      
+      <div class="tutorial-content">
+        <div class="tutorial-page" id="tutorialPage1">
+          <div class="tutorial-icon">👑</div>
+          <h3>Basis Gameplay</h3>
+          <p><strong>Klik op het dorpshoofd</strong> om goud te verdienen!</p>
+          <p>Elk klik geeft je goud dat je kunt gebruiken om je dorp uit te breiden.</p>
+          <ul>
+            <li>💰 Start met 1 goud per klik</li>
+            <li>⏱️ Wacht 5 seconden tussen clicks</li>
+            <li>🔥 Bouw een click streak op voor bonussen</li>
+          </ul>
+        </div>
+
+        <div class="tutorial-page" id="tutorialPage2" style="display: none;">
+          <div class="tutorial-icon">🏭</div>
+          <h3>Generators</h3>
+          <p><strong>Koop generators</strong> die automatisch goud maken!</p>
+          <p>Elke generator type heeft unieke eigenschappen:</p>
+          <ul>
+            <li>👨‍🌾 <strong>Dorpelingen</strong> - Goedkoop en betrouwbaar (1 goud/sec)</li>
+            <li>🏺 <strong>Handelsui</strong> - Meer goud per seconde (3 goud/sec)</li>
+            <li>🛡️ <strong>Krijgers</strong> - Sterker en voor combat (5 goud/sec)</li>
+            <li>🔮 <strong>Zieners</strong> - Krachtige mystieke helpers (20 goud/sec)</li>
+            <li>⚔️ <strong>Elite Krijgers</strong> - De sterksten (100 goud/sec)</li>
+          </ul>
+        </div>
+
+        <div class="tutorial-page" id="tutorialPage3" style="display: none;">
+          <div class="tutorial-icon">⚔️</div>
+          <h3>Combat & Avonturen</h3>
+          <p><strong>Gebruik je krijgers</strong> om Romeinse kampen aan te vallen!</p>
+          <ul>
+            <li>🏕️ <strong>Klein kamp</strong> - Laag risico, 5+ krijgers</li>
+            <li>🏰 <strong>Middelgroot kamp</strong> - Middel risico, 20+ krijgers</li>
+            <li>🏛️ <strong>Groot fort</strong> - Hoog risico, 50+ krijgers</li>
+          </ul>
+          <p>🗡️ <strong>Avonturen modus</strong> ontgrendelt automatisch gevecht met je held!</p>
+        </div>
+
+        <div class="tutorial-page" id="tutorialPage4" style="display: none;">
+          <div class="tutorial-icon">🎓</div>
+          <h3>Upgrades & Onderzoek</h3>
+          <p><strong>Verbeter je generators</strong> en <strong>onderzoek nieuwe technologieën</strong>!</p>
+          <ul>
+            <li>⚒️ <strong>Generator Upgrades</strong> - Snelheid, goud en geluk bonussen</li>
+            <li>🏗️ <strong>Centraal Gebouw</strong> - Upgrade je dorpscentrum</li>
+            <li>🎓 <strong>Universiteit</strong> - Onderzoek (ontgrendeld bij 50 generators)</li>
+            <li>✨ <strong>Prestige</strong> - Herstart voor permanente bonussen</li>
+          </ul>
+        </div>
+
+        <div class="tutorial-page" id="tutorialPage5" style="display: none;">
+          <div class="tutorial-icon">💡</div>
+          <h3>Tips voor Beginners</h3>
+          <ul>
+            <li>🎯 <strong>Focus eerst</strong> op dorpelingen - ze zijn het goedkoopst</li>
+            <li>📈 <strong>Upgrade je dorpshoofd</strong> - meer goud per klik en snellere cooldown</li>
+            <li>🛡️ <strong>Koop krijgers</strong> - ze geven goud EN kunnen vechten</li>
+            <li>⚡ <strong>Gebruik dorpshoofd skills</strong> - Rally, Inspire en Fortune</li>
+            <li>🏗️ <strong>Upgrade je gebouw</strong> - geeft belangrijke bonussen</li>
+            <li>💾 <strong>Je spel wordt automatisch opgeslagen</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tutorial-navigation">
+        <button id="prevTutorialBtn" class="tutorial-nav-btn" disabled>← Vorige</button>
+        <div class="tutorial-dots">
+          <span class="tutorial-dot active" data-page="1"></span>
+          <span class="tutorial-dot" data-page="2"></span>
+          <span class="tutorial-dot" data-page="3"></span>
+          <span class="tutorial-dot" data-page="4"></span>
+          <span class="tutorial-dot" data-page="5"></span>
+        </div>
+        <button id="nextTutorialBtn" class="tutorial-nav-btn">Volgende →</button>
+      </div>
+
+      <div class="tutorial-footer">
+        <label class="tutorial-checkbox">
+          <input type="checkbox" id="dontShowAgain"> 
+          Toon deze tutorial niet meer
+        </label>
+        <button id="startGameBtn" class="start-game-btn">🚀 Start het Spel!</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Fixed Reset Button at bottom -->
   <div class="reset-container">
     <button id="resetGameBtn" class="reset-btn">🔄 Reset Spel</button>
@@ -729,6 +825,7 @@
   <script src="js/building.js"></script>
   <script src="js/combat.js"></script>
   <script src="js/adventure.js"></script>
+  <script src="js/tutorial.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
