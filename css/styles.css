@@ -90,15 +90,13 @@ body {
   margin: 0; 
   padding: 0; /* Remove padding - handled by flex layout now */
   background: 
-    /* Mystical forest atmosphere */
-    radial-gradient(ellipse at 20% 20%, rgba(34, 139, 34, 0.3) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 80%, rgba(46, 125, 50, 0.2) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 100%, rgba(27, 94, 32, 0.4) 0%, transparent 50%),
-    /* Ancient magic glow */
-    radial-gradient(circle at 10% 30%, rgba(139, 69, 19, 0.1) 0%, transparent 40%),
-    radial-gradient(circle at 90% 70%, rgba(160, 82, 45, 0.1) 0%, transparent 40%),
-    /* Base forest gradient */
-    var(--gradient-forest);
+    /* Subtle overlay for readability */
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.02) 50%, rgba(0, 0, 0, 0.05) 100%),
+    /* Custom Gallisch grass texture */
+    url('../assets/custom-grass-pattern.svg');
+  background-size: 64px 64px; /* Smaller tiling for more detailed pattern */
+  background-repeat: repeat;
+  background-attachment: fixed;
   color: #1a1a1a;
   min-height: 100vh;
   image-rendering: pixelated;
