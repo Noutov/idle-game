@@ -4,14 +4,8 @@
  */
 
 const Generators = {
-  // Generator type configurations
-  config: {
-    villager: { name: 'Dorpelingen', emoji: '👨‍🌾', baseGps: 1 },
-    trader: { name: 'Handelsui', emoji: '🏺', baseGps: 3 },
-    warrior: { name: 'Krijgers', emoji: '🛡️', baseGps: 5 },
-    seer: { name: 'Zieners', emoji: '🔮', baseGps: 20 },
-    elite: { name: 'Elite Krijgers', emoji: '⚔️', baseGps: 100 }
-  },
+  // Use centralized configuration
+  config: GameConstants.GENERATORS,
 
   // Initialize generator system
   init() {
@@ -21,33 +15,33 @@ const Generators = {
 
   // Setup event listeners for buy buttons and generator sprites
   setupEventListeners() {
-    const buyButtons = [
-      { id: 'buyVillagerBtn', type: 'villager' },
-      { id: 'buyTraderBtn', type: 'trader' },
-      { id: 'buyWarriorBtn', type: 'warrior' },
-      { id: 'buySeerBtn', type: 'seer' },
-      { id: 'buyEliteBtn', type: 'elite' }
-    ];
-
-    const generatorSprites = [
-      { id: 'villagerSprite', type: 'villager' },
-      { id: 'traderSprite', type: 'trader' },
-      { id: 'warriorSprite', type: 'warrior' },
-      { id: 'seerSprite', type: 'seer' },
-      { id: 'eliteSprite', type: 'elite' }
-    ];
-
-    // Buy button listeners
-    buyButtons.forEach(({ id, type }) => {
-      const button = document.getElementById(id);
-      if (button) {
-        button.addEventListener('click', () => this.buyGenerator(type));
-      }
+    // Use centralized event binding
+    const buyBindings = Object.keys(GeneratorTypes).map(key => {
+      const type = GeneratorTypes[key];
+      const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
+      return {
+        id: `buy${capitalized}Btn`,
+        callback: () => this.buyGenerator(type),
+        context: this
+      };
+    });
+    
+    const spriteBindings = Object.keys(GeneratorTypes).map(key => {
+      const type = GeneratorTypes[key];
+      return {
+        id: `${type}Sprite`,
+        callback: () => this.startGenerator(type),
+        context: this
+      };
     });
 
-    // Generator sprite click listeners
-    generatorSprites.forEach(({ id, type }) => {
-      const sprite = document.getElementById(id);
+    // Bind all events at once
+    EventBinder.bindMultipleClicks([...buyBindings, ...spriteBindings]);
+    
+    // Legacy code for remaining sprite setup
+    Object.keys(GeneratorTypes).forEach(key => {
+      const type = GeneratorTypes[key];
+      const sprite = DOMUtils.get(`${type}Sprite`);
       if (sprite) {
         sprite.addEventListener('click', () => this.clickGenerator(type));
       }
@@ -90,11 +84,7 @@ const Generators = {
       this.showPurchaseEffect(type);
       
       // Show success notification
-      const config = this.config[type];
-      UI.showNotification(
-        `${config.emoji} ${config.name} gekocht! (+${generator.gps}/sec)`,
-        'success'
-      );
+      NotificationHelpers.generatorPurchased(type, generator.count, generator.gps);
       
       // Update sprite clickability
       this.updateGeneratorSprite(type);
@@ -244,10 +234,7 @@ const Generators = {
     generator.workStartTime = null;
 
     // Reset progress bar visual
-    const progressBar = document.getElementById(`${type}Progress`);
-    if (progressBar) {
-      progressBar.style.width = '0%';
-    }
+    DOMUtils.setStyle(`${type}Progress`, 'width', '0%');
 
     // Visual effects
     const sprite = document.getElementById(`${type}Sprite`);
@@ -282,8 +269,8 @@ const Generators = {
     const progressBar = document.getElementById(`${type}Progress`);
     if (!progressBar || !generator.busy) return;
 
-    // If the work time is very short (< 500ms), keep the bar filled instead of animating
-    if (generator.effectiveWorkTime < 500) {
+    // If the work time is very short, keep the bar filled instead of animating
+    if (generator.effectiveWorkTime < GameConstants.TIME.PROGRESS_BAR_MIN_ANIMATION) {
       progressBar.style.width = '100%';
       generator.progress = 100;
       return;
@@ -296,7 +283,7 @@ const Generators = {
       const duration = generator.effectiveWorkTime;
       const progress = Math.min((elapsed / duration) * 100, 100);
       
-      progressBar.style.width = `${progress}%`;
+      DOMUtils.setStyle(`${type}Progress`, 'width', `${progress}%`);
       generator.progress = progress;
 
       if (progress < 100) {
