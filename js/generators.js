@@ -7,6 +7,22 @@ const Generators = {
   // Use centralized configuration
   config: GameConstants.GENERATORS,
 
+  // Helper function for notifications with fallback
+  showNotification(message, type = 'info') {
+    if (typeof NotificationHelpers !== 'undefined') {
+      switch(type) {
+        case 'success': NotificationHelpers.success(message); break;
+        case 'error': NotificationHelpers.error(message); break;
+        case 'warning': NotificationHelpers.warning(message); break;
+        default: NotificationHelpers.info(message); break;
+      }
+    } else if (typeof UI !== 'undefined') {
+      UI.showNotification(message, type);
+    } else {
+      console.log(`[${type.toUpperCase()}] ${message}`);
+    }
+  },
+
   // Initialize generator system
   init() {
     this.setupEventListeners();
@@ -15,33 +31,51 @@ const Generators = {
 
   // Setup event listeners for buy buttons and generator sprites
   setupEventListeners() {
-    // Use centralized event binding
-    const buyBindings = Object.keys(GeneratorTypes).map(key => {
-      const type = GeneratorTypes[key];
-      const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
-      return {
-        id: `buy${capitalized}Btn`,
-        callback: () => this.buyGenerator(type),
-        context: this
-      };
-    });
-    
-    const spriteBindings = Object.keys(GeneratorTypes).map(key => {
-      const type = GeneratorTypes[key];
-      return {
-        id: `${type}Sprite`,
-        callback: () => this.startGenerator(type),
-        context: this
-      };
-    });
+    // Check if utilities are available, fallback to manual binding if not
+    if (typeof EventBinder !== 'undefined' && typeof GeneratorTypes !== 'undefined') {
+      // Use centralized event binding
+      const buyBindings = Object.keys(GeneratorTypes).map(key => {
+        const type = GeneratorTypes[key];
+        const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
+        return {
+          id: `buy${capitalized}Btn`,
+          callback: () => this.buyGenerator(type),
+          context: this
+        };
+      });
+      
+      const spriteBindings = Object.keys(GeneratorTypes).map(key => {
+        const type = GeneratorTypes[key];
+        return {
+          id: `${type}Sprite`,
+          callback: () => this.clickGenerator(type),
+          context: this
+        };
+      });
 
-    // Bind all events at once
-    EventBinder.bindMultipleClicks([...buyBindings, ...spriteBindings]);
+      // Bind all events at once
+      EventBinder.bindMultipleClicks([...buyBindings, ...spriteBindings]);
+    } else {
+      // Fallback to manual event binding
+      console.warn('Utilities not loaded, using fallback event binding');
+      this.setupManualEventListeners();
+    }
+  },
+
+  // Fallback manual event listeners
+  setupManualEventListeners() {
+    const generatorTypes = ['villager', 'trader', 'warrior', 'seer', 'elite'];
     
-    // Legacy code for remaining sprite setup
-    Object.keys(GeneratorTypes).forEach(key => {
-      const type = GeneratorTypes[key];
-      const sprite = DOMUtils.get(`${type}Sprite`);
+    generatorTypes.forEach(type => {
+      // Buy button
+      const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
+      const buyBtn = document.getElementById(`buy${capitalized}Btn`);
+      if (buyBtn) {
+        buyBtn.addEventListener('click', () => this.buyGenerator(type));
+      }
+      
+      // Generator sprite
+      const sprite = document.getElementById(`${type}Sprite`);
       if (sprite) {
         sprite.addEventListener('click', () => this.clickGenerator(type));
       }
@@ -84,7 +118,11 @@ const Generators = {
       this.showPurchaseEffect(type);
       
       // Show success notification
-      NotificationHelpers.generatorPurchased(type, generator.count, generator.gps);
+      if (typeof NotificationHelpers !== 'undefined') {
+        NotificationHelpers.generatorPurchased(type, generator.count, generator.gps);
+      } else {
+        this.showNotification(`${this.config[type].emoji} ${this.config[type].name} gekocht! (+${generator.gps}/sec)`, 'success');
+      }
       
       // Update sprite clickability
       this.updateGeneratorSprite(type);
@@ -112,7 +150,7 @@ const Generators = {
 
     // Check if generator has any units
     if (generator.count <= 0) {
-      UI.showNotification(`Je hebt geen ${this.config[type].name}!`, 'warning');
+      this.showNotification(`Je hebt geen ${this.config[type].name}!`, 'warning');
       return false;
     }
 
@@ -128,7 +166,7 @@ const Generators = {
 
     // Check if automated (building level)
     if (this.isAutomated(type)) {
-      UI.showNotification(`${this.config[type].name} werken automatisch!`, 'info');
+      this.showNotification(`${this.config[type].name} werken automatisch!`, 'info');
       return false;
     }
 
@@ -416,10 +454,7 @@ const Generators = {
     
     if (purchased > 0) {
       const config = this.config[type];
-      UI.showNotification(
-        `${purchased} ${config.name} gekocht!`,
-        'success'
-      );
+      this.showNotification(`${purchased} ${config.name} gekocht!`, 'success');
     }
     
     return purchased;
@@ -470,11 +505,7 @@ const Generators = {
     
     if (milestones.includes(count)) {
       const config = this.config[type];
-      UI.showNotification(
-        `🏆 Mijlpaal bereikt: ${count} ${config.name}!`,
-        'success',
-        5000
-      );
+      this.showNotification(`🏆 Mijlpaal bereikt: ${count} ${config.name}!`, 'success');
       
       // Special effects for major milestones
       if (count >= 100) {
@@ -487,11 +518,7 @@ const Generators = {
     const totalMilestones = [10, 50, 100, 500, 1000];
     
     if (totalMilestones.includes(total)) {
-      UI.showNotification(
-        `🎉 Totaal ${total} generators!`,
-        'success',
-        5000
-      );
+      this.showNotification(`🎉 Totaal ${total} generators!`, 'success');
     }
   },
 
@@ -510,7 +537,7 @@ const Generators = {
       }
       this.autoBuyIntervals[type] = interval;
       
-      UI.showNotification(`Auto-koop ${this.config[type].name} ingeschakeld!`, 'info');
+      this.showNotification(`Auto-koop ${this.config[type].name} ingeschakeld!`, 'info');
     } else {
       this.stopAutoBuy(type);
     }
@@ -521,7 +548,7 @@ const Generators = {
     if (this.autoBuyIntervals && this.autoBuyIntervals[type]) {
       clearInterval(this.autoBuyIntervals[type]);
       delete this.autoBuyIntervals[type];
-      UI.showNotification(`Auto-koop ${this.config[type].name} uitgeschakeld!`, 'info');
+      this.showNotification(`Auto-koop ${this.config[type].name} uitgeschakeld!`, 'info');
     }
   },
 
