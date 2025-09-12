@@ -201,7 +201,7 @@ body {
 
 @media (max-width: 480px) {
   .game-container {
-    padding-top: 40px; /* Space for header on mobile */
+    padding-top: 55px; /* Space for header on mobile */
   }
   
   .header-content {
