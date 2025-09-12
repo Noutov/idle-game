@@ -117,12 +117,7 @@ const Generators = {
       // Visual feedback
       this.showPurchaseEffect(type);
       
-      // Show success notification
-      if (typeof NotificationHelpers !== 'undefined') {
-        NotificationHelpers.generatorPurchased(type, generator.count, generator.gps);
-      } else {
-        this.showNotification(`${this.config[type].emoji} ${this.config[type].name} gekocht! (+${generator.gps}/sec)`, 'success');
-      }
+      // Notification removed to reduce spam when buying many generators
       
       // Update sprite clickability
       this.updateGeneratorSprite(type);
