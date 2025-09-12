@@ -696,9 +696,9 @@ const UI = {
       totalGoldElement.textContent = GameUtils.formatNumber(stats.totalGoldEarned);
     }
     
-    const wisdomElement = document.getElementById('wisdomPoints');
+    const wisdomElement = document.getElementById('wisdom');
     if (wisdomElement) {
-      wisdomElement.textContent = stats.wisdomPoints;
+      wisdomElement.textContent = `${stats.availableWisdom}/${stats.wisdomPoints}`;
     }
     
     const prestigeCountElement = document.getElementById('prestigeCount');

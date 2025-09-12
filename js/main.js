@@ -31,6 +31,7 @@ const Game = {
       Chief.init();
       ChiefEnhanced.init();
       Prestige.init();
+      TechTree.init();
       University.init();
       Generators.init();
       Upgrades.init();

@@ -38,7 +38,15 @@ const Prestige = {
     const totalGold = GameState.prestige.totalGoldEarned;
     const currentThreshold = this.getCurrentThreshold();
     // Formula: sqrt(totalGold / currentThreshold) for wisdom points
-    return Math.floor(Math.sqrt(totalGold / currentThreshold)) + 1;
+    let baseWisdom = Math.floor(Math.sqrt(totalGold / currentThreshold)) + 1;
+    
+    // Apply tech tree bonus for wisdom gain
+    if (typeof TechTree !== 'undefined') {
+      const wisdomBonus = TechTree.getTechBonus('wisdom_gain_bonus');
+      baseWisdom += wisdomBonus;
+    }
+    
+    return baseWisdom;
   },
 
   // Get current prestige multiplier from wisdom
@@ -48,8 +56,16 @@ const Prestige = {
 
   // Update wisdom multiplier based on current wisdom points
   updateWisdomMultiplier() {
-    // Each wisdom point gives 5% bonus (multiplicative)
-    GameState.prestige.bonusMultiplier = Math.pow(1.05, GameState.prestige.wisdomPoints);
+    // Base prestige bonus: Each wisdom point gives 5% bonus (multiplicative)
+    let baseMultiplier = Math.pow(1.05, GameState.prestige.wisdomPoints);
+    
+    // Apply tech tree amplifier bonus
+    if (typeof TechTree !== 'undefined') {
+      const amplifierBonus = TechTree.getTechBonus('prestige_bonus_amplifier');
+      baseMultiplier *= (1 + amplifierBonus);
+    }
+    
+    GameState.prestige.bonusMultiplier = baseMultiplier;
   },
 
   // Show prestige confirmation dialog
@@ -152,11 +168,12 @@ const Prestige = {
   performPrestige() {
     const wisdomGain = this.calculateWisdomGain();
     
-    // Award wisdom points
+    // Award wisdom points (both total and available for spending)
     GameState.prestige.wisdomPoints += wisdomGain;
+    GameState.prestige.availableWisdom += wisdomGain;
     GameState.prestige.prestigeCount++;
     
-    // Reset everything except prestige stats
+    // Reset everything except prestige stats and tech tree
     this.resetForPrestige();
     
     // Update multiplier
@@ -176,9 +193,10 @@ const Prestige = {
     GameEvents.emit('gameReset'); // Trigger UI updates
   },
 
-  // Reset game state for prestige (keep wisdom)
+  // Reset game state for prestige (keep wisdom and tech tree)
   resetForPrestige() {
     const prestigeData = { ...GameState.prestige }; // Keep prestige data
+    const techTreeData = { ...GameState.techTree }; // Keep tech tree data
     
     // Reset everything else
     GameState.gold = 0;
@@ -225,8 +243,9 @@ const Prestige = {
       luckCooldown: 30000
     };
     
-    // Restore prestige data
+    // Restore prestige and tech tree data
     GameState.prestige = prestigeData;
+    GameState.techTree = techTreeData;
   },
 
   // Get prestige stats
@@ -235,6 +254,7 @@ const Prestige = {
       canPrestige: this.canPrestige(),
       totalGoldEarned: GameState.prestige.totalGoldEarned,
       wisdomPoints: GameState.prestige.wisdomPoints,
+      availableWisdom: GameState.prestige.availableWisdom,
       prestigeCount: GameState.prestige.prestigeCount,
       currentMultiplier: this.getPrestigeMultiplier(),
       bonusPercentage: ((this.getPrestigeMultiplier() - 1) * 100).toFixed(1),
@@ -249,9 +269,11 @@ const Prestige = {
     GameState.prestige = {
       totalGoldEarned: 0,
       wisdomPoints: 0,
+      availableWisdom: 0,
       prestigeCount: 0,
       bonusMultiplier: 1
     };
+    GameState.techTree = {};
     this.updateWisdomMultiplier();
     GameEvents.emit('prestigeChanged');
   }

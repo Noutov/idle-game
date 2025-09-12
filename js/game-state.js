@@ -120,8 +120,15 @@ const GameState = {
   prestige: {
     totalGoldEarned: 0,
     wisdomPoints: 0,
+    availableWisdom: 0, // Wisdom points available to spend on tech tree
     prestigeCount: 0,
     bonusMultiplier: 1 // Based on wisdom points
+  },
+
+  // Tech tree system
+  techTree: {
+    // Categories will be populated as: categoryId: { upgradeId: level }
+    // Example: production: { efficient_workers: 3, mass_production: 1 }
   },
 
   // University research system
@@ -384,5 +391,66 @@ const GameUtils = {
       elite: 2000
     };
     return defaults[type] || 0;
+  },
+
+  // Tech Tree Integration Helpers
+  getTechTreeBonus(effectType, target = null) {
+    if (typeof TechTree === 'undefined') return 0;
+    return TechTree.getTechBonus(effectType, target);
+  },
+
+  // Get total gold multiplier with all bonuses
+  getGoldMultiplier(generatorType = 'all') {
+    let multiplier = 1;
+    
+    // Prestige bonus
+    multiplier *= GameState.prestige.bonusMultiplier;
+    
+    // Tech tree bonuses
+    if (typeof TechTree !== 'undefined') {
+      if (generatorType === 'warrior' || generatorType === 'elite') {
+        multiplier *= (1 + TechTree.getTechBonus('warrior_gold_bonus'));
+      } else if (generatorType === 'seer') {
+        multiplier *= (1 + TechTree.getTechBonus('seer_gold_bonus'));
+      }
+      
+      // General bonuses apply to all
+      multiplier *= (1 + TechTree.getTechBonus('generator_gold_bonus'));
+      
+      // Chief specific bonus
+      if (generatorType === 'chief') {
+        multiplier *= (1 + TechTree.getTechBonus('chief_gold_bonus'));
+      }
+    }
+    
+    return multiplier;
+  },
+
+  // Get cost reduction multiplier
+  getCostMultiplier(generatorType) {
+    let reduction = 0;
+    
+    if (typeof TechTree !== 'undefined') {
+      // General cost reduction
+      reduction += TechTree.getTechBonus('generator_cost_reduction');
+      
+      // Specific reductions
+      if (generatorType === 'warrior' || generatorType === 'elite') {
+        reduction += TechTree.getTechBonus('warrior_cost_reduction');
+      }
+    }
+    
+    return 1 - Math.min(reduction, 0.8); // Max 80% reduction
+  },
+
+  // Get speed multiplier
+  getSpeedMultiplier(generatorType) {
+    let multiplier = 1;
+    
+    if (typeof TechTree !== 'undefined') {
+      multiplier *= (1 + TechTree.getTechBonus('generator_speed_bonus'));
+    }
+    
+    return multiplier;
   }
 };
