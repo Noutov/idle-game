@@ -33,9 +33,8 @@
       <!-- Dorpshoofd Section -->
       <div class="chief-section">
         <div class="chief-display">
-          <button class="chief-sprite clickable" id="chiefBtn" title="🖱️ KLIK om goud te verdienen!">
-            <div id="chiefSprite">👑</div>
-          </button>
+          <div class="chief-sprite clickable" id="chiefSprite" title="🖱️ KLIK om goud te verdienen!">👑</div>
+          <button id="chiefBtn" style="display: none;"></button>
           <div class="chief-info">
             <p><strong>Dorpshoofd</strong> (+<span id="chiefGold">1</span> goudstukken per klik, wachttijd <span id="chiefCooldownText">5.0</span>s)</p>
             <div class="progress-container">
@@ -687,6 +686,41 @@
           <span class="stat-value"><span id="totalResearchSpent">0</span>💰</span>
         </div>
       </div>
+        </div>
+      </div>
+      
+      <!-- Prestige Section -->
+      <div class="panel prestige-panel">
+        <h2>✨ Prestige - Wedergeboorte</h2>
+        
+        <div class="prestige-display">
+          <div class="prestige-icon">✨</div>
+          <div class="prestige-info">
+            <h3>Wijsheid Systeem</h3>
+            <p>Herstart je vooruitgang en krijg permanente bonussen!</p>
+            <div class="prestige-stats">
+              <div class="stat-item">
+                <span class="stat-label">Wijsheid Punten:</span>
+                <span class="stat-value" id="wisdom">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Prestige Count:</span>
+                <span class="stat-value" id="prestigeCount">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Huidige Bonus:</span>
+                <span class="stat-value">+<span id="prestigeBonus">0</span>%</span>
+              </div>
+            </div>
+          </div>
+          <div class="prestige-actions">
+            <button id="prestigeBtn" class="prestige-btn" disabled>
+              ✨ Prestige!
+            </button>
+            <div class="prestige-requirement" id="prestigeRequirement">
+              Vereist: 1.000.000💰 totaal
+            </div>
+          </div>
         </div>
       </div>
     </div>
