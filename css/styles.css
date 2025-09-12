@@ -3805,13 +3805,14 @@ select, input {
   background: linear-gradient(145deg, #ff9800, #f57c00);
   color: white;
   border: 2px solid #ef6c00;
-  border-radius: 8px;
-  padding: 6px 8px;
-  font-size: 0.7em;
+  border-radius: var(--radius-button);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-smooth);
   white-space: nowrap;
-  max-width: 120px;
+  min-width: 60px;
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -3851,17 +3852,18 @@ select, input {
 
 .research-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-sm);
 }
 
 .research-item {
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-xs);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-smooth);
+  font-size: var(--font-size-sm);
 }
 
 .research-item:hover {
@@ -4016,8 +4018,10 @@ select, input {
   }
   
   .speed-up-btn, .toggle-research-btn {
-    font-size: 0.7em;
-    padding: 6px 10px;
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs);
+    min-width: 50px;
+    max-width: 80px;
   }
 }
 
@@ -4179,13 +4183,15 @@ select, input {
   background: linear-gradient(145deg, #ff9800, #ffb74d);
   color: white;
   border: 2px solid #f57c00;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-family: 'Courier New', monospace;
+  border-radius: var(--radius-button);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-family: var(--font-primary);
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9em;
+  transition: var(--transition-smooth);
+  font-size: var(--font-size-xs);
+  min-width: 60px;
+  max-width: 100px;
 }
 
 .speed-up-btn:hover:not(:disabled) {

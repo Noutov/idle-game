@@ -361,8 +361,8 @@ const University = {
     const timeReduction = Math.floor(actualCost / 5) * 1000; // Convert to milliseconds
     
     if (GameUtils.spendGold(actualCost)) {
-      // Reduce the research time by moving the start time forward
-      GameState.university.research.startTime += timeReduction;
+      // Reduce the research time by moving the start time backward (making it seem like it started earlier)
+      GameState.university.research.startTime -= timeReduction;
       GameState.university.totalSpent += actualCost;
       
       const secondsReduced = Math.floor(timeReduction / 1000);
