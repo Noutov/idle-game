@@ -359,35 +359,21 @@ const University = {
       return true;
     }
 
-    // More expensive cost: 20 gold per second remaining
-    const fullSpeedUpCost = Math.ceil(timeLeft / 1000) * 20;
+    // Fixed cost: 10x the initial research price
+    const speedUpCost = GameState.university.research.baseCost * 10;
     const currentGold = GameState.gold;
     
-    if (currentGold < 50) {
-      UI.showNotification('Je hebt minimaal 50 goud nodig om te versnellen!', 'error');
+    if (currentGold < speedUpCost) {
+      UI.showNotification(`Je hebt ${GameUtils.formatNumber(speedUpCost)} goud nodig om te versnellen!`, 'error');
       return false;
     }
-
-    // Allow partial payment - use all available gold (minimum 10)
-    const actualCost = Math.min(fullSpeedUpCost, currentGold);
     
-    // Calculate how much time to reduce based on payment (1 second per 20 gold)
-    const timeReduction = Math.floor(actualCost / 20) * 1000; // Convert to milliseconds
-    
-    if (GameUtils.spendGold(actualCost)) {
-      // Reduce the research time by moving the start time backward (making it seem like it started earlier)
-      GameState.university.research.startTime -= timeReduction;
-      GameState.university.totalSpent += actualCost;
+    if (GameUtils.spendGold(speedUpCost)) {
+      // Complete the research instantly
+      this.completeResearch();
+      GameState.university.totalSpent += speedUpCost;
       
-      const secondsReduced = Math.floor(timeReduction / 1000);
-      const remainingAfter = Math.floor(this.getResearchTimeLeft() / 1000);
-      
-      if (remainingAfter <= 0) {
-        UI.showNotification(`⚡ Onderzoek voltooid door versnelling!`, 'success');
-        this.completeResearch();
-      } else {
-        UI.showNotification(`⚡ Onderzoek versneld met ${secondsReduced}s! Nog ${remainingAfter}s over.`, 'success');
-      }
+      UI.showNotification(`⚡ Onderzoek voltooid door versnelling!`, 'success');
       
       return true;
     }
@@ -651,18 +637,11 @@ const University = {
       }
 
       if (speedUpResearchBtn && speedUpCost) {
-        const fullSpeedCost = Math.ceil(timeLeft / 1000) * 20;
+        const speedUpCostAmount = GameState.university.research.baseCost * 10;
         const currentGold = GameState.gold;
-        const actualCost = Math.min(fullSpeedCost, Math.max(50, currentGold));
-        const timeReduction = Math.floor(actualCost / 20);
         
-        if (fullSpeedCost <= actualCost) {
-          speedUpCost.textContent = `${GameUtils.formatNumber(actualCost)} (Voltooi)`;
-        } else {
-          speedUpCost.textContent = `${GameUtils.formatNumber(actualCost)} (-${timeReduction}s)`;
-        }
-        
-        speedUpResearchBtn.disabled = currentGold < 50 || timeLeft <= 0;
+        speedUpCost.textContent = GameUtils.formatNumber(speedUpCostAmount);
+        speedUpResearchBtn.disabled = currentGold < speedUpCostAmount || timeLeft <= 0;
       }
     } else {
       if (activeResearchIcon) activeResearchIcon.textContent = '🔬';

@@ -3799,6 +3799,12 @@ select, input {
   flex-shrink: 0;
 }
 
+.speed-up-label {
+  font-size: var(--font-size-sm);
+  color: #8b4513;
+  font-weight: bold;
+}
+
 .speed-up-btn {
   background: linear-gradient(145deg, #ff9800, #f57c00);
   color: white;
