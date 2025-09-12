@@ -799,35 +799,23 @@ button:disabled {
 
 /* Generators - Compact Layout */
 .generator-item {
-  background: 
-    /* Parchment texture overlay */
-    radial-gradient(circle at 25% 25%, rgba(139, 119, 101, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(160, 140, 120, 0.1) 0%, transparent 50%),
-    /* Age spots and stains */
-    radial-gradient(circle at 10% 90%, rgba(139, 115, 85, 0.08) 0%, transparent 30%),
-    radial-gradient(circle at 90% 10%, rgba(160, 130, 98, 0.06) 0%, transparent 40%),
-    /* Parchment base */
-    linear-gradient(145deg, #f5f0e8 0%, #f0e6d2 50%, #e8d7bb 100%);
-  border: 3px solid #d4af37;
-  border-image: linear-gradient(45deg, #b8860b, #daa520, #b8860b, #cd853f) 1;
-  border-radius: 8px;
-  padding: 12px;
-  margin: 8px 0;
-  display: flex;
+  background: var(--gradient-parchment);
+  border: var(--border-gold);
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-md);
+  margin: var(--spacing-sm) 0;
+  
+  /* Clean grid layout for perfect alignment */
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-template-areas: "sprite info progress button";
   align-items: center;
-  gap: 12px;
-  min-height: 75px; /* More space for content */
-  box-shadow: 
-    /* Main shadow */
-    0 4px 12px rgba(212, 175, 55, 0.2),
-    0 2px 6px rgba(0, 0, 0, 0.1),
-    /* Inner parchment effect */
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(139, 115, 85, 0.3),
-    inset 1px 0 0 rgba(255, 255, 255, 0.6),
-    inset -1px 0 0 rgba(139, 115, 85, 0.2);
+  gap: var(--spacing-md);
+  min-height: 70px;
+  
   position: relative;
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-smooth);
   overflow: hidden;
 }
 
@@ -864,19 +852,21 @@ button:disabled {
 }
 
 .generator-sprite {
+  grid-area: sprite;
   width: 44px;
-  height: 44px; /* Square, 2-line height */
-  background: linear-gradient(145deg, #8b4513, #a0522d);
-  border: 2px solid #654321;
-  border-radius: 8px;
+  height: 44px;
+  background: var(--gradient-wood);
+  border: var(--border-wood);
+  border-radius: var(--radius-medium);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4em;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  transition: var(--transition-normal);
   user-select: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-button);
 }
 
 /* Generator clickable states */
@@ -992,6 +982,12 @@ button:disabled {
   transition: var(--transition-normal);
 }
 
+/* Generator grid positioning */
+.generator-item .buy-btn {
+  grid-area: button;
+  justify-self: end;
+}
+
 .villager-sprite { 
   background: linear-gradient(135deg, #8bc34a 0%, #aed581 100%);
   border-color: #689f38;
@@ -1010,13 +1006,13 @@ button:disabled {
 }
 
 .generator-info {
-  flex: 1;
+  grid-area: info;
   color: #1a1a1a;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
-  min-height: 50px; /* More space for content */
+  gap: var(--spacing-xs);
+  min-width: 0;
 }
 
 .generator-line1 {
