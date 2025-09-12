@@ -905,6 +905,8 @@ button:disabled {
   width: 150px; /* Fixed width for all generator progress bars */
   height: 12px;
   flex-shrink: 0; /* Don't shrink when space is tight */
+  margin: 2px 0; /* Add small vertical margin for better alignment */
+  align-self: center; /* Center align the progress bar */
 }
 
 .generator-progress {
@@ -1186,6 +1188,7 @@ button:disabled {
   .generator-item {
     display: flex !important;
     align-items: center;
+    justify-content: space-between;
     gap: 15px;
     min-height: 75px;
     padding: 12px;
@@ -1204,6 +1207,7 @@ button:disabled {
     justify-content: center;
     min-height: 50px;
     gap: 4px;
+    min-width: 0;
   }
   
   .generator-line1 {
@@ -1222,6 +1226,7 @@ button:disabled {
     height: 44px;
     font-size: 0.75em;
     flex-shrink: 0;
+    align-self: center;
   }
 }
 

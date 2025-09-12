@@ -282,6 +282,13 @@ const Generators = {
     const progressBar = document.getElementById(`${type}Progress`);
     if (!progressBar || !generator.busy) return;
 
+    // If the work time is very short (< 500ms), keep the bar filled instead of animating
+    if (generator.effectiveWorkTime < 500) {
+      progressBar.style.width = '100%';
+      generator.progress = 100;
+      return;
+    }
+
     const updateProgress = () => {
       if (!generator.busy) return;
 
