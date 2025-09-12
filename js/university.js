@@ -240,16 +240,11 @@ const University = {
       speedUpResearchBtn.addEventListener('click', () => this.speedUpResearch());
     }
 
-    // Research toggle button
-    const toggleResearchBtn = document.getElementById('toggleResearchBtn');
-    const researchCategories = document.getElementById('researchCategories');
-    if (toggleResearchBtn && researchCategories) {
-      toggleResearchBtn.addEventListener('click', () => {
-        const isVisible = researchCategories.style.display !== 'none';
-        researchCategories.style.display = isVisible ? 'none' : 'block';
-        toggleResearchBtn.textContent = isVisible ? '📋 Toon Onderzoek' : '📋 Verberg Onderzoek';
-      });
-    }
+    // Collapsible category headers
+    const categoryHeaders = document.querySelectorAll('.category-header');
+    categoryHeaders.forEach(header => {
+      header.addEventListener('click', () => this.toggleCategory(header));
+    });
 
     // Listen to generator changes to check for new unlocks
     GameEvents.on('generatorsChanged', () => {
@@ -333,6 +328,25 @@ const University = {
     return false;
   },
 
+  // Toggle category visibility
+  toggleCategory(header) {
+    const categoryName = header.dataset.category;
+    const grid = document.getElementById(`${categoryName}Research`);
+    const toggle = header.querySelector('.category-toggle');
+    
+    if (grid.classList.contains('collapsed')) {
+      // Expand
+      grid.classList.remove('collapsed');
+      grid.classList.add('expanded');
+      header.classList.add('expanded');
+    } else {
+      // Collapse
+      grid.classList.remove('expanded');
+      grid.classList.add('collapsed');
+      header.classList.remove('expanded');
+    }
+  },
+
   // Speed up current research
   speedUpResearch() {
     if (!GameState.university.research.active) return false;
@@ -345,20 +359,20 @@ const University = {
       return true;
     }
 
-    // More expensive cost: 5 gold per second remaining
-    const fullSpeedUpCost = Math.ceil(timeLeft / 1000) * 5;
+    // More expensive cost: 20 gold per second remaining
+    const fullSpeedUpCost = Math.ceil(timeLeft / 1000) * 20;
     const currentGold = GameState.gold;
     
-    if (currentGold < 10) {
-      UI.showNotification('Je hebt minimaal 10 goud nodig om te versnellen!', 'error');
+    if (currentGold < 50) {
+      UI.showNotification('Je hebt minimaal 50 goud nodig om te versnellen!', 'error');
       return false;
     }
 
     // Allow partial payment - use all available gold (minimum 10)
     const actualCost = Math.min(fullSpeedUpCost, currentGold);
     
-    // Calculate how much time to reduce based on payment (1 second per 5 gold)
-    const timeReduction = Math.floor(actualCost / 5) * 1000; // Convert to milliseconds
+    // Calculate how much time to reduce based on payment (1 second per 20 gold)
+    const timeReduction = Math.floor(actualCost / 20) * 1000; // Convert to milliseconds
     
     if (GameUtils.spendGold(actualCost)) {
       // Reduce the research time by moving the start time backward (making it seem like it started earlier)
@@ -637,10 +651,10 @@ const University = {
       }
 
       if (speedUpResearchBtn && speedUpCost) {
-        const fullSpeedCost = Math.ceil(timeLeft / 1000) * 5;
+        const fullSpeedCost = Math.ceil(timeLeft / 1000) * 20;
         const currentGold = GameState.gold;
-        const actualCost = Math.min(fullSpeedCost, Math.max(10, currentGold));
-        const timeReduction = Math.floor(actualCost / 5);
+        const actualCost = Math.min(fullSpeedCost, Math.max(50, currentGold));
+        const timeReduction = Math.floor(actualCost / 20);
         
         if (fullSpeedCost <= actualCost) {
           speedUpCost.textContent = `${GameUtils.formatNumber(actualCost)} (Voltooi)`;
@@ -648,7 +662,7 @@ const University = {
           speedUpCost.textContent = `${GameUtils.formatNumber(actualCost)} (-${timeReduction}s)`;
         }
         
-        speedUpResearchBtn.disabled = currentGold < 10 || timeLeft <= 0;
+        speedUpResearchBtn.disabled = currentGold < 50 || timeLeft <= 0;
       }
     } else {
       if (activeResearchIcon) activeResearchIcon.textContent = '🔬';

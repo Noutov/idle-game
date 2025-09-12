@@ -600,11 +600,11 @@
       <div class="university-info">
         <h3 id="universityName">Geen universiteit</h3>
         <p id="universityDescription">Bouw een universiteit om onderzoek te starten (kost 100.000 goud)</p>
-      </div>
-      <div class="university-actions">
-        <button id="upgradeUniversityBtn" class="upgrade-btn">
-          Bouw: Universiteit - <span id="universityCost">100000</span>💰
-        </button>
+        <div class="university-actions">
+          <button id="upgradeUniversityBtn" class="upgrade-btn">
+            Bouw: Universiteit - <span id="universityCost">100000</span>💰
+          </button>
+        </div>
       </div>
     </div>
 
@@ -632,47 +632,68 @@
           <button id="speedUpResearchBtn" class="speed-up-btn">
             ⚡ Versnellen - <span id="speedUpCost">0</span>💰
           </button>
-          <button id="toggleResearchBtn" class="toggle-research-btn">
-            📋 Toon Onderzoek
-          </button>
         </div>
       </div>
     </div>
 
-    <!-- Available Research (Collapsible) -->
-    <div class="research-categories" id="researchCategories" style="display: none;">
+    <!-- Available Research (Always Visible, Collapsible Categories) -->
+    <div class="research-categories" id="researchCategories">
       <h4>📋 Beschikbaar Onderzoek</h4>
       
       <!-- General Research -->
-      <div class="research-category">
-        <h5>📚 Algemeen</h5>
-        <div class="research-grid" id="generalResearch"></div>
+      <div class="research-category collapsible">
+        <div class="category-header" data-category="general">
+          <span class="category-icon">📚</span>
+          <span class="category-title">Algemeen</span>
+          <span class="category-toggle">▶</span>
+        </div>
+        <div class="research-grid collapsed" id="generalResearch"></div>
       </div>
 
       <!-- Generator Specific Research -->
-      <div class="research-category">
-        <h5>👨‍🌾 Dorpelingen</h5>
-        <div class="research-grid" id="villagerResearch"></div>
+      <div class="research-category collapsible">
+        <div class="category-header" data-category="villager">
+          <span class="category-icon">👨‍🌾</span>
+          <span class="category-title">Dorpelingen</span>
+          <span class="category-toggle">▶</span>
+        </div>
+        <div class="research-grid collapsed" id="villagerResearch"></div>
       </div>
 
-      <div class="research-category">
-        <h5>🏺 Handelsui</h5>
-        <div class="research-grid" id="traderResearch"></div>
+      <div class="research-category collapsible">
+        <div class="category-header" data-category="trader">
+          <span class="category-icon">🏺</span>
+          <span class="category-title">Handelsui</span>
+          <span class="category-toggle">▶</span>
+        </div>
+        <div class="research-grid collapsed" id="traderResearch"></div>
       </div>
 
-      <div class="research-category">
-        <h5>🛡️ Krijgers</h5>
-        <div class="research-grid" id="warriorResearch"></div>
+      <div class="research-category collapsible">
+        <div class="category-header" data-category="warrior">
+          <span class="category-icon">🛡️</span>
+          <span class="category-title">Krijgers</span>
+          <span class="category-toggle">▶</span>
+        </div>
+        <div class="research-grid collapsed" id="warriorResearch"></div>
       </div>
 
-      <div class="research-category">
-        <h5>🔮 Zieners</h5>
-        <div class="research-grid" id="seerResearch"></div>
+      <div class="research-category collapsible">
+        <div class="category-header" data-category="seer">
+          <span class="category-icon">🔮</span>
+          <span class="category-title">Zieners</span>
+          <span class="category-toggle">▶</span>
+        </div>
+        <div class="research-grid collapsed" id="seerResearch"></div>
       </div>
 
-      <div class="research-category">
-        <h5>⚔️ Elite Krijgers</h5>
-        <div class="research-grid" id="eliteResearch"></div>
+      <div class="research-category collapsible">
+        <div class="category-header" data-category="elite">
+          <span class="category-icon">⚔️</span>
+          <span class="category-title">Elite Krijgers</span>
+          <span class="category-toggle">▶</span>
+        </div>
+        <div class="research-grid collapsed" id="eliteResearch"></div>
       </div>
 
       <!-- Research Statistics -->
@@ -710,6 +731,10 @@
               <div class="stat-item">
                 <span class="stat-label">Huidige Bonus:</span>
                 <span class="stat-value">+<span id="prestigeBonus">0</span>%</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Voortgang naar volgend Wijsheidspunt:</span>
+                <span class="stat-value" id="wisdomProgress">0💰 / 0💰</span>
               </div>
             </div>
           </div>

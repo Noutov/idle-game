@@ -711,6 +711,14 @@ const UI = {
       bonusElement.textContent = stats.bonusPercentage;
     }
     
+    // Update wisdom progress
+    const wisdomProgressElement = document.getElementById('wisdomProgress');
+    if (wisdomProgressElement) {
+      const currentGold = GameUtils.formatNumber(stats.totalGoldEarned);
+      const nextThreshold = GameUtils.formatNumber(stats.nextWisdomThreshold);
+      wisdomProgressElement.textContent = `${currentGold}💰 / ${nextThreshold}💰`;
+    }
+    
     // Update prestige button
     const prestigeBtn = document.getElementById('prestigeBtn');
     const prestigeRequirement = document.getElementById('prestigeRequirement');

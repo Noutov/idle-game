@@ -201,6 +201,9 @@ const Prestige = {
     // Reset everything else
     GameState.gold = 0;
     
+    // Reset totalGoldEarned to prevent immediate re-prestige
+    prestigeData.totalGoldEarned = 0;
+    
     GameState.chief = {
       gold: 1,
       cooldown: 5000,
@@ -248,8 +251,23 @@ const Prestige = {
     GameState.techTree = techTreeData;
   },
 
+  // Calculate gold needed for next wisdom point
+  getNextWisdomPointThreshold() {
+    const currentThreshold = this.getCurrentThreshold();
+    const currentWisdom = this.calculateWisdomGain();
+    
+    // Calculate what total gold would be needed for one more wisdom point
+    // Formula: (currentWisdom + 1)^2 * currentThreshold = nextThreshold
+    const nextWisdom = currentWisdom + 1;
+    const nextThreshold = Math.pow(nextWisdom, 2) * currentThreshold;
+    
+    return nextThreshold;
+  },
+
   // Get prestige stats
   getStats() {
+    const nextWisdomThreshold = this.getNextWisdomPointThreshold();
+    
     return {
       canPrestige: this.canPrestige(),
       totalGoldEarned: GameState.prestige.totalGoldEarned,
@@ -260,7 +278,9 @@ const Prestige = {
       bonusPercentage: ((this.getPrestigeMultiplier() - 1) * 100).toFixed(1),
       wisdomGainAvailable: this.calculateWisdomGain(),
       goldNeededForPrestige: Math.max(0, this.getCurrentThreshold() - GameState.prestige.totalGoldEarned),
-      currentThreshold: this.getCurrentThreshold()
+      currentThreshold: this.getCurrentThreshold(),
+      nextWisdomThreshold: nextWisdomThreshold,
+      goldNeededForNextWisdom: Math.max(0, nextWisdomThreshold - GameState.prestige.totalGoldEarned)
     };
   },
 
